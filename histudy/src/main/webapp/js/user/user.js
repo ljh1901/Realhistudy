@@ -1,4 +1,3 @@
-<<<<<<< HEAD
     // 2. 로그인 함수 
 	function loginCheck(){
 		return fetch("userSignIn.do", 
