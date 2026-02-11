@@ -352,3 +352,109 @@ iframe {
     line-height: 1.6;
     color: #333;
 }
+
+/* 카드 리스트 스타일 */
+.admin__study__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin__study__item {
+    background: #fff;
+    border: 1px solid var(--color-gray);
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.admin__study__item:hover {
+    border-color: var(--color-navy);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* 정보 영역 */
+.study__info__left {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.study__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.study__cate {
+    background: #eef2ff;
+    color: var(--color-navy);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.study__title_text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.study__details {
+    display: flex;
+    gap: 15px;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.study__details span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 상태 및 액션 */
+.admin__actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.study__status {
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status--recruiting { color: #10b981; background: #ecfdf5; }
+.status--closed { color: #ef4444; background: #fef2f2; }
+
+/* 삭제 버튼 (기존 faq/notice 스타일 활용) */
+.admin__btn__del_small {
+    padding: 8px 16px;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.admin__btn__del_small:hover {
+    background-color: #dc2626;
+}
+
+/* 필터 셀렉트 */
+.admin__select {
+    padding: 8px;
+    border: 1px solid var(--color-gray);
+    border-radius: 4px;
+    outline: none;
+}

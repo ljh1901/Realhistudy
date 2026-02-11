@@ -19,7 +19,6 @@ public class FaqController {
 	
 	@Autowired
 	private FaqService faqService;
-
 	
 	@GetMapping("/adminFaqForm.do")
 	public ModelAndView adminFaqForm(

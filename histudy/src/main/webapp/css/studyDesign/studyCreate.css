@@ -1,6 +1,7 @@
 @charset "UTF-8";
    #studyCreatePage header{
       background-color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
    }
    .studyCreate{
       padding: 1rem;
@@ -24,6 +25,14 @@
       flex-direction: column;
       margin-bottom: 30px;
    }
+   .studyData__title{
+   	   display:flex;
+   	   align-items:center;
+   }
+   #maxTitle{
+   	     font-size:0.6rem;
+   		color:red;
+   }
    .studyCreate__Data__Top{
       border-bottom: 1px solid black;
       text-align: left;
@@ -38,6 +47,7 @@
       margin-bottom: 10px;
       margin-top: 10px;
       font-weight: bold;
+      margin-right: 10px;
    }
    .studyData input, select{
       border: 1px solid #888;
@@ -47,6 +57,7 @@
    .studyData textarea{
       border-radius: 10px;
       padding:1rem;
+      resize: none;
    }
    .studyCreate__btns input[type="submit"]{
       width:100%;

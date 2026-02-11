@@ -29,13 +29,13 @@ public class AdminController {
 	// 스터디 카페 전체 목록
 	@GetMapping("/adminCafeList.do")
 	public ModelAndView adminList() {
-	    List<StudycafeDTO> list = adminService.getCafeList(); 
+		List<StudycafeDTO> list = adminService.getCafeList(); 
 
-	    ModelAndView mav = new ModelAndView();
-	    mav.setViewName("admin/adminCafeList");
-	    mav.addObject("cafeList", list);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/adminCafeList");
+		mav.addObject("cafeList", list);
 
-	    return mav;
+		return mav;
 	}
 
 	// 스터디 카페 상세 보기
@@ -50,11 +50,11 @@ public class AdminController {
 	@GetMapping("/adminCafeSales.do")
 	public ModelAndView adminCafeSales(@RequestParam Map<String, Object> params) {
 		List<Map<String, Object>> salesData = adminService.getSalesList(params);
-		
+
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/adminCafeSales");
 		mav.addObject("salesData", salesData);
-		
+
 		return mav;
 	}
 	// 스터디 카페 좌석현황
@@ -67,42 +67,42 @@ public class AdminController {
 	public String adminCafeInquiryList() {
 		return "admin/adminCafeInquiryList";
 	}
-	
+
 	// 스터디 카페 요금제 리스트
 	@GetMapping("/adminCafePrice.do")
 	public ModelAndView adminCafePrice(@RequestParam("studycafe_idx") int idx) {
-	    ModelAndView mav = new ModelAndView("admin/adminCafePrice");
-	    
-	    List<TicketCategoryDTO> categoryList = adminService.getTicketCategoryList();
-	    List<TicketJoinTicketCategoryDTO> ticketList = adminService.getTicketList(idx);
+		ModelAndView mav = new ModelAndView("admin/adminCafePrice");
 
-	    mav.addObject("categoryList", categoryList);
-	    mav.addObject("ticketList", ticketList);
-	    return mav;
+		List<TicketCategoryDTO> categoryList = adminService.getTicketCategoryList();
+		List<TicketJoinTicketCategoryDTO> ticketList = adminService.getTicketList(idx);
+
+		mav.addObject("categoryList", categoryList);
+		mav.addObject("ticketList", ticketList);
+		return mav;
 	}
 	//스터디 카페 요금제 등록하기
 	@PostMapping("/addTicketAction.do")
 	@ResponseBody
 	public Map<String, Object> addTicket(@RequestBody Map<String, Object> data) {
-	    int newIdx = adminService.registerTicket(data);
-	    
-	    Map<String, Object> result = new HashMap<>();
-	    result.put("status", "success");
-	    result.put("newIdx", newIdx);
-	    return result;
+		int newIdx = adminService.registerTicket(data);
+
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", "success");
+		result.put("newIdx", newIdx);
+		return result;
 	}
 	// 스터디 카페 좌석 등록 에디터
 	@GetMapping("/studycafeEditor.do")
-    public ModelAndView studycafeEditor(@RequestParam("studycafe_idx") int studycafe_idx) {
-        List<Map<String, Object>> layoutList = adminService.getLayoutList(studycafe_idx);
-        
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("admin/studycafeEditor");
-        mav.addObject("layoutList", layoutList);
-        mav.addObject("studycafe_idx", studycafe_idx);
-        
-        return mav;
-    }
+	public ModelAndView studycafeEditor(@RequestParam("studycafe_idx") int studycafe_idx) {
+		List<Map<String, Object>> layoutList = adminService.getLayoutList(studycafe_idx);
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/studycafeEditor");
+		mav.addObject("layoutList", layoutList);
+		mav.addObject("studycafe_idx", studycafe_idx);
+
+		return mav;
+	}
 
 	// 스터디 카페 좌석 저장하기
 	@PostMapping("/saveCafeLayoutAction.do")
@@ -118,8 +118,8 @@ public class AdminController {
 		return response;
 	}
 	
-	@GetMapping("/adminMember.do")
-	public String adminMemberList() {
-		return "admin/adminMember";	
+	@GetMapping("/adminInquiryList.do")
+	public String adminInquiryList() {
+		return ("admin/adminInquiryList");
 	}
 }

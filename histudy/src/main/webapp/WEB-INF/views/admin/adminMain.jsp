@@ -14,22 +14,22 @@
                 <a href="adminCafeList.do" target="contentFrame">스터디카페 관리</a>
             </li>    
             <li class="admin__menu__item">
-                <a href="adminStudyGroup.do" target="contentFrame">스터디모임 관리</a>
+                <a href="adminStudyList.do" target="contentFrame">스터디모임 관리</a>
             </li>
             <li class="admin__menu__item">
-                <a href="adminMember.do" target="contentFrame">회원 관리</a>
+                <a href="adminUserList.do" target="contentFrame">회원 관리</a>
             </li>
             <li class="admin__menu__item">
                 <a href="adminNotice.do" target="contentFrame">공지사항</a>
             </li>
             <li class="admin__menu__item">
-                <a href="adminInquiry.do" target="contentFrame">문의사항 관리</a>
+                <a href="adminInquiryList.do" target="contentFrame">문의사항 관리</a>
             </li>
             <li class="admin__menu__item">
                 <a href="adminFaqForm.do" target="contentFrame">자주 묻는 질문 관리</a>
             </li>
             <li class="admin__menu__item">
-                <a href="adminReport.do" target="contentFrame">신고 관리</a>
+                <a href="adminReportList.do" target="contentFrame">신고 관리</a>
             </li>
         </ul>
 

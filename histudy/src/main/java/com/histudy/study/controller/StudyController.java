@@ -70,14 +70,15 @@ public class StudyController {
 	   ModelAndView mav = new ModelAndView();
 	   
 	   String msg = null;
+	   
+	   Integer user_idx = (Integer)session.getAttribute("user_idx");
 
-	   Integer user_idx_s = (Integer)session.getAttribute("user_idx");
-	   if(user_idx_s == null || user_idx_s==0) {
+	   if(user_idx == null || user_idx == 0) {
 		   msg = "Hi, Study에 로그인 완료된 사용자만 접근 가능합니다!";
 		   mav.addObject("msg", msg);
 		   mav.setViewName("study/studyMsg");
 	   }else {
-		   int user_idx = user_idx_s;
+		   
 		   UserDTO dto = ss.getStudyCreateUser(user_idx);
 		      
 		   mav.addObject("user_name", dto.getUser_name());
@@ -117,6 +118,21 @@ public class StudyController {
       }
       mav.setViewName("study/studyMsg");
       return mav;
+   }
+   
+   @GetMapping("/studyContent.do")
+   public ModelAndView studyContent(
+		   @RequestParam(value="study_idx", defaultValue="0")int study_idx, HttpSession session) {
+	   ModelAndView mav = new ModelAndView();
+	   
+	   
+	   StudyDTO dto = ss.getStudyContent(study_idx);
+	   
+	   session.setAttribute("dto", dto);
+	   
+	   mav.addObject("dto", dto);
+	   mav.setViewName("study/studyContent");
+	   return mav;
    }
    
    public void fileCopy(MultipartFile upload) {

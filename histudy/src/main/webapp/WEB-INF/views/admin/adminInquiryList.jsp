@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-window.alert("${msg}");
-window.self.close();
-
+<h1>문의사항 관리</h1>
 </body>
 </html>

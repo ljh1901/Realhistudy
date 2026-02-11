@@ -75,7 +75,7 @@ public class NoticeController {
 	    ModelAndView mav = new ModelAndView("admin/adminMsg");
 	    if(result > 0) {
 	        mav.addObject("msg", "새 공지사항이 등록되었습니다.");
-	        mav.addObject("url", "adminNotice.do"); // 목록으로 이동
+	        mav.addObject("url", "adminNotice.do");
 	    } else {
 	        mav.addObject("msg", "공지 등록에 실패했습니다.");
 	        mav.addObject("url", "history.back()");
@@ -151,7 +151,7 @@ public class NoticeController {
     }
 	//공지사항 삭제
 	@RequestMapping("/adminNoticeDelete.do")
-	public ModelAndView adminNoticeDelte(@RequestParam("notice_idx")int notice_idx) {
+	public ModelAndView adminNoticeDelete(@RequestParam("notice_idx")int notice_idx) {
 		int result = noticeService.deleteNoitce(notice_idx);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("admin/adminMsg");

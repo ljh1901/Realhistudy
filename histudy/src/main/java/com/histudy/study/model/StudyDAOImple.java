@@ -46,5 +46,11 @@ public class StudyDAOImple implements StudyDAO {
       return result;
    }
    
+   @Override
+	public StudyDTO getStudyContent(int study_idx) {
+	   StudyDTO dto = sqlSession.selectOne("selectStudyContent", study_idx);
+	   return dto;
+	}
+   
    
 }

@@ -1,7 +1,6 @@
 package com.histudy.admin.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.histudy.admin.model.NoticeCategoryDTO;
 import com.histudy.admin.model.NoticeDTO;

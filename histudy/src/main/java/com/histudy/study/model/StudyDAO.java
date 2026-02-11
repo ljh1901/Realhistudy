@@ -10,4 +10,5 @@ public interface StudyDAO {
    public int studyTotalCnt(Integer sc_idx);
    public UserDTO getStudyCreateUser(int user_idx);
    public int studyMaxCreate(int user_idx);
+   public StudyDTO getStudyContent(int study_idx);
 }

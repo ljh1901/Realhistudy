@@ -46,28 +46,30 @@
       <section class="studyGrid">
          <c:if test="${!empty requestScope.studyList}">
             <c:forEach var="dto" items="${requestScope.studyList}">
-               <article class="studyCard">
-                   <div class="studyCard__thumb">
-                     <img src="/histudy/study-img/${!empty dto.study_upload_img ? dto.study_upload_img : 'groupStudy.png'}" alt="스터디 이미지">
-                   </div>
-                   <div class="studyCard__content">
-                     <div class="studyCard__tags">
-                        <span class="tag tag--language">${dto.sc_name}</span>
-                     </div>
-                        <h3 class="studyCard__title">${dto.study_title}</h3>
-                     <div class="studyCard__rating">
-                       <div class="stars">
-                         ★★★★☆ <span style="color:black; font-weight:bold">4.9 (24)</span>
-                       </div>
-                    </div>
-                        <ul class="studyCard__meta">
-                          <li><img src="/histudy/main-img/user.png">${dto.user_name}</li>
-                             <li><img src="/histudy/main-img/personnel.png">${dto.study_current_members }/${dto.study_max_members}명</li>
-                          <li><img src="/histudy/main-img/clock.png">마감일 - ${dto.study_end_date.substring(0, 10)}</li>
-                          <li><img src="/histudy/main-img/location.png">${empty dto.study_addr?'장소가 지정되지 않았어요':dto.study_addr }</li>
-                       </ul>
-                   </div>
-                </article>
+            	<a href="studyContent.do?study_idx=${dto.study_idx}">
+	                <article class="studyCard">
+	                   <div class="studyCard__thumb">
+	                     <img src="/histudy/study-img/${!empty dto.study_upload_img ? dto.study_upload_img : 'groupStudy.png'}" alt="스터디 이미지">
+	                   </div>
+	                   <div class="studyCard__content">
+	                     <div class="studyCard__tags">
+	                        <span class="tag">${dto.sc_name}</span>
+	                     </div>
+	                        <h3 class="studyCard__title">${dto.study_title}</h3>
+	                     <div class="studyCard__rating">
+	                       <div class="stars">
+	                         ★★★★☆ <span style="color:black; font-weight:bold">4.9 (24)</span>
+	                       </div>
+	                    </div>
+	                        <ul class="studyCard__meta">
+	                          <li><img src="/histudy/main-img/user.png">${dto.user_name}</li>
+	                             <li><img src="/histudy/main-img/personnel.png">${dto.study_current_members }/${dto.study_max_members}명</li>
+	                          <li><img src="/histudy/main-img/clock.png">마감일 - ${dto.study_end_date.substring(0, 10)}</li>
+	                          <li><img src="/histudy/main-img/location.png">${empty dto.study_addr?'장소가 지정되지 않았어요':dto.study_addr }</li>
+	                       </ul>
+	                   </div>
+	                </article>
+                </a>
             </c:forEach>
          </c:if>
          <c:if test="${empty requestScope.studyList}">

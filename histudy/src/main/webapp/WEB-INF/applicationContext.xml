@@ -40,6 +40,19 @@
    	 <constructor-arg ref="sqlSessionTemplate" />
 	</bean>
 	
+	<bean id="adminUserDAO" class="com.histudy.admin.model.AdminUserDAOImple">
+   	 <constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	
+	<bean id="adminReportDAO" class="com.histudy.admin.model.AdminReportDAOImple">
+   	 <constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	
+	<!--Admin study -->
+	<bean id="adminStudyDAO" class="com.histudy.admin.model.AdminStudyDAOImple">
+   	 <constructor-arg ref="sqlSessionTemplate" />
+	</bean>
+	
 	<bean id="faqDAO" class="com.histudy.admin.model.FaqDAOImple">
 		<constructor-arg ref="sqlSessionTemplate"/>
 	</bean>

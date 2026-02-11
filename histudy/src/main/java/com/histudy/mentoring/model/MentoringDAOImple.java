@@ -41,6 +41,66 @@ public class MentoringDAOImple implements MentoringDAO {
     public Integer findMentorIdxAndUserIdx(int user_idx) {
         return sqlSession.selectOne("com.histudy.mentoring.findMentorIdxAndUserIdx", user_idx);
     }
+    
+    @Override
+    public Integer findMentorIdxAndUserIdx(int user_idx) {
+        return sqlSession.selectOne("com.histudy.mentoring.findMentorIdxAndUserIdx", user_idx);
+    }
+
+    @Override
+    public int insertMentoring(MentoringDTO dto) {
+        return sqlSession.insert("com.histudy.mentoring.insertMentoring", dto);
+    }
+
+    @Override
+    public int insertMentoringSchedule(MentoringScheduleDTO dto) {
+        return sqlSession.insert("com.histudy.mentoring.insertMentoringSchedule", dto);
+    }
+
+    @Override
+    public List<MentorApplicationDTO> selectMentorApplications(int mentor_idx) {
+      return sqlSession.selectList("com.histudy.mentoring.selectMentorApplications", mentor_idx);
+    }
+
+    @Override
+    public MentorApplicationDTO selectMentorApplicationDetail(int ma_id) {
+      return sqlSession.selectOne("com.histudy.mentoring.selectMentorApplicationDetail", ma_id);
+    }
+
+    @Override
+    public int approveMentorApplication(int ma_id) {
+      return sqlSession.update("com.histudy.mentoring.approveMentorApplication", ma_id);
+    }
+
+    @Override
+    public int rejectMentorApplication(Map<String, Object> map) {
+      return sqlSession.update("com.histudy.mentoring.rejectMentorApplication", map);
+    }
+    
+    @Override
+    public int deleteMentorApplication(int ma_id) {
+        return sqlSession.update("com.histudy.mentoring.deleteMentorApplication", ma_id);
+    }
+    
+    @Override
+    public MentorSummaryDTO selectMentorSummary(int mentor_idx) {
+        return sqlSession.selectOne("com.histudy.mentoring.selectMentorSummary", mentor_idx);
+    }
+
+    @Override
+    public List<String> selectMentorTags(int mentor_idx) {
+        return sqlSession.selectList("com.histudy.mentoring.selectMentorTags", mentor_idx);
+    }
+
+    @Override
+    public MentorMatchDTO selectMatchInfoMaId(int ma_id) {
+        return sqlSession.selectOne("com.histudy.mentoring.selectMatchInfoByMaId", ma_id);
+    }
+
+    @Override
+    public int insertMentoringMatch(MentorMatchDTO dto) {
+        return sqlSession.insert("com.histudy.mentoring.insertMentoringMatch", dto);
+    }
 
     @Override
     public int insertMentoring(MentoringDTO dto) {

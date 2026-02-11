@@ -7,7 +7,7 @@
    <insert id="insertStudy" parameterType="com.histudy.study.model.StudyDTO">
       INSERT INTO study values(study_idx.nextval, #{study_title}, #{study_content}, sysdate, #{study_end_date},
                                1, #{study_max_members}, #{study_location_lng}, #{study_location_lat}, #{study_addr},
-                               #{study_upload_img}, #{sc_idx}, #{user_idx})
+                               #{study_upload_img}, #{sc_idx}, #{user_idx}, null, #{study_total_weeks})
    </insert>
    <select id="selectStudyList" parameterType="map" resultType="com.histudy.study.model.StudyDTO">
       SELECT * 
@@ -40,5 +40,19 @@
       SELECT count(*)
       FROM study JOIN usertb ON study.user_idx=usertb.user_idx
       WHERE study.user_idx=#{user_idx}
+   </select>
+   <select id="selectStudyContent" parameterType="Integer" resultType="com.histudy.study.model.StudyDTO">
+		SELECT a.study_idx, a.study_title, a.study_content,
+		       a.study_end_date, a.study_current_members, a.study_max_members,
+		       a.study_location_lng, a.study_location_lat, a.study_addr,
+		       a.study_upload_img, a.sc_idx, a.user_idx, a.user_name,
+		       study_category.sc_name, TO_CHAR(a.study_start_date, 'YYYY-MM-DD') as study_start_date,
+		       a.study_total_weeks
+		FROM
+		    (
+		    select study.*, usertb.user_name
+		    from study JOIN usertb ON study.user_idx=usertb.user_idx
+		    where study_idx = #{study_idx}
+		    ) a JOIN study_category ON a.sc_idx = study_category.sc_idx
    </select>
 </mapper>

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <link rel="stylesheet" href="css/userSignIn.css">
+<script src="${pageContext.request.contextPath}/js/user/user.js"></script>
 <script>
 window.onload=function(){
 	if(${!empty cookie.id}){

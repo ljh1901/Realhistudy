@@ -44,5 +44,11 @@ public class StudyServiceImple implements StudyService {
       int result = studyDao.studyMaxCreate(user_idx);
       return result;
    }
+   
+   @Override
+	public StudyDTO getStudyContent(int study_idx) {
+	   StudyDTO dto = studyDao.getStudyContent(study_idx);
+	   return dto;
+	}
 
 }

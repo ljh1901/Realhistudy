@@ -25,8 +25,11 @@
                   <h2>기본 정보</h2>
                </div>
                <div class="studyData">
-                  <label>스터디 제목</label>
-                  <input type="text" name="study_title" placeholder="ex) 정보처리기사 실기 스터디" required>
+               	  <div class="studyData__title">
+               	  	    <label>스터디 제목</label>
+               	  		<span id="maxTitle"></span>
+               	  </div>
+                  <input type="text" name="study_title" maxlength="25" oninput="titleCheck(this)" placeholder="ex) 정보처리기사 실기 스터디" required>
                </div>
                <div class="studyData">
                   <label>카테고리</label>
@@ -53,6 +56,17 @@
                <div class="studyData">
                   <label>마감일</label>
                   <input type="date" name="study_end_date" onchange="dateCheck()" required>
+               </div>
+               <div class="studyData">
+               	  <label>스터디 진행 일정</label>
+               	  <select name="study_total_weeks" onchange="studyWeeksCheck()" required>
+               	  	 <option value="5">5주</option>
+               	  	 <option value="6">6주</option>
+               	  	 <option value="7">7주</option>
+               	  	 <option value="8">8주</option>
+               	  	 <option value="9">9주</option>
+               	  	 <option value="10">10주</option>
+               	  </select>
                </div>
                <div class="studyData">
                   <label>배경 이미지</label>
@@ -84,7 +98,7 @@
                <div class="studyData">
                   <label>스터디 소개</label>
                   <textarea name="study_content" rows="20" cols="40"
-                     placeholder="스터디 목표와 진행 방식을 자세히 설명해주세요 / 진행방식 / 커리큘럼 / 준비물 (최대 500자)"
+                     placeholder="스터디 목표와 진행 방식을 자세히 설명해주세요 / 진행방식 / 커리큘럼 / 준비물 (최대 300자)"
                      oninput="studyContentCheck(this)"
                      maxlength="300"
                      required></textarea>
@@ -120,8 +134,29 @@
 <%@include file="../footer.jsp" %>
 </body>
 <script>
+	// 제목 글자 수 유효성 검사
+	function titleCheck(el){
+		const MAX = 25;
+		const titleCount = el.value.length;
+		const data = document.getElementById('maxTitle');
+		
+		if(titleCount>=MAX){
+			data.innerHTML = '제목은 20자 이내로 작성해주세요!';
+		}else{
+			data.innerHTML = '';
+		}
+		
+	}
+	// 장소 선택 안할 시 유효성 검사
 	function locationCheck(){
 		var location = document.studyCreateForm.study_addr.value;
+		var MINTEXT = 70;
+		
+		var count = document.studyCreateForm.study_content.value.length;
+	    if(count < MINTEXT){
+	    	alert('스터디 소개를 조금 더 자세히 작성해주세요 (최소 70자 이상)');
+	    	return false;
+	    }
 		
 		if(location == null || location == ''){
 			var tf = window.confirm('스터디 장소를 지정하지 않으시겠어요?');
@@ -148,9 +183,9 @@
            keynum.style.color = 'red';
        } else {
            keynum.style.color = 'black';
-       }
-      
+       } 
    }
+   // 파일 확장자 제한 유효성 검사
    function fileCheck(){
       console.log('test');
       var upload = document.studyCreateForm.rstudy_upload_img.value;
@@ -161,6 +196,7 @@
          document.studyCreateForm.rstudy_upload_img.value='';
       }
    }
+   // 이전 날짜 제한 유효성 검사
    function dateCheck(){
       var selectDate = document.studyCreateForm.study_end_date.value;
       

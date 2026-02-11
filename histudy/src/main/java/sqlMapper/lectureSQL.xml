@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.histudy.lecture.model.LectureDAO">
+   <select id="lectureList" resultType="com.histudy.lecture.model.LectureDTO">
+      select *
+      from(select rownum as rnum,a.*
+      from(select * from lecture order by lecture_idx desc) a)
+      b where rnum <![CDATA[>=]]>#{start} and rnum <![CDATA[<=]]>#{end}
+   </select>
+   <select id ="lectureContent" parameterType="int" resultType="com.histudy.lecture.model.LectureDTO">
+      select *
+      from lecture
+      where lecture_idx=#{lecture_idx}
+   </select>
+   <select id="lectureMemoList" parameterType="Map" resultType="com.histudy.lecture.model.LectureNoteDTO">
+		select *
+		from lecture_note
+		where user_idx=#{user_idx} and
+			lecture_idx=#{lecture_idx}
+   </select>
+   <insert id="lectureNoteInsert" parameterType="com.histudy.lecture.model.LectureNoteDTO">
+   	Insert into lecture_note values(
+   		lecture_note_idx.nextval,
+   		#{note_title},
+   		#{note_content},
+   		#{user_idx},
+   		#{lecture_idx})
+   </insert>
+   <update id="lectureNoteUpdate" parameterType="com.histudy.lecture.model.LectureNoteDTO">
+    UPDATE lecture_note 
+    SET note_title = #{note_title},
+        note_content = #{note_content}
+	WHERE user_idx = #{user_idx} AND lecture_idx = #{lecture_idx}
+	</update>
+    <select id="getTotalCnt" resultType="Integer">
+    	select count(*) from lecture
+   </select>
+   <select id="reviewList" parameterType="int" resultType="com.histudy.lecture.model.LectureReviewDTO">
+   	select * 
+   	from lecture_review
+   	where lecture_idx=#{lecture_idx}
+   	order by review_date desc
+   </select>
+   <select id="checkReviewCount" parameterType="Map" resultType="int">
+   	select count(*)
+   	from lecture_review
+   	where lecture_idx=#{lecture_idx} and user_idx=#{user_idx}
+   </select>
+   <insert id="reviewInsert" parameterType="com.histudy.lecture.model.LectureReviewDTO">
+		insert into lecture_review values(
+			lecture_review_idx.nextval,
+			#{review_title},
+			#{review_content},
+			#{review_score},
+			sysdate,
+			#{user_idx},
+			#{lecture_idx}	
+		)
+   </insert>
+   <select id="lectureLike" parameterType="map" resultType="com.histudy.lecture.model.LectureLikeDTO">
+		select *
+		from lecture_Like
+		where user_idx=#{user_idx}
+			and lecture_idx=#{lecture_idx}
+   </select>
+   <update id="lectureLikeUp" parameterType="int">
+   	update lecture set lecture_like=lecture_like+1
+   	where lecture_idx=#{lecture_idx} 
+   </update>
+   <update id="lectureLikeDown" parameterType="int">
+   	update lecture set lecture_like=lecture_like-1
+   	where lecture_idx=#{lecture_idx} 
+   </update>
+   <select id="lectureHate" parameterType="map" resultType="com.histudy.lecture.model.LectureHateDTO">
+		select *
+		from lecture_hate
+		where user_idx=#{user_idx}
+			and lecture_idx=#{lecture_idx}
+   </select>
+   <update id="lectureHateUp" parameterType="int">
+   		update lecture set lecture_hate=lecture_hate+1
+   		where lecture_idx=#{lecture_idx} 
+   </update>
+   <update id="lectureHateDown" parameterType="int">
+ 	  	update lecture set lecture_hate=lecture_hate-1
+   		where lecture_idx=#{lecture_idx} 
+   </update>
+   <delete id="lectureLikeDelete" parameterType="com.histudy.lecture.model.LectureLikeDTO">
+	    delete from lecture_like where user_idx=#{user_idx} and lecture_idx=#{lecture_idx}
+	</delete>
+	<delete id="lectureHateDelete" parameterType="com.histudy.lecture.model.LectureLikeDTO">
+	    delete from lecture_hate where user_idx=#{user_idx} and lecture_idx=#{lecture_idx}
+	</delete>
+	<insert id="lectureLikeInsert" parameterType="com.histudy.lecture.model.LectureLikeDTO">
+    	INSERT INTO lecture_like VALUES (#{user_idx}, #{lecture_idx})
+	</insert>
+	<insert id="lectureHateInsert" parameterType="com.histudy.lecture.model.LectureHateDTO">
+    	INSERT INTO lecture_hate VALUES (#{user_idx}, #{lecture_idx})
+	</insert>
+	<select id="myReview" parameterType="int" resultType="int">
+		select review_idx
+		from lecture_review
+		where user_idx=#{user_idx}
+	</select>
+	<update id="reviewUpdate" parameterType="com.histudy.lecture.model.LectureReviewDTO">
+		update lecture_review
+		set review_title=#{review_title},
+			review_content=#{review_content},
+			review_score=#{review_score}
+		where review_idx=#{review_idx}
+	</update>
+	<delete id="reviewDelete" parameterType="int">
+		delete from lecture_review
+		where review_idx=#{review_idx}
+	</delete>
+	<select id="selectName" parameterType="int">
+		select user_name
+		from usertb join lecture_review
+		on usertb.user_idx=lecture_review.user_idx
+		where lecture_review.user_idx=#{user_idx}
+	</select>
+	<select id="userPro" parameterType="String">
+		select profile_img
+		from mypage join usertb
+		on mypage.mypage_idx=usertb.mypage_idx
+		where user_idx=#{user_idx}
+	</select>
+	<select id="scIdx" parameterType="int" resultType="String">
+		select sc_name
+		from study_category,lecture
+		where study_category.sc_idx=lecture.sc_idx
+			and lecture_idx=#{lecture_idx}
+	</select>
+</mapper>

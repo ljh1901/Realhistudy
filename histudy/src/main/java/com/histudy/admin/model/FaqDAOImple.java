@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
 public class FaqDAOImple implements FaqDAO {
 	
     private SqlSession session;

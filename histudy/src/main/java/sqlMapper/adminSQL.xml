@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.histudy.admin">
+	<!--스터디카페 관련 -->
+	<select id="selectAllCafes"
+		resultType="com.histudy.studycafe.model.StudycafeDTO">
+		select * from studycafe order by studycafe_idx asc
+	</select>
+
+	<select id="selectSalesList" parameterType="map"
+		resultType="map">
+		select
+		<choose>
+			<when test="type == 'month'"> to_char(sales_date, 'yyyy-mm') as sales_date,
+				sum(total_amount) as total_amount
+			</when>
+			<when test="type == 'total'"> '누적 매출' as sales_date,
+				sum(total_amount) as
+				total_amount
+			</when>
+			<otherwise>
+				to_char(sales_date, 'yyyy-mm-dd') as sales_date,
+				total_amount as total_amount
+			</otherwise>
+		</choose>
+		from sales_report
+		where studycafe_idx = #{studycafe_idx}
+		<if test="startDate != null and startDate != ''">
+			and sales_date &gt;= to_date(#{startDate}, 'yyyy-mm-dd')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and sales_date &lt;= to_date(#{endDate}, 'yyyy-mm-dd')
+		</if>
+		<choose>
+			<when test="type == 'month'">
+				group by to_char(sales_date, 'yyyy-mm')
+			</when>
+			<when test="type == 'total'">
+				group by '누적 매출'
+			</when>
+		</choose>
+		order by sales_date asc
+	</select>
+
+	<!-- 스터디모임 관련 -->
+	<select id="selectAllStudyList"
+		resultType="com.histudy.study.model.StudyDTO">
+		select
+		s.study_idx,
+		s.study_title,
+		c.sc_name as sc_name,
+		u.user_name as user_name,
+		s.study_current_members,
+		s.study_max_members,
+		TO_CHAR(s.study_start_date, 'YYYY-MM-DD') as study_start_date,
+		TO_CHAR(s.study_end_date, 'YYYY-MM-DD') as study_end_date,
+		s.study_addr
+		from study s
+		left join study_category c ON s.sc_idx =
+		c.sc_idx
+		left join usertb u ON s.user_idx = u.user_idx
+		ORDER BY
+		s.study_idx DESC
+	</select>
+
+	<delete id="deleteStudy"
+		parameterType="com.histudy.study.model.StudyDTO">
+		delete from study where study_idx = #{study_idx}
+	</delete>
+
+	<!-- 회원 관리 -->
+	<select id="selectAllUserList"
+		resultType="com.histudy.user.model.UserDTO">
+		select
+		user_idx,
+		user_id,
+		user_pw,
+		user_name,
+		user_birthdate,
+		user_tel,
+		user_email,
+		role_idx
+		from usertb
+		order
+		by user_idx DESC
+	</select>
+
+	<select id="getUserCount" resultType="int">
+		select count(*) from usertb
+	</select>
+
+	<delete id="deleteUser" parameterType="int">
+		delete from usertb where
+		user_idx = #{user_idx}
+	</delete>
+
+
+	<!-- 자주 묻는 질문 관련 -->
+	<select id="getFaqCategoryList"
+		resultType="com.histudy.admin.model.MenuCategoryDTO">
+		select * from menu_category order by menu_category_idx asc
+	</select>
+
+	<select id="getFaqList" parameterType="map"
+		resultType="com.histudy.admin.model.FaqDTO">
+		select f.faq_idx, f.menu_category_idx, f.faq_title, f.faq_content,
+		c.menu_category_name
+		from faq f
+		join menu_category c on
+		f.menu_category_idx = c.menu_category_idx
+		<where>
+			<if test="menu_category_idx != null and menu_category_idx != 0">
+				and f.menu_category_idx = #{menu_category_idx}
+			</if>
+		</where>
+		order by f.faq_idx desc
+	</select>
+
+	<select id="getFaqOne" parameterType="int"
+		resultType="com.histudy.admin.model.FaqDTO">
+		select faq_idx, menu_category_idx, faq_title, faq_content
+		from faq where faq_idx = #{faq_idx}
+	</select>
+
+	<update id="updateFaq"
+		parameterType="com.histudy.admin.model.FaqDTO">
+		update faq set menu_category_idx = #{menu_category_idx},
+		faq_title =
+		#{faq_title}, faq_content = #{faq_content}
+		where faq_idx =
+		#{faq_idx}
+	</update>
+
+	<insert id="insertFaq"
+		parameterType="com.histudy.admin.model.FaqDTO">
+		insert into faq (faq_idx, menu_category_idx, faq_title,
+		faq_content)
+		values (faq_idx.nextval, #{menu_category_idx},
+		#{faq_title}, #{faq_content})
+	</insert>
+
+	<delete id="deleteFaq"
+		parameterType="com.histudy.admin.model.FaqDTO">
+		delete from faq where faq_idx = #{faq_idx}
+	</delete>
+
+	<delete id="deleteLayoutByCafeIdx" parameterType="int">
+		delete from
+		studycafe_layout where studycafe_idx = #{studycafe_idx}
+	</delete>
+
+	<insert id="insertLayout" parameterType="map">
+		insert into
+		studycafe_layout (layout_idx, studycafe_idx, type, label, x, y,
+		width,
+		height)
+		values (seq_layout_idx.nextval, #{studycafe_idx}, #{type},
+		#{label}, #{x},
+		#{y}, #{width}, #{height})
+	</insert>
+
+	<select id="selectLayoutList" parameterType="int"
+		resultType="map">
+		select type, label, x, y, width, height
+		from
+		studycafe_layout where studycafe_idx = #{studycafe_idx}
+		order by
+		layout_idx asc
+	</select>
+
+	<!-- 공지사항 관련 -->
+	<select id="getNoticeCategoryList"
+		resultType="com.histudy.admin.model.NoticeCategoryDTO">
+		select * from notice_category order by notice_category_idx
+		asc
+	</select>
+
+	<select id="selectNoticeList" parameterType="map"
+		resultType="com.histudy.admin.model.NoticeDTO">
+		select n.notice_idx, c.notice_category_name, n.notice_title,
+		n.notice_writedate
+		from notice n
+		join notice_category c ON
+		n.notice_category_idx = c.notice_category_idx
+		<where>
+			<if
+				test="notice_category_idx != null and notice_category_idx != 0">
+				and n.notice_category_idx = #{notice_category_idx}
+			</if>
+		</where>
+		order by n.notice_idx desc
+	</select>
+
+	<select id="getNoticeOne" parameterType="int"
+		resultType="com.histudy.admin.model.NoticeDTO">
+		select n.*, c.notice_category_name
+		from notice n
+		join
+		notice_category c ON n.notice_category_idx = c.notice_category_idx
+		where n.notice_idx = #{notice_idx}
+	</select>
+
+	<insert id="insertNotice"
+		parameterType="com.histudy.admin.model.NoticeDTO">
+		insert into notice (notice_idx, notice_category_idx,
+		notice_title,
+		notice_content, notice_file, notice_writedate)
+		values
+		(notice_idx.nextval, #{notice_category_idx}, #{notice_title},
+		#{notice_content}, #{notice_file}, sysdate)
+	</insert>
+
+	<update id="updateNotice"
+		parameterType="com.histudy.admin.model.NoticeDTO">
+		update notice set notice_category_idx =
+		#{notice_category_idx}, notice_title
+		= #{notice_title}, notice_content
+		= #{notice_content}, notice_file =
+		#{notice_file}
+		where notice_idx =
+		#{notice_idx}
+	</update>
+
+	<delete id="deleteNotice"
+		parameterType="com.histudy.admin.model.NoticeDTO">
+		delete from notice where notice_idx = #{notice_idx}
+	</delete>
+
+	<select id="getTicketCategoryList"
+		resultType="com.histudy.admin.model.TicketCategoryDTO">
+		select
+		ticket_category_idx,
+		ticket_category_name
+		from
+		ticket_category
+		order by ticket_category_idx asc
+	</select>
+
+	<select id="getTicketList" parameterType="int"
+		resultType="com.histudy.studycafe.model.TicketJoinTicketCategoryDTO">
+		select
+		t.ticket_idx,
+		t.studycafe_idx,
+		t.ticket_category_idx,
+		c.ticket_category_name,
+		t.ticket_name,
+		t.ticket_amount
+		from
+		studycafe_ticket t
+		join ticket_category c ON t.ticket_category_idx =
+		c.ticket_category_idx
+		where t.studycafe_idx = #{studycafe_idx}
+		order BY
+		t.ticket_category_idx ASC, t.ticket_amount ASC
+	</select>
+
+	<insert id="insertTicket" parameterType="map">
+		<selectKey keyProperty="newIdx" resultType="int"
+			order="BEFORE">
+			select ticket_idx.nextval from dual
+		</selectKey>
+		insert into studycafe_ticket (
+		ticket_idx,
+		studycafe_idx,
+		ticket_category_idx,
+		ticket_name,
+		ticket_amount
+		) values (
+		#{newIdx},
+		#{studycafe_idx},
+		#{ticket_category_idx},
+		#{ticket_name},
+		#{ticket_amount}
+		)
+	</insert>
+
+	<delete id="deleteTicket" parameterType="int">
+		delete from
+		studycafe_ticket where ticket_idx = #{ticket_idx}
+	</delete>
+
+	<select id="selectAllReportList" resultType="com.histudy.admin.model.ReportDTO">
+    SELECT 
+        r.report_idx,
+        r.report_type,
+        r.target_idx,
+        r.reporter_idx,
+        r.report_content,
+        r.report_date,
+        r.report_status,
+        u.user_name as reporter_name,
+        CASE 
+            WHEN r.report_type = 'STUDY' THEN (SELECT study_title FROM study WHERE study_idx = r.target_idx)
+            WHEN r.report_type = 'USER' THEN (SELECT user_name FROM usertb WHERE user_idx = r.target_idx)
+        END as target_name
+    FROM report r
+    JOIN usertb u ON r.reporter_idx = u.user_idx
+    ORDER BY r.report_idx DESC
+</select>
+
+<update id="updateReportStatus" parameterType="int">
+    UPDATE report SET report_status = '완료' WHERE report_idx = #{report_idx}
+</update>
+
+
+</mapper>

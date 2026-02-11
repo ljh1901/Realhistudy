@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+#lectureContentPage header {
+    background-color: white !important;
+    z-index: 9999 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.header-spacer {
+    width: 100%;
+    height: 80px; 
+    display: block;
+}
+
+.LectureContentContainer, 
+.lectureContentContainer {
+    width: 80% !important;
+    max-width: 1200px !important;
+    margin: 50px auto !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+    display: block !important;
+}
+
+.video-memo-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;  
+}
+
+.video-area {
+    flex: 15;             
+    min-width: 0;
+}
+
+.video-area video {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.memo-area {
+    flex: 5.5;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding: 35px;
+    border-radius: 10px;
+}
+
+.memo-table { 
+    width: 100%; 
+}
+
+.lecture-detail-info {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.lecture-detail-info h2 {
+    margin: 10px 0;
+    font-size: 1.8rem;
+}
+
+.action-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 15px 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+/* 영상 아래 제목과 버튼을 감싸는 박스 */
+.lecture-header {
+    display: flex;
+    justify-content: space-between; /* 제목은 왼쪽, 버튼은 오른쪽 끝으로 밀어내기 */
+    align-items: center;            /* 위아래 수직 중앙 정렬 */
+    width: 100%;
+    margin-top: 20px;               /* 영상과의 간격 */
+    border-bottom: 1px solid #ddd;  /* 아래 구분선 */
+    padding-bottom: 20px;
+}
+
+/* 왼쪽: 제목과 강사명 */
+.lecture-title-group h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.lecture-title-group h3 {
+    margin: 5px 0 0 0;
+    font-size: 1rem;
+    color: #666;
+    font-weight: normal;
+}
+
+.lecture-btn-group {
+    display: flex;
+    gap: 20px;  
+    align-items: center;
+}
+
+.btn-item {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-item span {
+    font-size: 12px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #555;
+}

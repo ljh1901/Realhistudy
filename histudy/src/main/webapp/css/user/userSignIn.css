@@ -112,7 +112,7 @@
     left: 15px;         /* 기존 background-position과 동일하게 설정 */
     top: 50%;           /* 세로 중앙 정렬 */
     transform: translateY(-50%);
-    width: 25px;!important;      /* 아이콘 너비 고정 */
+    width: 25px !important;      /* 아이콘 너비 고정 */
     height: auto;       /* 비율에 맞춰 높이 조절 */
     z-index: 10;        /* input보다 위에 보이게 설정 */
     pointer-events: none; /* 아이콘 클릭 시 input이 선택되도록 설정 */
