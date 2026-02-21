@@ -26,7 +26,12 @@ public class MembershipDAOImple implements MembershipDAO {
 		return sqlSession.insert("insertPrimium",paymentDTO);
 	}
 	@Override
-	public List<Map<String, Object>> getPayment(int user_idx){
-		return sqlSession.selectList("getPayment",user_idx);
+	public List<Map<String, Object>> getPayment(Map<String,Object> map){
+		return sqlSession.selectList("getPayment",map);
+	}
+	@Override
+	public int getPaymentTotalCnt(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getPaymentTotalCnt",user_idx);
 	}
 }

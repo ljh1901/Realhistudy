@@ -7,4 +7,20 @@
 	<insert id="sendNotice" parameterType="com.histudy.notifications.model.NotificationsDTO">
 		INSERT INTO notifications VALUES(n_idx.nextval, #{n_sender_idx}, #{n_type}, #{n_title}, #{n_content}, #{n_read}, sysdate, #{user_idx})
 	</insert>
+	<select id="selectNotice" parameterType="int" resultType="com.histudy.notifications.model.NotificationsDTO">
+		select *
+		from notifications
+		where user_idx=#{user_idx}
+		order by n_idx desc
+	</select>
+	<update id="updateNotice">
+		update table_name 
+		set status='읽음' 
+		where status='안읽음';
+	</update>
+	<delete id="deleteNotice">
+		delete from table_name 
+		where status='읽음';
+	</delete>
+	
 </mapper>
