@@ -42,11 +42,25 @@ public class MypageController {
 		return mav;
 	}
 	@GetMapping("myPurchase.do")
-	public ModelAndView myPurchase(HttpSession session) {
+	public ModelAndView myPurchase(HttpSession session,
+		@RequestParam(value="cp", defaultValue="1") int cp,
+		@RequestParam(value="ls", defaultValue="8") int ls) {
 		ModelAndView mav=new ModelAndView();
-		Integer user_idx=(Integer)session.getAttribute("user_idx");
-		List<Map<String, Object>> list=membershipService.getPayment(user_idx);
+		Integer user_idx = (Integer)session.getAttribute("user_idx");
+		
+		int totalCnt=membershipService.getPaymentTotalCnt(user_idx);
+		int listSize=8;
+		int pageSize=5;
+		String pageStr=com.histudy.lecture.page.PageModule.makePage("myPurchase.do",totalCnt,listSize,pageSize,cp);
+		int start = (cp - 1) * listSize + 1;
+	    int end = cp * listSize;
+		Map<String, Object> map = new HashMap<>();
+	    map.put("user_idx", user_idx);
+	    map.put("start", start);
+	    map.put("end", end);
+		List<Map<String, Object>> list=membershipService.getPayment(map);
 		mav.addObject("list",list);
+		mav.addObject("pageStr",pageStr);
 		mav.setViewName("mypage/myPurchase");
 		return mav;
 	}
@@ -71,11 +85,9 @@ public class MypageController {
             HttpSession session) {
         
         Integer user_idx=(Integer)session.getAttribute("user_idx");
-        
         if (user_idx==null) {
             return new HashMap<>();
         }
-
         return mypageService.getMonthSchedule(user_idx, year, month);
     }
 
@@ -83,11 +95,9 @@ public class MypageController {
     @ResponseBody
     public String saveSchedule(@RequestBody Map<String, Object> param, HttpSession session) {
         Integer user_idx= (Integer) session.getAttribute("user_idx");
-        
         if (user_idx== null) {
             return "fail";
         }
-        
         param.put("user_idx", user_idx);
         
         int result= mypageService.saveSchedule(param);
@@ -98,14 +108,18 @@ public class MypageController {
     @ResponseBody
     public String deleteSchedule(@RequestBody Map<String, Object> param, HttpSession session) {
         Integer user_idx= (Integer) session.getAttribute("user_idx");
-        
         if (user_idx== null) {
             return "fail";
         }
-        
         param.put("user_idx", user_idx);
         
         int result = mypageService.deleteSchedule(param);
         return result > 0 ? "success" : "fail";
+    }
+    @GetMapping("notification.do")
+    public ModelAndView myNotification() {
+    	ModelAndView mav=new ModelAndView();
+    	mav.setViewName("mypage/myNotification");
+    	return mav;
     }
 }

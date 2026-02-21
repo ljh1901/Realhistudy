@@ -61,12 +61,12 @@
 
 						<div class="profile-info-section">
 							<table class="profile-table">
-							<c:if test="${sessionScope.membership == 'premium'}">
+							<c:if test="${sessionScope.membership=='premium'}">
 							    <tr>
 							        <th style="color: gold;">프리미엄 멤버</th>
 							        <td>
 							            <c:forEach var="pay" items="${list}">
-							                <c:if test="${pay.PAY_TYPE == '멤버십'}">
+							                <c:if test="${pay.PAY_TYPE=='멤버십'}">
 							                    ${pay.PAY_DATE}&nbsp;~&nbsp;${pay.END_DATE}
 							                </c:if>
 							            </c:forEach>

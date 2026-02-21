@@ -30,13 +30,6 @@
 			</nav>
 		</aside>
 		<table class="purchase-table">
-		    <thead>
-		        <tr>
-		            <th>종류</th>
-		            <th>결제 금액</th>
-		            <th>결제 일시</th>
-		        </tr>
-		    </thead>
 		    <tbody>
 		        <c:if test="${empty list}">
 		            <tr>
@@ -47,15 +40,25 @@
 		        <c:if test="${not empty list}">
 		            <c:forEach var="pay" items="${list}">
 		                <tr>
-		                    <td>${pay.PAY_ID}</td>
-		                    <td>${pay.PAY_TYPE}</td>
+		                    <td calspan="2">${pay.PAY_DATE}</td>
+		                </tr>
+		                <tr>
+		                    <td>${pay.PAY_TYPE}구매</td>
 		                    <td>${pay.PAY_AMOUNT }원</td>
-		                    <td>${pay.PAY_DATE}</td>
 		                    
 		                </tr>
 		            </c:forEach>
 		        </c:if>
 		    </tbody>
+		    <tfoot>
+		    <c:if test="${not empty list}">
+		            <tr>
+		       			<td colspan="2">
+		      	 		<div>${pageStr }</div>
+		      	 		</td>
+		            </tr>
+		        </c:if>
+       </tfoot>
 		</table>
 	</div>
 </div>

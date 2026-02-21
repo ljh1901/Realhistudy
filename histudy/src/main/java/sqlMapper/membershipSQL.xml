@@ -43,31 +43,53 @@
         (SELECT membership_idx FROM membership WHERE membership_name = '일반')
     )
 	</insert>
-	<select id="getPayment" parameterType="int" resultType="map">
-		SELECT 
-        	'스터디카페' AS pay_type,    
-	        sp.paymentId AS pay_id,    
-	        sp.orderName AS pay_name,   
-	        sp.paid AS pay_amount,       
-	        sp.pay_method AS pay_method,  
-	        sp.paidAt AS pay_date,
-	        NULL AS end_date    
-	    FROM studycafe_pay sp 
-	    JOIN usertb utb ON sp.user_idx = utb.user_idx
-	    WHERE utb.user_idx = #{user_idx} 
-	      AND sp.pay_status = 'PAID'
-	    UNION ALL
-	    SELECT 
-	        '멤버십' AS pay_type, 
-	        payNum AS pay_id,    
-	        '프리미엄' AS pay_name,  
-	        payment_amount AS pay_amount, 
-	        payment_method AS pay_method,  
-	        payment_date AS pay_date, 
-	        end_date AS end_date 
-	    FROM membership_payment
-	    WHERE user_idx = #{user_idx} 
-	      AND membership_idx = 2
-	    ORDER BY pay_date DESC
+	<select id="getPayment" parameterType="map" resultType="map">
+	    select *
+	    from (
+	        select rownum as rnum, a.*
+	        from (
+	            select 
+	                '스터디카페' as pay_type,    
+	                to_char(sp.paymentid) as pay_id,    
+	                sp.ordername as pay_name,   
+	                sp.paid as pay_amount,       
+	                sp.pay_method as pay_method,  
+	                to_char(sp.paidat, 'YYYY"년" MM"월" DD"일"') as pay_date,
+	                null as end_date    
+	            from studycafe_pay sp 
+	            join usertb utb on sp.user_idx = utb.user_idx
+	            where utb.user_idx = #{user_idx} 
+	              and sp.pay_status = 'PAID'
+	            union all
+	            select 
+	                '멤버십' as pay_type, 
+	                to_char(paynum) as pay_id,    
+	                '프리미엄' as pay_name,  
+	                payment_amount as pay_amount, 
+	                payment_method as pay_method,  
+	                to_char(payment_date, 'YYYY"년" MM"월" DD"일"') as pay_date, 
+	                to_char(end_date, 'YYYY"년" MM"월" DD"일"') as end_date 
+	            from membership_payment
+	            where user_idx = #{user_idx} 
+	              and membership_idx = 2
+	            order by pay_date desc
+	        ) a
+	    ) b 
+	    where rnum <![CDATA[>=]]> #{start} and rnum <![CDATA[<=]]> #{end}
+	</select>
+	<select id="getPaymentTotalCnt" parameterType="int" resultType="int">
+	    select count(*)
+	    from (
+	        select sp.paymentid
+	        from studycafe_pay sp 
+	        join usertb utb on sp.user_idx = utb.user_idx
+	        where utb.user_idx=#{user_idx} 
+	          and sp.pay_status='PAID'
+	        union all
+	        select paynum
+	        from membership_payment
+	        where user_idx=#{user_idx} 
+	          and membership_idx=2
+	    )
 	</select>
 </mapper>

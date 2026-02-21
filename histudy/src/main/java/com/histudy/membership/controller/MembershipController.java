@@ -58,7 +58,11 @@ public class MembershipController {
         mav.addObject("uidx", udto.getUser_idx());
         mav.setViewName("membership/membershipPayment");
         
-        List<Map<String, Object>> list=membershipService.getPayment(user_idx);
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_idx", user_idx);
+        map.put("start", 1); 
+        map.put("end", 10);
+        List<Map<String, Object>> list=membershipService.getPayment(map);
         mav.addObject("list",list);
         
         return mav;

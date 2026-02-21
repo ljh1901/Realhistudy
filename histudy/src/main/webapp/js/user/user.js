@@ -1,11 +1,8 @@
-/* === 전역 변수 (상태 관리) === */
 var isIdChecked = false;
 var isEmailChecked = false;
 
-/** 1. 로그인 처리 함수  */
 function loginCheck() {
-
-	var userId = document.login.user_id.value;
+    var userId = document.login.user_id.value;
     var userPwd = document.login.user_pwd.value;
     var rememberId = document.login.rememberId.checked ? "on" : null;
 
@@ -23,23 +20,20 @@ function loginCheck() {
         alert(data);
         location.reload();
     })
-    .catch(function(err) { console.error("로그인 중 오류 발생:", err); });
+    .catch(function(err) { console.error(err); });
 }
 
-
-/** 2. 쿠키 읽기 함수 (안전한 버전) */
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length); // 공백 제거
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
 
-/** 3. 로그인 모달 열기 함수 */
 function openSignInModal() {
     fetch("userSignIn.do")
         .then(function(response) {
@@ -77,16 +71,14 @@ function openSignInModal() {
                 modalContent.appendChild(closeBtn);
             }
         })
-        .catch(function(error) { console.error("모달 로드 실패:", error); });
+        .catch(function(error) { console.error(error); });
 }
 
-/** 4. 모달 닫기 함수 */
 function closeSignInModal() {
     var overlay = document.getElementById('modalOverlay');
     if (overlay) overlay.style.display = 'none';
 }
 
-/** 5. 아이디 중복 확인 */
 function checkId() {
     var userIdEl = document.getElementById('user_id');
     if (!userIdEl) return;
@@ -111,7 +103,6 @@ function checkId() {
         });
 }
 
-/** 6. 이메일 중복 확인 */
 function emailCheck() {
     var emailEl = document.getElementById('user_email');
     if (!emailEl) return;
@@ -130,14 +121,13 @@ function emailCheck() {
                 isEmailChecked = false;
             } else {
                 alert("사용 가능한 이메일입니다.");
-                isEmailChecked = true; // 중요: 중복 확인 성공 시 상태 업데이트
+                isEmailChecked = true; 
                 emailEl.onchange = function() { isEmailChecked = false; };
             }
         })
-        .catch(function(err) { console.error("이메일 중복 체크 오류:", err); });
+        .catch(function(err) { console.error(err); });
 }
 
-/** 7. 비밀번호 실시간 일치 확인 초기화 */
 function initPasswordCheck() {
     var pwConfirmEl = document.getElementById('user_pw_confirm');
     if (!pwConfirmEl) return;
@@ -169,7 +159,6 @@ function initPasswordCheck() {
     };
 }
 
-/** 8. 회원가입 전체 유효성 검사 */
 function validateSignUp() {
     if (!isIdChecked) { alert("아이디 중복 검사를 진행해주세요."); return false; }
     if (!isEmailChecked) { alert("이메일 중복 검사를 진행해주세요."); return false; }
@@ -190,30 +179,25 @@ function validateSignUp() {
     return true;
 }
 
-/** 9. 공통 이벤트 리스너 등록 */
 document.addEventListener('DOMContentLoaded', function() {
-    initPasswordCheck(); // 비밀번호 실시간 체크 활성화
+    initPasswordCheck();
     
-    // [A] 로그인 버튼 클릭 위임
     document.addEventListener('click', function(e) {
        
     });
 
-    // [B] 메뉴 바깥쪽 클릭 시 닫기
     document.addEventListener('click', function(e) {
         var menu = document.getElementById('userMenu');
         var dropdown = e.target.closest('.user-dropdown');
         if (menu && !dropdown) menu.style.display = 'none';
     });
 
-    // [C] 회원가입 폼 전송 이벤트 연결
     var signupForm = document.getElementById('signupForm');
     if (signupForm) {
         signupForm.onsubmit = function() { return validateSignUp(); };
     }
 });
 
-/** 10. 메뉴 토글 함수 */
 function toggleUserMenu(event) {
     if (event) event.stopPropagation();
     var menu = document.getElementById('userMenu');
@@ -221,4 +205,66 @@ function toggleUserMenu(event) {
         var isVisible = (menu.style.display === 'block');
         menu.style.display = isVisible ? 'none' : 'block';
     }
+}
+
+function toggleEditMode(isEdit) {
+    var viewElements = document.querySelectorAll('.view-mode');
+    var editElements = document.querySelectorAll('.edit-mode');
+    var viewButtons = document.getElementById('view-buttons');
+    var editButtons = document.getElementById('edit-buttons');
+
+    if (isEdit) {
+        viewElements.forEach(el => el.style.display = 'none');
+        editElements.forEach(el => el.style.display = ''); 
+        viewButtons.style.display = 'none';
+        editButtons.style.display = 'block';
+    } else {
+        viewElements.forEach(el => el.style.display = '');
+        editElements.forEach(el => el.style.display = 'none');
+        viewButtons.style.display = 'block';
+        editButtons.style.display = 'none';
+    }
+}
+
+function submitProfileUpdate() {
+    var formData = new FormData();
+    
+    formData.append('user_idx', document.getElementById('user_idx').value);
+    formData.append('user_name', document.getElementById('name-input').value);
+    formData.append('user_birthdate', document.getElementById('birthdate-input').value);
+    formData.append('user_email', document.getElementById('email-input').value);
+    formData.append('user_tel', document.getElementById('tel-input').value);
+    formData.append('user_intro', document.getElementById('intro-input').value);
+
+    var fileInput = document.getElementById('fileInput');
+    if (fileInput.files.length > 0) {
+        formData.append('uploadFile', fileInput.files[0]);
+    }
+
+    // ★ 주소에 contextPath를 다시 살렸습니다!
+    fetch(contextPath + '/updateProfile.do', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        // ★ 404 같은 주소 에러가 나면 여기서 바로 잡아냅니다!
+        if (!response.ok) {
+            throw new Error("서버 응답 에러 (상태 코드: " + response.status + ")");
+        }
+        return response.text();
+    })
+    .then(result => {
+        var realResult = result.trim();
+        if (realResult === 'success') {
+            alert('프로필이 성공적으로 수정되었습니다.');
+            location.reload();
+        } else {
+            // ★ 서버가 'fail'을 뱉으면 그 이유를 보여줍니다.
+            alert('서버에서 수정을 거절했습니다. 응답: ' + realResult);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert('통신 오류가 발생했습니다! 내용: ' + error.message);
+    });
 }
