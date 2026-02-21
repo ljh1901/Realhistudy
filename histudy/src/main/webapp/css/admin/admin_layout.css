@@ -151,8 +151,6 @@ iframe {
     height: 50vh;
 }
 
-/* --- FAQ & Notice 공통 부분 수정 --- */
-
 .faq__category, .notice__category {
     border: 1px solid var(--color-gray);
     border-radius: 8px;
@@ -163,7 +161,7 @@ iframe {
 .faq__category__list, .notice__category__list {
     list-style: none;
     padding: 0;
-    margin: 15px 0 0 0;
+    margin: 0;
     display: flex;
     gap: 10px;
 }
@@ -582,120 +580,243 @@ iframe {
     text-decoration: underline;
 }
 
-.inquiry__container {
-	padding: 40px;
-	max-width: 1200px;
-	margin: 0 auto;
-	background-color: #fff;
-	border-radius: 12px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+.inquiry__category {
+    border: 1px solid var(--color-gray);
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
 }
 
-.admin__title {
-	font-size: 24px;
-	color: #1a202c;
-	margin-bottom: 25px;
-	border-left: 5px solid #4f46e5;
-	padding-left: 15px;
+.inquiry__category__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
 }
 
+.inquiry__category__item {
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.inquiry__category__item:hover, 
+.inquiry__category__item.active {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border-color: var(--color-navy);
+}
+
+.inquiry__category__item.active {
+    color: var(--color-yellow);
+    font-weight: bold;
+}
+
+/* 4. 검색창 영역 (Notice/FAQ 스타일로 슬림하게) */
 .inquiry__cat {
-	background-color: #f8fafc;
-	padding: 20px;
-	border-radius: 8px;
-	margin-bottom: 25px;
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
-
-.inquiry__cat select, .inquiry__cat input {
-	padding: 10px;
-	border: 1px solid #e2e8f0;
-	border-radius: 6px;
-	font-size: 14px;
-}
-
-.inquiry__cat select {
-	min-width: 120px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 15px;
 }
 
 .inquiry__cat input {
-	flex-grow: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--color-gray);
+    border-radius: 4px;
+    width: 250px;
 }
 
 .inquiry__btn__search {
-	background-color: #4f46e5;
-	color: white;
-	border: none;
-	padding: 10px 20px;
-	border-radius: 6px;
-	cursor: pointer;
-	transition: 0.2s;
-}
-
-.inquiry__btn__search:hover {
-	background-color: #4338ca;
+    padding: 8px 20px;
+    background-color: var(--color-navy);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .inquiry__list__table {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0;
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .inquiry__list__table th {
-	background-color: #f1f5f9;
-	color: #64748b;
-	font-weight: 600;
-	padding: 15px;
-	border-bottom: 2px solid #e2e8f0;
-	font-size: 13px;
-	text-transform: uppercase;
+    background-color: #f8f9fa;
+    color: var(--color-navy);
+    font-weight: bold;
+    padding: 12px;
+    border-top: 2px solid var(--color-navy);
+    border-bottom: 1px solid var(--color-gray);
+    text-align: center;
 }
 
 .inquiry__list__table td {
-	padding: 16px 15px;
-	border-bottom: 1px solid #f1f5f9;
-	color: #334155;
-	font-size: 14px;
-	vertical-align: middle;
+    padding: 12px;
+    border-bottom: 1px solid var(--color-gray);
+    text-align: center;
+    color: #333;
 }
 
 .inquiry__list__table tr:hover {
-	background-color: #fcfdfe;
+    background-color: #f1f1f1;
 }
 
 .inquiry__link {
-	text-decoration: none;
-	color: #1e293b;
-	font-weight: 500;
-	transition: 0.2s;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
 }
 
 .inquiry__link:hover {
-	color: #4f46e5;
-	text-decoration: underline;
+    text-decoration: underline;
+    color: var(--color-navy);
 }
 
 .badge {
-	padding: 4px 10px;
-	border-radius: 20px;
-	font-size: 12px;
-	font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
-.inquiry__cat__item {
-	background-color: #e2e8f0;
-	color: #475569;
+.inquiry__status__ok__wait { background-color: #fee2e2; color: #ef4444; }
+.inquiry__status__ok { background-color: #dcfce7; color: #22c55e; }
+
+.adminCafe__container {
+    padding: 20px;
+    background-color: #fff;
 }
 
-.inquiry__status__ok__wait {
-	background-color: #fee2e2;
-	color: #ef4444;
+/* 2. 카테고리/상태 필터 (둥근 탭 UI) */
+.adminCafe__category {
+    border: 1px solid var(--color-gray);
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 20px;
 }
 
-.inquiry__status__ok {
-	background-color: #dcfce7;
-	color: #22c55e;
+.adminCafe__category__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
 }
+
+.adminCafe__category__item {
+    padding: 10px 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+}
+
+.adminCafe__category__item:hover, 
+.adminCafe__category__item.active {
+    background-color: var(--color-navy);
+    color: var(--color-white);
+    border-color: var(--color-navy);
+}
+
+.adminCafe__category__item.active {
+    color: var(--color-yellow);
+    font-weight: bold;
+}
+
+/* 3. 상단 검색 및 버튼 영역 */
+.adminCafe__header__tools {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.adminCafe__input {
+    padding: 8px 12px;
+    border: 1px solid var(--color-gray);
+    border-radius: 4px;
+    width: 250px;
+    outline: none;
+}
+
+.adminCafe__btn {
+    padding: 8px 20px;
+    background-color: var(--color-navy);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.adminCafe__btn:hover {
+    background-color: #122633;
+    color: var(--color-yellow);
+}
+
+/* 4. 데이터 테이블 스타일 */
+.adminCafe__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.adminCafe__table th {
+    background-color: #f8f9fa;
+    color: var(--color-navy);
+    font-weight: bold;
+    padding: 12px;
+    border-top: 2px solid var(--color-navy);
+    border-bottom: 1px solid var(--color-gray);
+    text-align: center;
+}
+
+.adminCafe__table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--color-gray);
+    text-align: center;
+    color: #333;
+}
+
+.adminCafe__table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 5. 링크 및 뱃지 */
+.adminCafe__link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.adminCafe__link:hover {
+    text-decoration: underline;
+    color: var(--color-navy);
+}
+
+.adminCafe__badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* 상태별 뱃지 컬러 */
+.adminCafe__status--wait { background-color: #fee2e2; color: #ef4444; } /* 대기/미처리 */
+.adminCafe__status--ok { background-color: #dcfce7; color: #22c55e; }   /* 완료/승인 */

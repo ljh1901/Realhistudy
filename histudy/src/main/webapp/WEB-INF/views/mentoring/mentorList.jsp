@@ -36,11 +36,11 @@
     <!-- ===== 카테고리 필터 ===== -->
     <div class="mentor-filter">
       <a class="${activeCategory == 0 ? 'active' : ''}" href="mentorList.do">전체</a>
-      <a class="${activeCategory == 1 ? 'active' : ''}" href="mentorList.do?sc_idx=1&kw=${param.kw}">개발</a>
+      <a class="${activeCategory == 1 ? 'active' : ''}" href="mentorList.do?sc_idx=1&kw=${param.kw}">코딩</a>
       <a class="${activeCategory == 2 ? 'active' : ''}" href="mentorList.do?sc_idx=2&kw=${param.kw}">언어</a>
-      <a class="${activeCategory == 3 ? 'active' : ''}" href="mentorList.do?sc_idx=3&kw=${param.kw}">취업</a>
+      <a class="${activeCategory == 3 ? 'active' : ''}" href="mentorList.do?sc_idx=3&kw=${param.kw}">학업</a>
       <a class="${activeCategory == 4 ? 'active' : ''}" href="mentorList.do?sc_idx=4&kw=${param.kw}">자격증</a>
-      <a class="${activeCategory == 5 ? 'active' : ''}" href="mentorList.do?sc_idx=5&kw=${param.kw}">학업</a>
+      <a class="${activeCategory == 5 ? 'active' : ''}" href="mentorList.do?sc_idx=5&kw=${param.kw}">취업</a>
     </div>
  
 </section>
@@ -59,16 +59,29 @@
         <c:forEach var="m" items="${mentorList}">
           <div class="mentor-card" onclick="openMentorProfile(${m.mentor_idx})">
             <div class="card-top">
-              <div class="avatar"></div>
+              <div class="avatar">
+              <c:choose>
+            <c:when test="${not empty m.profile_img}">
+                <img src="${pageContext.request.contextPath}/upload/${m.profile_img}" 
+                     style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </c:when>
+            <c:otherwise>
+                <div style="width: 100%; height: 100%; border-radius: 50%; background: #f1f5f9; 
+                            display: flex; align-items: center; justify-content: center; font-size: 20px;">
+                    👤
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
               <div>
                 <div class="m-name"><c:out value="${m.user_name}"/></div>
                 <div class="m-meta">
                   <c:choose>
-                    <c:when test="${m.sc_idx == 1}">개발</c:when>
+                    <c:when test="${m.sc_idx == 1}">코딩</c:when>
                     <c:when test="${m.sc_idx == 2}">언어</c:when>
-                    <c:when test="${m.sc_idx == 3}">취업</c:when>
+                    <c:when test="${m.sc_idx == 3}">학업</c:when>
                     <c:when test="${m.sc_idx == 4}">자격증</c:when>
-                    <c:when test="${m.sc_idx == 5}">학업</c:when>
+                    <c:when test="${m.sc_idx == 5}">취업</c:when>
                     <c:otherwise>기타</c:otherwise>
                   </c:choose>
                 </div>
@@ -81,9 +94,9 @@
                 <c:choose>
                   <c:when test="${m.sc_idx == 1}">IT/개발</c:when>
                   <c:when test="${m.sc_idx == 2}">언어</c:when>
-                  <c:when test="${m.sc_idx == 3}">취업</c:when>
+                  <c:when test="${m.sc_idx == 3}">학업</c:when>
                   <c:when test="${m.sc_idx == 4}">자격증</c:when>
-                  <c:when test="${m.sc_idx == 5}">학업</c:when>
+                  <c:when test="${m.sc_idx == 5}">취업</c:when>
                   <c:otherwise>기타</c:otherwise>
                 </c:choose>
               </span>
@@ -137,7 +150,6 @@ function openMentorProfile(mentor_idx) {
    location.href = "mentorProfile.do?mentor_idx=" + mentor_idx;
 }
 
-/* ===== 모달 토글(팀원이 하던 방식) ===== */
 function openMentorGuideModal(){
   document.getElementById("mentorGuideModal").style.display = "block";
 }

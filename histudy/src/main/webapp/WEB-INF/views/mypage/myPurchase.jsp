@@ -47,6 +47,7 @@
 		        <c:if test="${not empty list}">
 		            <c:forEach var="pay" items="${list}">
 		                <tr>
+		                    <td>${pay.PAY_ID}</td>
 		                    <td>${pay.PAY_TYPE}</td>
 		                    <td>${pay.PAY_AMOUNT }원</td>
 		                    <td>${pay.PAY_DATE}</td>

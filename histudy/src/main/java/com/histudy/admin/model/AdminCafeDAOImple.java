@@ -24,15 +24,27 @@ public class AdminCafeDAOImple implements AdminCafeDAO {
     }
     
     @Override
+    public List<Map<String, Object>> selectCafePaymentList(int studycafe_idx) {
+        return session.selectList("selectCafePaymentList", studycafe_idx);
+    }
+    @Override
     public void deleteLayoutByCafeIdx(int studycafe_idx) {
         session.delete("deleteLayoutByCafeIdx", studycafe_idx);
     }
 
     @Override
-    public void insertLayout(Map<String, Object> item) {
-        session.insert("insertLayout", item);
+    public int deleteSeatByCafeIdx(int studycafe_idx) {
+        return session.delete("deleteSeatByCafeIdx", studycafe_idx);
     }
-
+    @Override
+    public int insertSeat(Map<String, Object> seatData) {
+        return session.insert("insertSeat", seatData);
+    }
+    
+    @Override
+    public int insertLayout(Map<String, Object> layoutData) {
+        return session.insert("insertLayout", layoutData);
+    }
     @Override
     public List<Map<String, Object>> getLayoutList(int studycafe_idx) {
         return session.selectList("selectLayoutList", studycafe_idx);

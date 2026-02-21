@@ -3,74 +3,85 @@
 
 <mapper namespace="com.histudy.inquiry">
 
-    <select id="selectCategoryList" resultType="com.histudy.inquiry.model.InquiryCategoryDTO">
-        SELECT 
-            inquiry_category_idx, 
-            inquiry_category_name 
-        FROM inquiry_category
-        ORDER BY inquiry_category_idx ASC
-    </select>
+	<select id="selectCategoryList"
+		resultType="com.histudy.inquiry.model.InquiryCategoryDTO">
+		SELECT
+		inquiry_category_idx,
+		inquiry_category_name
+		FROM inquiry_category
+		ORDER BY inquiry_category_idx ASC
+	</select>
 
-    <insert id="insertInquiry" parameterType="com.histudy.inquiry.model.InquiryDTO">
-        INSERT INTO inquiry (
-            inquiry_idx,
-            user_idx,
-            inquiry_category_idx,
-            inquiry_title,
-            inquiry_content,
-            inquiry_date,
-            inquiry_status
-        ) VALUES (
-            inquiry_idx.NEXTVAL,
-            #{user_idx},
-            #{inquiry_category_idx},
-            #{inquiry_title},
-            #{inquiry_content},
-            SYSDATE,
-            '대기'
-        )
-    </insert>
+	<insert id="insertInquiry"
+		parameterType="com.histudy.inquiry.model.InquiryDTO">
+		INSERT INTO inquiry (
+		inquiry_idx,
+		user_idx,
+		inquiry_category_idx,
+		inquiry_title,
+		inquiry_content,
+		inquiry_date,
+		inquiry_status
+		) VALUES (
+		inquiry_idx.NEXTVAL,
+		#{user_idx},
+		#{inquiry_category_idx},
+		#{inquiry_title},
+		#{inquiry_content},
+		SYSDATE,
+		'대기'
+		)
+	</insert>
 
-    <select id="selectInquiryList" resultType="com.histudy.inquiry.model.InquiryDTO">
-        SELECT 
-            i.*,
-            c.inquiry_category_name AS inquiry_category_name,
-            u.user_name AS user_name
-        FROM inquiry i
-        LEFT JOIN inquiry_category c ON i.inquiry_category_idx = c.inquiry_category_idx
-        LEFT JOIN usertb u ON i.user_idx = u.user_idx
-        ORDER BY i.inquiry_idx DESC
-    </select>
+	<select id="selectInquiryList"
+		resultType="com.histudy.inquiry.model.InquiryDTO">
+		SELECT
+		i.*,
+		c.inquiry_category_name AS inquiry_category_name,
+		u.user_name AS user_name
+		FROM inquiry i
+		LEFT JOIN inquiry_category c ON i.inquiry_category_idx =
+		c.inquiry_category_idx
+		LEFT JOIN usertb u ON i.user_idx = u.user_idx
+		ORDER BY
+		CASE WHEN i.inquiry_status = '대기' THEN 1 ELSE 2 END ASC,
+		i.inquiry_idx DESC
+	</select>
 
-    <select id="selectUserInquiryList" parameterType="int" resultType="com.histudy.inquiry.model.InquiryDTO">
-        SELECT 
-            i.*,
-            c.inquiry_category_name AS inquiry_category_name
-        FROM inquiry i
-        LEFT JOIN inquiry_category c ON i.inquiry_category_idx = c.inquiry_category_idx
-        WHERE i.user_idx = #{user_idx}
-        ORDER BY i.inquiry_idx DESC
-    </select>
+	<select id="selectUserInquiryList" parameterType="int"
+		resultType="com.histudy.inquiry.model.InquiryDTO">
+		SELECT
+		i.*,
+		c.inquiry_category_name AS inquiry_category_name
+		FROM inquiry i
+		LEFT JOIN inquiry_category c ON i.inquiry_category_idx =
+		c.inquiry_category_idx
+		WHERE i.user_idx = #{user_idx}
+		ORDER BY i.inquiry_idx DESC
+	</select>
 
-    <select id="selectInquiryDetail" parameterType="int" resultType="com.histudy.inquiry.model.InquiryDTO">
-        SELECT 
-            i.*,
-            c.inquiry_category_name AS inquiry_category_name,
-            u.user_name AS user_name,
-            u.user_id as user_id
-        FROM inquiry i
-        LEFT JOIN inquiry_category c ON i.inquiry_category_idx = c.inquiry_category_idx
-        LEFT JOIN usertb u ON i.user_idx = u.user_idx
-        WHERE i.inquiry_idx = #{inquiry_idx}
-    </select>
+	<select id="selectInquiryDetail" parameterType="int"
+		resultType="com.histudy.inquiry.model.InquiryDTO">
+		SELECT
+		i.*,
+		c.inquiry_category_name AS inquiry_category_name,
+		u.user_name AS user_name,
+		u.user_id as user_id
+		FROM inquiry i
+		LEFT JOIN inquiry_category c ON i.inquiry_category_idx =
+		c.inquiry_category_idx
+		LEFT JOIN usertb u ON i.user_idx = u.user_idx
+		WHERE i.inquiry_idx = #{inquiry_idx}
+	</select>
 
-    <update id="updateInquiryReply" parameterType="com.histudy.inquiry.model.InquiryDTO">
-        UPDATE inquiry 
-        SET 
-            inquiry_reply = #{inquiry_reply},
-            inquiry_reply_date = SYSDATE,
-            inquiry_status = '답변완료'
-        WHERE inquiry_idx = #{inquiry_idx}
-    </update>
+	<update id="updateInquiryReply"
+		parameterType="com.histudy.inquiry.model.InquiryDTO">
+		UPDATE inquiry
+		SET
+		inquiry_reply = #{inquiry_reply},
+		inquiry_reply_date = SYSDATE,
+		inquiry_status = '답변완료'
+		WHERE inquiry_idx = #{inquiry_idx}
+	</update>
 
 </mapper>

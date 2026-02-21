@@ -88,5 +88,8 @@
 	<bean id="membershipDAO" class="com.histudy.membership.model.MembershipDAOImple">
     	<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
 	</bean>
+	<bean id="mypageDAO" class="com.histudy.mypage.model.MypageDAOImple">
+    	<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
+	</bean>
 </beans>
 

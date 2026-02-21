@@ -4,6 +4,6 @@ import java.util.*;
 
 public interface AdminReportDAO {
 	
-	public List<ReportDTO> selectAllReportList();
+	public List<ReportDTO> getReportList(String status);
 	public int updateReportStatus(int report_idx);
 }

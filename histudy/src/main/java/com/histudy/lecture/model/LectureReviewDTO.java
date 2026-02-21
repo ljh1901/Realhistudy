@@ -13,6 +13,9 @@ public class LectureReviewDTO {
       return review_idx;
    }
    
+   public LectureReviewDTO() {
+	// TODO Auto-generated constructor stub
+}
 public String getUser_name() {
 	return user_name;
 }

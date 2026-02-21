@@ -14,37 +14,49 @@
 		resultType="map">
 		SELECT
 		<choose>
-			<when test="type == 'month'">
-				TO_CHAR(paidat + INTERVAL '9' HOUR, 'YYYY-MM') AS sales_date,
-				SUM(totalAmount) AS total_amount
-			</when>
-			<when test="type == 'total'">
-				'누적 매출' AS sales_date,
-				SUM(totalAmount) AS total_amount
-			</when>
-			<otherwise>
-				TO_CHAR(paidat + INTERVAL '9' HOUR, 'YYYY-MM-DD') AS sales_date,
-				SUM(totalAmount) AS total_amount
-			</otherwise>
+			<when test="type == 'month'">TO_CHAR(p.paidAt, 'YYYY-MM') AS sales_date</when>
+			<when test="type == 'total'">'누적 매출' AS sales_date</when>
+			<otherwise>TO_CHAR(p.paidAt, 'YYYY-MM-DD') AS sales_date</otherwise>
 		</choose>
-		FROM studycafe_pay
-		WHERE pay_status = 'PAID'
+		,
+		SUM(p.totalAmount) AS total_amount
+		FROM studycafe_pay p
+		JOIN studycafe_reservation r ON p.paymentId = r.paymentId
+		JOIN seat s ON r.seat_idx = s.seat_idx
+		WHERE p.pay_status = 'PAID'
+		AND s.studycafe_idx = #{studycafe_idx}
 		<if test="startDate != null and startDate != ''">
-			AND (paidat + INTERVAL '9' HOUR) &gt;= TO_DATE(#{startDate},
-			'YYYY-MM-DD')
+			AND (p.paidAt) &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
 		</if>
 		<if test="endDate != null and endDate != ''">
-			AND (paidat + INTERVAL '9' HOUR) &lt;= TO_DATE(#{endDate} || '
-			23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+			AND (p.paidAt) &lt;= TO_DATE(#{endDate} || ' 23:59:59', 'YYYY-MM-DD
+			HH24:MI:SS')
 		</if>
 		GROUP BY
 		<choose>
-			<when test="type == 'month'">TO_CHAR(paidat + INTERVAL '9' HOUR, 'YYYY-MM')</when>
+			<when test="type == 'month'">TO_CHAR(p.paidAt, 'YYYY-MM')</when>
 			<when test="type == 'total'">'누적 매출'</when>
-			<otherwise>TO_CHAR(paidat + INTERVAL '9' HOUR, 'YYYY-MM-DD')
-			</otherwise>
+			<otherwise>TO_CHAR(p.paidAt, 'YYYY-MM-DD')</otherwise>
 		</choose>
 		ORDER BY sales_date ASC
+	</select>
+
+	<select id="selectCafePaymentList" parameterType="int"
+		resultType="map">
+		SELECT
+		p.paymentId AS pay_idx,
+		u.user_name,
+		u.user_id,
+		p.orderName AS seat_info, p.totalAmount,
+		TO_CHAR(p.paidAt, 'YYYY-MM-DD HH24:MI:SS') AS pay_date,
+		p.pay_status
+		FROM studycafe_pay p
+		JOIN usertb u ON p.user_idx = u.user_idx
+		JOIN studycafe_reservation r ON p.paymentId = r.paymentId
+		JOIN seat s ON r.seat_idx = s.seat_idx
+		WHERE s.studycafe_idx = #{studycafe_idx}
+		AND p.pay_status = 'PAID'
+		ORDER BY p.paidAt DESC
 	</select>
 
 	<insert id="insertStudyCafe"
@@ -63,6 +75,98 @@
 		#{studycafe_addr}
 		)
 	</insert>
+	<delete id="deleteLayoutByCafeIdx" parameterType="int">
+		delete from
+		studycafe_layout where studycafe_idx = #{studycafe_idx}
+	</delete>
+
+	<insert id="insertLayout" parameterType="map">
+		INSERT INTO studycafe_layout (
+		layout_idx, studycafe_idx, type, label, x, y, width, height
+		) VALUES (
+		seq_layout_idx.nextval, #{studycafe_idx}, #{type}, #{label}, #{x}, #{y}, #{width}, #{height}
+		)
+	</insert>
+
+	<insert id="insertSeat" parameterType="map">
+		INSERT INTO seat (
+		seat_idx, seat_num, seat_type, seat_status,
+		seat_x, seat_y, seat_w, seat_h, studycafe_idx
+		) VALUES (
+		seat_idx.nextval, #{label}, #{type}, 'FREE',
+		#{x}, #{y}, #{width}, #{height}, #{studycafe_idx}
+		)
+	</insert>
+
+	<select id="selectLayoutList" parameterType="int"
+		resultType="map">
+		select type, label, x, y, width, height
+		from
+		studycafe_layout where studycafe_idx = #{studycafe_idx}
+		order by
+		layout_idx asc
+	</select>
+
+	<delete id="deleteSeatByCafeIdx" parameterType="int">
+		DELETE FROM seat WHERE studycafe_idx = #{studycafe_idx}
+	</delete>
+
+	<select id="getTicketCategoryList"
+		resultType="com.histudy.admin.model.TicketCategoryDTO">
+		select
+		ticket_category_idx,
+		ticket_category_name
+		from
+		ticket_category
+		order by ticket_category_idx asc
+	</select>
+
+	<select id="getTicketList" parameterType="int"
+		resultType="com.histudy.studycafe.model.TicketJoinTicketCategoryDTO">
+		select
+		t.ticket_idx,
+		t.studycafe_idx,
+		t.ticket_category_idx,
+		c.ticket_category_name,
+		t.ticket_name,
+		t.ticket_amount,
+		t.ticket_time
+		from
+		studycafe_ticket t
+		join ticket_category c ON t.ticket_category_idx
+		=
+		c.ticket_category_idx
+		where t.studycafe_idx = #{studycafe_idx}
+		order BY
+		t.ticket_category_idx ASC, t.ticket_amount ASC
+	</select>
+
+	<insert id="insertTicket" parameterType="map">
+		<selectKey keyProperty="newIdx" resultType="int"
+			order="BEFORE">
+			select ticket_idx.nextval from dual
+		</selectKey>
+		insert into studycafe_ticket (
+		ticket_idx,
+		studycafe_idx,
+		ticket_category_idx,
+		ticket_name,
+		ticket_amount,
+		ticket_time
+		) values (
+		#{newIdx},
+		#{studycafe_idx},
+		#{ticket_category_idx},
+		#{ticket_name},
+		#{ticket_amount},
+		#{ticket_time}
+		)
+	</insert>
+
+	<delete id="deleteTicket" parameterType="int">
+		delete from
+		studycafe_ticket where ticket_idx = #{ticket_idx}
+	</delete>
 
 	<!-- 스터디모임 관련 -->
 	<select id="selectAllStudyList" parameterType="int"
@@ -72,9 +176,11 @@
 		s.study_title,
 		CASE
 		WHEN s.sc_idx = 1 THEN '코딩'
-		WHEN s.sc_idx = 2 THEN '언어'
+		WHEN
+		s.sc_idx = 2 THEN '언어'
 		WHEN s.sc_idx = 3 THEN '학업'
-		WHEN s.sc_idx = 4 THEN '자격증'
+		WHEN s.sc_idx = 4
+		THEN '자격증'
 		WHEN s.sc_idx = 5 THEN '취업'
 		ELSE '기타'
 		END as sc_name,
@@ -99,16 +205,19 @@
 		s.*,
 		case
 		when s.sc_idx = 1 then '코딩'
-		when s.sc_idx = 2 then '언어'
+		when s.sc_idx = 2
+		then '언어'
 		when s.sc_idx = 3 then '학업'
 		when s.sc_idx = 4 then '자격증'
-		when s.sc_idx = 5 then '취업'
+		when
+		s.sc_idx = 5 then '취업'
 		else '기타'
 		end as sc_name,
 		u.user_name as user_name
 		from study s
 		left JOIN usertb u ON s.user_idx = u.user_idx
-		where s.study_idx = #{study_idx}
+		where
+		s.study_idx = #{study_idx}
 	</select>
 
 	<delete id="deleteStudy"
@@ -131,7 +240,8 @@
 	</select>
 
 	<select id="getUserCount" resultType="int">
-		select count(*) from usertb where role_idx =2
+		select count(*) from usertb
+		where role_idx =2
 	</select>
 
 	<delete id="deleteUser" parameterType="int">
@@ -188,30 +298,6 @@
 		parameterType="com.histudy.admin.model.FaqDTO">
 		delete from faq where faq_idx = #{faq_idx}
 	</delete>
-
-	<delete id="deleteLayoutByCafeIdx" parameterType="int">
-		delete from
-		studycafe_layout where studycafe_idx = #{studycafe_idx}
-	</delete>
-
-	<insert id="insertLayout" parameterType="map">
-		insert into
-		studycafe_layout (layout_idx, studycafe_idx, type, label, x, y,
-		width,
-		height)
-		values (seq_layout_idx.nextval, #{studycafe_idx}, #{type},
-		#{label}, #{x},
-		#{y}, #{width}, #{height})
-	</insert>
-
-	<select id="selectLayoutList" parameterType="int"
-		resultType="map">
-		select type, label, x, y, width, height
-		from
-		studycafe_layout where studycafe_idx = #{studycafe_idx}
-		order by
-		layout_idx asc
-	</select>
 
 	<!-- 공지사항 관련 -->
 	<select id="getNoticeCategoryList"
@@ -271,64 +357,9 @@
 		delete from notice where notice_idx = #{notice_idx}
 	</delete>
 
-	<select id="getTicketCategoryList"
-		resultType="com.histudy.admin.model.TicketCategoryDTO">
-		select
-		ticket_category_idx,
-		ticket_category_name
-		from
-		ticket_category
-		order by ticket_category_idx asc
-	</select>
-
-	<select id="getTicketList" parameterType="int"
-		resultType="com.histudy.studycafe.model.TicketJoinTicketCategoryDTO">
-		select
-		t.ticket_idx,
-		t.studycafe_idx,
-		t.ticket_category_idx,
-		c.ticket_category_name,
-		t.ticket_name,
-		t.ticket_amount
-		from
-		studycafe_ticket t
-		join ticket_category c ON t.ticket_category_idx =
-		c.ticket_category_idx
-		where t.studycafe_idx = #{studycafe_idx}
-		order BY
-		t.ticket_category_idx ASC, t.ticket_amount ASC
-	</select>
-
-	<insert id="insertTicket" parameterType="map">
-		<selectKey keyProperty="newIdx" resultType="int"
-			order="BEFORE">
-			select ticket_idx.nextval from dual
-		</selectKey>
-		insert into studycafe_ticket (
-		ticket_idx,
-		studycafe_idx,
-		ticket_category_idx,
-		ticket_name,
-		ticket_amount,
-		ticket_time
-		) values (
-		#{newIdx},
-		#{studycafe_idx},
-		#{ticket_category_idx},
-		#{ticket_name},
-		#{ticket_amount},
-		#{ticket_time}
-		)
-	</insert>
-
-	<delete id="deleteTicket" parameterType="int">
-		delete from
-		studycafe_ticket where ticket_idx = #{ticket_idx}
-	</delete>
-
-	<select id="selectAllReportList"
+	<select id="selectAllReportList" parameterType="hashmap"
 		resultType="com.histudy.admin.model.ReportDTO">
-		select
+		SELECT
 		r.report_idx,
 		r.report_type,
 		r.target_idx,
@@ -336,20 +367,26 @@
 		r.report_content,
 		r.report_date,
 		r.report_status,
-		u.user_name as reporter_name,
-		case
-		when r.report_type = 'STUDY' THEN (select study_title FROM study where
+		u.user_name AS reporter_name,
+		CASE
+		WHEN r.report_type = 'STUDY' THEN (SELECT study_title FROM study WHERE
 		study_idx = r.target_idx)
-		when r.report_type = 'USER' THEN (select user_name FROM usertb where
+		WHEN r.report_type = 'USER' THEN (SELECT user_name FROM usertb WHERE
 		user_idx = r.target_idx)
-		end as target_name
-		from report r
-		join usertb u ON r.reporter_idx = u.user_idx
+		END AS target_name
+		FROM report r
+		JOIN usertb u ON r.reporter_idx = u.user_idx
+		<where>
+			<if test="status != null and status != ''">
+				AND r.report_status = #{status}
+			</if>
+		</where>
 		ORDER BY r.report_idx DESC
 	</select>
 
 	<update id="updateReportStatus" parameterType="int">
-		update report set report_status = '완료' where report_idx = #{report_idx}
+		update report set
+		report_status = '완료' where report_idx = #{report_idx}
 	</update>
 
 

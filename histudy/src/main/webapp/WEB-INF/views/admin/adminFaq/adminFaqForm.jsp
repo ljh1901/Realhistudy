@@ -14,7 +14,6 @@
 	<h1>자주 묻는 질문 관리</h1>
 
 	<fieldset class="faq__category">
-		<legend>카테고리 선택</legend>
 		<ul class="faq__category__list">
 			<li
 				class="faq__category__item ${empty param.menu_category_idx ? 'active' : ''}"

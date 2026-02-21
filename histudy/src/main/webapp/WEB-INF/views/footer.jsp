@@ -40,7 +40,7 @@
 						<ul>
 							<li>FAQ</li>
 							<li>공지사항</li>
-							<li>문의하기</li>
+							<li><a href="userInquiryList.do">문의하기</a></li>
 						</ul>
 					</div>
 				</div>

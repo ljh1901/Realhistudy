@@ -70,13 +70,14 @@
    <p>${lectureCount }개의 강의와 ${userCount }명의 수강생들이 함께하고 있습니다</p>
    <br>
    <br>
-   <c:if test="${sessionScope.membership != 'premium'}">
+   <c:if test="${sessionScope.membership!='premium'}">
    <input type="submit" name="membership_go" value="멤버십 가입하기">
    </c:if>
    <br>
    <br>
    </section>
    </form>
+   
 </main>
 <%@include file="../footer.jsp"%>
 </body>

@@ -17,19 +17,17 @@
         mp.sc_idx,
         mp.mentor_intro,
         mp.mentor_link,
-        mp.mentor_tel
-      FROM mento_profile mp
+        mp.mentor_tel,
+        p.profile_img  FROM mento_profile mp
       JOIN usertb u ON u.user_idx = mp.user_idx
-      <where>
+      LEFT JOIN mypage p ON p.user_idx = u.user_idx <where>
         <if test="sc_idx != null">
           AND mp.sc_idx = #{sc_idx}
         </if>
-        
         <if test="kw != null and kw != ''">
           AND (
             u.user_name LIKE '%' || #{kw} || '%'
             OR mp.mentor_intro LIKE '%' || #{kw} || '%'
-            OR mp.mentor_link LIKE '%' || #{kw} || '%'
           )
         </if>
       </where>
@@ -259,6 +257,7 @@
     AND status = '승인대기중'
 </update>
 
+
 <!-- 멘토링 매치 현황 -->
 <select id="selectMatchInfoMaId" parameterType="int"
         resultType="com.histudy.mentoring.model.MentorMatchDTO">
@@ -481,6 +480,75 @@ WHERE ROWNUM = 1
   VALUES (#{mentoring_idx}, #{skill_idx})
 </insert>
 
+<insert id="insertMentoringMatchNotification" parameterType="int">
+    INSERT INTO notifications (
+        n_idx, 
+        n_sender_idx, 
+        n_type, 
+        n_title, 
+        n_content, 
+        n_read, 
+        n_date, 
+        user_idx
+    )
+    SELECT 
+        N_IDX.NEXTVAL,mp.user_idx,'MENTORING','멘토링 매칭 성공!','[' || m.mentoring_title || '] 신청이 승인되어 매칭이 완료되었습니다.', 'N',SYSDATE,ma.mentee_user_idx 
+        FROM mentoring_application ma
+    JOIN mentoring m ON ma.mentoring_idx = m.mentoring_idx
+    JOIN mento_profile mp ON m.mentor_idx = mp.mentor_idx
+    WHERE ma.ma_id = #{ma_id}
+    </insert>
+
+<select id="selectNotificationList" parameterType="int" resultType="map">
+    SELECT 
+        n_idx as "n_idx",
+        n_type as "n_type",
+        n_title as "n_title",
+        n_content as "n_content",
+        n_read as "n_read",
+        TO_CHAR(n_date, 'YYYY.MM.DD | HH24:MI') as "n_date"
+    FROM notifications
+    WHERE user_idx = #{user_idx}
+    ORDER BY n_read ASC, n_date DESC  
+</select>
+
+<insert id="insertMentoringRejectNotification" parameterType="map">
+    INSERT INTO notifications (
+        n_idx, n_sender_idx, n_type, n_title, n_content, n_read, n_date, user_idx
+    )
+    SELECT 
+        N_IDX.NEXTVAL,
+        mp.user_idx,
+        'MENTORING',
+        '멘토링 신청 거절',
+        '[' || m.mentoring_title || '] 신청이 거절되었습니다.',  'N',
+        SYSDATE,
+        ma.mentee_user_idx 
+    FROM mentoring_application ma
+    JOIN mentoring m ON ma.mentoring_idx = m.mentoring_idx
+    JOIN mento_profile mp ON m.mentor_idx = mp.mentor_idx
+    WHERE ma.ma_id = #{ma_id}
+</insert>
+
+<insert id="insertReport" parameterType="com.histudy.admin.model.ReportDTO">
+    INSERT INTO report (
+        report_idx,
+        report_type,
+        target_idx,
+        reporter_idx,
+        report_content,
+        report_date,
+        report_status
+    ) VALUES (
+        report_seq.NEXTVAL,
+        #{report_type},
+        #{target_idx},
+        #{reporter_idx},
+        #{report_content},
+        SYSDATE,
+        '대기'
+    )
+</insert>
 
 
 </mapper>

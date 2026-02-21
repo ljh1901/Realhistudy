@@ -48,10 +48,13 @@
           <div class="ma-mentor-img">
             <c:choose>
               <c:when test="${not empty mentorSummary.mentor_profile_img}">
-                <img src="<c:out value='${mentorSummary.mentor_profile_img}'/>" alt="멘토 프로필">
-              </c:when>
+      			<img src="${pageContext.request.contextPath}/upload/${mentorSummary.mentor_profile_img}" alt="멘토 프로필">
+    			</c:when>
               <c:otherwise>
-                <div class="ma-mentor-img-fallback"></div>
+     				 <div class="ma-mentor-img-fallback" style="background-color: #f1f5f9; 
+     				 font-size:30px; display: flex; align-items: center; justify-content: center;">
+          					👤
+    			  			</div>
               </c:otherwise>
             </c:choose>
           </div>
@@ -213,10 +216,22 @@
     box.innerHTML = "";
     if(imgUrl && imgUrl !== "null"){
       const img = document.createElement("img");
-      img.src = imgUrl;
+      img.src = "${pageContext.request.contextPath}/upload/" + imgUrl;
       img.alt = "프로필";
       box.appendChild(img);
+      img.style.width = "100%";
+      img.style.height = "100%";
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "50%";
+      box.appendChild(img);
+      box.style.display = "block";
     } else {
+    	box.innerHTML = "👤";
+    	box.style.display = "flex";    
+        box.style.alignItems = "center";  
+        box.style.justifyContent = "center"; 
+        box.style.fontSize = "30px";         
+        box.style.backgroundColor = "#f1f5f9"; 
       box.classList.add("fallback");
     }
     openModal("reasonModal");

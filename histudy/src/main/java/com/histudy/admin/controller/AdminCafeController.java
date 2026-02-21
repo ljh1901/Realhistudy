@@ -48,19 +48,32 @@ public class AdminCafeController {
 
 		@GetMapping("/adminCafeSales.do")
 		public ModelAndView adminCafeSales(@RequestParam Map<String, Object> params) {
+			
+            int studycafe_idx = Integer.parseInt(params.get("studycafe_idx").toString());
 			List<Map<String, Object>> salesData = adminService.getSalesList(params);
+            List<Map<String, Object>> paymentList = adminService.getCafePaymentList(studycafe_idx);
 
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("admin/adminCafe/adminCafeSales");
 			mav.addObject("salesData", salesData);
+            mav.addObject("paymentList", paymentList);
+            mav.addObject("studycafe_idx", studycafe_idx);
 
 			return mav;
 		}
 		// 스터디 카페 좌석현황
 		@GetMapping("/adminCafeSeat.do")
-		public String adminCafeSeat() {
-			return "admin/adminCafe/adminCafeSeat";
-		} 
+		public ModelAndView adminCafeSeat(@RequestParam("studycafe_idx") int studycafe_idx) {
+		    List<Map<String, Object>> layoutList = adminService.getLayoutList(studycafe_idx);
+
+		    ModelAndView mav = new ModelAndView();
+		    mav.setViewName("admin/adminCafe/adminCafeSeat");
+		    
+		    mav.addObject("layoutList", layoutList);
+		    mav.addObject("studycafe_idx", studycafe_idx);
+
+		    return mav;
+		}
 		// 스터디 카페 문의사항
 		@GetMapping("/adminCafeInquiryList.do")
 		public String adminCafeInquiryList() {

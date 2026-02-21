@@ -67,7 +67,7 @@
 							        <td>
 							            <c:forEach var="pay" items="${list}">
 							                <c:if test="${pay.PAY_TYPE == '멤버십'}">
-							                    ${pay.PAY_DATE}~${pay.END_DATE}
+							                    ${pay.PAY_DATE}&nbsp;~&nbsp;${pay.END_DATE}
 							                </c:if>
 							            </c:forEach>
 							        </td>
@@ -142,7 +142,6 @@
 		}
 	</script>
 	<script>
-    // 서버의 절대 경로를 전역 변수로 선언 (예: /histudy)
     var contextPath = "${pageContext.request.contextPath}";
 </script>
 	<script src="${pageContext.request.contextPath}/js/user/user.js"></script>

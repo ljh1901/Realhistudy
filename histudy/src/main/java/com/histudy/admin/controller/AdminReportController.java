@@ -18,10 +18,12 @@ public class AdminReportController {
 
     // 신고 목록 페이지
     @RequestMapping("/adminReportList.do")
-    public ModelAndView adminReportList() {
-        List<ReportDTO> list = adminReportService.getReportList();
+    public ModelAndView adminReportList(@RequestParam(value = "status", required = false) String status) {
+        List<ReportDTO> list = adminReportService.getReportList(status);
+        
         ModelAndView mav = new ModelAndView();
         mav.addObject("reportList", list);
+        mav.addObject("currentStatus", status); 
         mav.setViewName("admin/adminReportList");
         return mav;
     }

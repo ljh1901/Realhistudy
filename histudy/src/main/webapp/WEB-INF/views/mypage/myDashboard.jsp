@@ -28,6 +28,15 @@
 				</ul>
 			</nav>
 		</aside>
+		<c:choose>
+			<c:when test="${sessionScope.membership=='primeum' }">
+				<section>
+				<div>프리미엄 회원 잔여일</div>
+				</section>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 </main>

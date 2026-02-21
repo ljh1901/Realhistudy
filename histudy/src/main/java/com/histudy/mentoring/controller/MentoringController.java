@@ -12,6 +12,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.ArrayList;
+import com.histudy.notifications.model.*;
+import com.histudy.notifications.service.*;
 
 import com.histudy.mentoring.model.*;
 import com.histudy.mentoring.service.*;
@@ -21,6 +25,9 @@ public class MentoringController {
 
     @Autowired
     private MentoringService mentoringService;
+    
+    @Autowired
+    private NotificationsService notificationsService;
 
     @GetMapping("/mentorList.do")
     public String mentorList(
@@ -412,6 +419,17 @@ public class MentoringController {
       return "redirect:/mentorProfile.do?mentor_idx=" + mentor_idx;
     }
 
+    @GetMapping("/getNoticeList.do")
+    @ResponseBody 
+    public List<Map<String, Object>> getNoticeList(HttpSession session) {
+        
+        Integer user_idx = (Integer) session.getAttribute("user_idx");
+        
+        if (user_idx == null) {
+            return new ArrayList<>(); 
+        }
+        return mentoringService.selectNotificationList(user_idx);
+    }
 
 
 }

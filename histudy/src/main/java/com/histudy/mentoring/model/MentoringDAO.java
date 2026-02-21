@@ -2,6 +2,7 @@ package com.histudy.mentoring.model;
 
 import java.util.List;
 import java.util.Map;
+import com.histudy.admin.model.ReportDTO;
 
 public interface MentoringDAO {
 	public List<MentorListDTO> mentorList(Map<String, Object> map);
@@ -50,4 +51,10 @@ public interface MentoringDAO {
     public List<MentoringScheduleDTO> selectMentoringSchedule(int mentoring_idx);
     public int updateMentoringStatusClose(int mentoring_idx);
     
+    public int insertMentoringMatchNotification(int ma_id);
+    public List<Map<String, Object>> selectNotificationList(int user_idx);
+
+    int insertMentoringRejectNotification(Map<String, Object> map);
+    
+    int insertReport(ReportDTO dto);
 }

@@ -36,4 +36,38 @@
             user_tel = #{user_tel}
         WHERE user_idx = #{user_idx}
     </update>
+    
+    
+    <select id="getMonthSchedule" parameterType="map" resultType="com.histudy.mypage.model.ScheduleDTO">
+        select *
+        from schedule
+        where user_idx=#{user_idx}
+          and to_char(s_start_date, 'yyyy-mm')=#{year} || '-' || lpad(#{month}, 2, '0')
+    </select>
+
+    <select id="checkSchedule" parameterType="map" resultType="int">
+        select count(*)
+        from schedule
+        where user_idx= #{user_idx}
+          and to_char(s_start_date, 'yyyy-mm-dd') = #{schedule_date}
+    </select>
+
+    <insert id="insertSchedule" parameterType="map">
+        insert into schedule values (
+            schedule_seq.nextval, '일정', #{schedule_content}, to_date(#{schedule_date}, 'yyyy-mm-dd'), to_date(#{schedule_date}, 'yyyy-mm-dd'), #{user_idx}, 0
+        )
+    </insert>
+
+    <update id="updateSchedule" parameterType="map">
+        update schedule
+        set s_content = #{schedule_content}
+        where user_idx = #{user_idx}
+          and to_char(s_start_date, 'yyyy-mm-dd') = #{schedule_date}
+    </update>
+
+    <delete id="deleteSchedule" parameterType="map">
+        delete from schedule
+        where user_idx = #{user_idx}
+          and to_char(s_start_date, 'yyyy-mm-dd') = #{schedule_date}
+    </delete>
 </mapper>

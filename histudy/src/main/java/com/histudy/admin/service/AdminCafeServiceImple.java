@@ -27,6 +27,11 @@ public class AdminCafeServiceImple implements AdminCafeService {
     }
     
     @Override
+    public List<Map<String, Object>> getCafePaymentList(int studycafe_idx) {
+        return adminDAO.selectCafePaymentList(studycafe_idx);
+    }
+    
+    @Override
     public List<TicketCategoryDTO> getTicketCategoryList() {
         return adminDAO.getTicketCategoryList();
     }
@@ -48,13 +53,17 @@ public class AdminCafeServiceImple implements AdminCafeService {
     
     @Override
     @Transactional
-    public void updateCafeLayout(int studycafe_idx, List<Map<String, Object>> layoutList) {
-        adminDAO.deleteLayoutByCafeIdx(studycafe_idx);
-        
-        if (layoutList != null && !layoutList.isEmpty()) {
-            for (Map<String, Object> item : layoutList) {
-                item.put("studycafe_idx", studycafe_idx);
-                adminDAO.insertLayout(item);
+    public void updateCafeLayout(int studycafe_idx, List<Map<String, Object>> layoutData) {
+    	adminDAO.deleteLayoutByCafeIdx(studycafe_idx);
+    	adminDAO.deleteSeatByCafeIdx(studycafe_idx);
+
+        for (Map<String, Object> item : layoutData) {
+            item.put("studycafe_idx", studycafe_idx);
+            
+            adminDAO.insertLayout(item);
+            
+            if (!item.get("type").toString().equals("WALL")) { 
+            	adminDAO.insertSeat(item);
             }
         }
     }

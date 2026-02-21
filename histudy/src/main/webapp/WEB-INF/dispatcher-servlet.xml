@@ -111,6 +111,7 @@
 	<bean id="membershipService" class="com.histudy.membership.service.MembershipServiceImple">
 		<constructor-arg ref="membershipDAO"></constructor-arg>
 	</bean>
+	<bean id="mypageService" class="com.histudy.mypage.service.MypageServiceImple" />
 	<bean id="lmsSubmitService" class="com.histudy.lms.service.LmsSubmitServiceImple">
 		<constructor-arg ref="lmsSubmitDAO"></constructor-arg>
 	</bean>

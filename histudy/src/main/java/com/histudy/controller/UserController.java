@@ -123,7 +123,9 @@ public class UserController {
    @RequestMapping(value = "/userLogout.do", method = RequestMethod.GET)
    public String logout(HttpSession session) {
       session.invalidate();
-      sa_Service.userLogoutTimeUpdate((Integer)session.getAttribute("user_idx"));
+
+      Integer user_idx = (Integer) session.getAttribute("user_idx"); 
+       sa_Service.userLogoutTimeUpdate(user_idx);
       return "redirect:/index.do";
    }
 

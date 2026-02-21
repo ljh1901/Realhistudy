@@ -13,6 +13,7 @@ public class ReportDTO {
 
 	private String reporter_name; 
 	private String target_name; 
+	private String report_photo;
 
 	public ReportDTO() {
 		
@@ -90,4 +91,13 @@ public class ReportDTO {
 		this.target_name = target_name;
 	}
 
+	public String getReport_photo() {
+		return report_photo;
+	}
+
+	public void setReport_photo(String report_photo) {
+		this.report_photo = report_photo;
+	}
+
+	
 }

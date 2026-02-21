@@ -7,7 +7,6 @@
 <title>문의사항 관리</title>
 <link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
 <%@ include file="../adminCheck.jsp" %>
-
 </head>
 <body id="adminInquiryList">
 
@@ -16,28 +15,28 @@
             <h1 class="admin__title">문의사항 관리</h1>
         </div>
 
-       <form action="adminInquiryList.do" method="get" class="inquiry__cat">
-    <select name="category_idx">
-        <option value="0">전체 카테고리</option> <c:forEach var="cat" items="${categoryList}">
-            <option value="${cat.inquiry_category_idx}" 
-                <c:if test="${param.category_idx == cat.inquiry_category_idx}">selected</c:if>>
-                ${cat.inquiry_category_name}
-            </option>
-        </c:forEach>
-    </select> 
-    <input type="text" name="keyword" value="${param.keyword}" placeholder="제목 또는 작성자 검색">
-    <button type="submit" class="inquiry__btn__search">검색</button>
-</form>
+        <div class="inquiry__category">
+            <ul class="inquiry__category__list">
+                <li class="inquiry__category__item ${empty param.category_idx || param.category_idx == 0 ? 'active' : ''}" 
+                    onclick="location.href='adminInquiryList.do'">전체</li>
+                <c:forEach var="cat" items="${categoryList}">
+                    <li class="inquiry__category__item ${param.category_idx == cat.inquiry_category_idx ? 'active' : ''}" 
+                        onclick="location.href='adminInquiryList.do?category_idx=${cat.inquiry_category_idx}'">
+                        ${cat.inquiry_category_name}
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
 
         <table class="inquiry__list__table">
             <thead>
                 <tr>
-                    <th>번호</th>
-                    <th>카테고리</th>
+                    <th width="80">번호</th>
+                    <th width="120">카테고리</th>
                     <th>제목</th>
-                    <th>작성자</th>
-                    <th>등록일</th>
-                    <th>상태</th>
+                    <th width="120">작성자</th>
+                    <th width="150">등록일</th>
+                    <th width="100">상태</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,12 +46,13 @@
                         <td align="center">
                             <span class="badge inquiry__cat__item">${dto.inquiry_category_name}</span>
                         </td>
-                        <td style="text-align: left;">
+                        <td style="text-align: left; padding-left: 20px;">
                             <a href="adminInquiryDetail.do?inquiry_idx=${dto.inquiry_idx}" class="inquiry__link">
                                 ${dto.inquiry_title}
                             </a>
                         </td>
-                        <td align="center">${dto.user_name}</td> <td align="center">${dto.inquiry_date}</td>
+                        <td align="center">${dto.user_name}</td>
+                        <td align="center">${dto.inquiry_date}</td>
                         <td align="center">
                             <c:choose>
                                 <c:when test="${dto.inquiry_status eq '대기'}">
@@ -63,12 +63,14 @@
                                 </c:otherwise>
                             </c:choose>
                         </td>
-                    </tr>
+                    </tr>	
                 </c:forEach>
                 
                 <c:if test="${empty inquiryList}">
                     <tr>
-                        <td colspan="6" align="center" style="padding: 50px 0;">등록된 문의사항이 없습니다.</td>
+                        <td colspan="6" align="center" style="padding: 80px 0; color: #64748b;">
+                            등록된 문의사항이 없습니다.
+                        </td>
                     </tr>
                 </c:if>
             </tbody>

@@ -11,6 +11,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;  
 import com.histudy.mentoring.model.*;
+import com.histudy.admin.model.ReportDTO;
 
 
 public class MentoringServiceImple implements MentoringService {
@@ -67,16 +68,25 @@ public class MentoringServiceImple implements MentoringService {
     }
 
     @Override
-    public int rejectMentorApplication(int ma_id, String reject_reason) {
+    public int rejectMentorApplication(int ma_id) {
       java.util.Map<String, Object> map = new java.util.HashMap<>();
       map.put("ma_id", ma_id);
-      map.put("reject_reason", reject_reason);
       return mentoringDAO.rejectMentorApplication(map);
     }
     
+    @Transactional
     @Override
     public int deleteMentorApplication(int ma_id) {
-       return mentoringDAO.deleteMentorApplication(ma_id);
+
+        int result = mentoringDAO.deleteMentorApplication(ma_id);
+
+        if (result > 0) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("ma_id", ma_id);
+            mentoringDAO.insertMentoringRejectNotification(map);
+        }
+        
+        return result;
     }
     
     @Override
@@ -89,24 +99,31 @@ public class MentoringServiceImple implements MentoringService {
         return dto;
     }
 
-
     @Transactional
     @Override
     public int approveAndMatch(int ma_id) {
-
         int updated = mentoringDAO.approveMentorApplication(ma_id);
         if(updated <= 0) return 0; 
-    
+        
         MentorMatchDTO info = mentoringDAO.selectMatchInfoMaId(ma_id);
         if(info == null) return 1;
-  
+        
         int cnt = mentoringDAO.countMentoringMatch(info);
         if(cnt > 0) return 1; 
 
-        mentoringDAO.insertMentoringMatch(info);
+        int result = mentoringDAO.insertMentoringMatch(info);
+        
+        if(result > 0) {
+            mentoringDAO.insertMentoringMatchNotification(ma_id);
+        }
 
         mentoringDAO.updateMentoringStatusClose(info.getMentoring_idx());
         return 1;
+    }
+
+    @Override
+    public List<Map<String, Object>> selectNotificationList(int user_idx) {
+        return mentoringDAO.selectNotificationList(user_idx);
     }
     
     @Override
@@ -247,4 +264,5 @@ public class MentoringServiceImple implements MentoringService {
         c.add(Calendar.HOUR, 1);
         return c.getTime();
     }
+    
 }

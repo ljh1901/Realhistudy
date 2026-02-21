@@ -18,9 +18,9 @@ public class AdminReportServiceImple implements AdminReportService {
 	}
 
 	@Override
-    public List<ReportDTO> getReportList() {
-        return adminReportDao.selectAllReportList();
-    }
+	public List<ReportDTO> getReportList(String status) {
+	    return adminReportDao.getReportList(status);
+	}
 
     @Override
     public int resolveReport(int report_idx) {
