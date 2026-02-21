@@ -189,7 +189,8 @@
 		s.study_max_members,
 		TO_CHAR(s.study_start_date, 'YYYY-MM-DD') as study_start_date,
 		TO_CHAR(s.study_end_date, 'YYYY-MM-DD') as study_end_date,
-		s.study_addr
+		s.study_addr,
+		s.study_status
 		FROM study s
 		LEFT JOIN usertb u ON s.user_idx = u.user_idx
 		<where>
