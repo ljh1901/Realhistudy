@@ -119,7 +119,7 @@ if(${!empty msg}){
 				<div class="reviewGrid">
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/beom.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">서준범</p>
 								<p class="reviewId">seoni65</p>
@@ -130,7 +130,7 @@ if(${!empty msg}){
 					</div>
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/sung.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">김성지</p>
 								<p class="reviewId">tjdwl12</p>
@@ -141,7 +141,7 @@ if(${!empty msg}){
 					</div>
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/sang.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">양상연</p>
 								<p class="reviewId">sang__chi</p>
@@ -152,7 +152,7 @@ if(${!empty msg}){
 					</div>
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/min.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">김민영</p>
 								<p class="reviewId">alsdud12</p>
@@ -163,7 +163,7 @@ if(${!empty msg}){
 					</div>
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/yoo.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">유준상</p>
 								<p class="reviewId">wnstkd12</p>
@@ -174,7 +174,7 @@ if(${!empty msg}){
 					</div>
 					<div class="reviewCard">
 						<div class="reviewHeader">
-							<img class="reviewAvatar">
+							<img src="/histudy/main-img/ju.jpg" class="reviewAvatar">
 							<div class="reviewUser">
 								<p class="reviewName">이주호</p>
 								<p class="reviewId">wngh12</p>

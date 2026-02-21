@@ -92,7 +92,8 @@ public class UserController {
          session.setAttribute("role_idx", loginUser.getRole_idx());
          session.setAttribute("user_name", loginUser.getUser_name());
 
-sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
+         sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
+         
          // [중요] 세션에 DTO 객체를 저장해둬야 마이페이지 수정 시 편리합니다.
          session.setAttribute("user", loginUser);
 
@@ -122,6 +123,7 @@ sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
    @RequestMapping(value = "/userLogout.do", method = RequestMethod.GET)
    public String logout(HttpSession session) {
       session.invalidate();
+
       Integer user_idx = (Integer) session.getAttribute("user_idx"); 
        sa_Service.userLogoutTimeUpdate(user_idx);
       return "redirect:/index.do";

@@ -78,6 +78,7 @@
 		                       FROM assignment_submit
 		                       WHERE user_idx = #{user_idx}
 		                       )
+		    and a_end_date > SYSDATE
 	</select>
 	<update id="taskInsertUpdate" parameterType="com.histudy.lms.model.LmsDTO">
 		UPDATE assignment
@@ -141,8 +142,20 @@
 	</update>
 	<select id="finishStudy" parameterType="Integer" resultType="com.histudy.study.model.StudyDTO">
 		SELECT s.*, u.user_name
-		FROM study s JOIN usertb u ON s.user_idx = u.user_idx
-		WHERE s.study_status = #{study_status}
+		FROM study s
+		JOIN usertb u ON s.user_idx = u.user_idx
+		WHERE s.study_status = 2
+		  AND s.user_idx = #{user_idx}
+		
+		UNION
+		
+		SELECT s.*, u.user_name
+		FROM study s
+		JOIN study_application sa ON s.study_idx = sa.study_idx
+		JOIN usertb u ON s.user_idx = u.user_idx
+		WHERE s.study_status = 2
+		  AND sa.user_idx = #{user_idx}
+		  AND sa.sa_status = 'Approved'
 	</select>
 	<select id="selectMemberNum" parameterType="Integer" resultType="com.histudy.study.model.StudyDTO">
 		SELECT study_current_members, study_max_members
