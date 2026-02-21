@@ -126,10 +126,10 @@ public class UserController {
    // 4. 로그아웃 및 중복체크
    @RequestMapping(value = "/userLogout.do", method = RequestMethod.GET)
    public String logout(HttpSession session) {
-      session.invalidate();
 
       Integer user_idx = (Integer) session.getAttribute("user_idx"); 
        sa_Service.userLogoutTimeUpdate(user_idx);
+       session.invalidate();
       return "redirect:/index.do";
    }
 
