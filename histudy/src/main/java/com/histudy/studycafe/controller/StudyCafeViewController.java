@@ -140,13 +140,4 @@ public class StudyCafeViewController {
 	    return mav;
 	}
 	
-	@GetMapping("studycafeReview.do")
-	public ModelAndView studycafeReply(@RequestParam(required = true, value="studycafe_idx") int studycafe_idx) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("studycafe/studycafeReview");
-		return mav;
-	}
-
-
-
 }
