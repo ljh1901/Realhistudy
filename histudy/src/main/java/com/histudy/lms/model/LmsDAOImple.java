@@ -200,6 +200,12 @@ public class LmsDAOImple implements LmsDAO {
 		return count;
 	}
 	
+	@Override
+	public String getStudyTitle(int study_idx) {
+	    String studyTitle=sqlSession.selectOne("getStudyTitle", study_idx);
+	    return studyTitle;
+	}
+	
 	/**==== LmsRestController에서 쓰는 DAO ====*/
 	/** 왼쪽 내 스터디 클릭 시 리더일 경우 해당 스터디의 과제만 추출 */
 	@Override

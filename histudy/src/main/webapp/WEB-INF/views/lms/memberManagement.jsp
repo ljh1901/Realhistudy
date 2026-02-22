@@ -179,6 +179,7 @@ for(let i=0; i<togglebtns.length; i++){
 		togglebtns[i].classList.add('toggle');
 	});	
 }
+
 var xhr;
 function getXHR(){
 	if(window.ActiveXObject){
@@ -219,7 +220,7 @@ function studyApplySelectResult(){
 	
 			'<div class="studyApplyCard">' +
 				'<div class="studyApplyCard__left">' +
-					'<img src="/histudy/main-img/defaultUser.png" alt="참여자 이미지">' +
+					'<img src="/histudy/main-img/'+jsonData[i].profile_img+'" alt="참여자 이미지">' +
 				'</div>' +
 				'<div class="studyApplyCard__center">' +
 					'<div class="studyApplyCard__center__top">' +
@@ -325,6 +326,7 @@ function notice(userIdx, studyIdx, userName, study_title){
 function closeNotice(){
 	document.querySelector('.noticeModalBg').remove();
 }
+
 function sendNotice(userIdx, studyIdx, studyTitle){
 	
 	var noticeContent = document.getElementById('noticeMsg').value;

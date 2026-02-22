@@ -77,6 +77,8 @@ public interface LmsService {
 
     /** 현재멤버수, 최대멤버수 가져오기 */
     public StudyDTO selectMemberNum(int study_idx);
+    
+    public String getStudyTitle(int study_idx);
 
     /** ==== LmsRestController에서 사용 (REST 전용) ==== */
     /** 왼쪽 내 스터디 클릭 시 리더일 경우 해당 스터디의 과제만 추출 */
