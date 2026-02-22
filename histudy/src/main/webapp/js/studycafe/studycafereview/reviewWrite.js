@@ -59,10 +59,10 @@ function renderPreviewItems() {
 }
 
 document.getElementById('writeReview').addEventListener('input', function(e){
-	if(document.getElementById('writeReview').value.length>400){
+	if(document.getElementById('writeReview').value.length>200){
 		e.preventDefault();
-		document.getElementById('writeReview').value=document.getElementById('writeReview').value.substring(0,400);
-		alert('입력가능한 글자 수는 400자 입니다.')
+		document.getElementById('writeReview').value=document.getElementById('writeReview').value.substring(0,200);
+		alert('입력가능한 글자 수는 200자 입니다.')
 	}
-	document.getElementById('countWriteReview').innerText = document.getElementById('writeReview').value.length+"/"+400;
+	document.getElementById('countWriteReview').innerText = document.getElementById('writeReview').value.length+"/"+200;
 })

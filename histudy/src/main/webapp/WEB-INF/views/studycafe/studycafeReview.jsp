@@ -162,6 +162,27 @@ body {
 	width: 50%;
 	overflow: hidden;
 }
+.reply-photo{
+	display:grid;
+	grid-template-columns: repeat(5, 0fr);
+}
+.reply-content{
+	border: 2px solid black;
+	border-radius: 5px;
+
+}
+.reply-text{
+	background-color: #ccc;
+	width: 90%;
+	margin: auto;
+	border: gray solid 2px;
+	border-radius: 5px;
+}
+.photo-area img{
+	width: 120px;
+	height: 110px;
+	padding-left: 10px;
+}
 </style>
 </head>
 <body>
@@ -169,13 +190,27 @@ body {
 	<form id="studycafeReview" method="post" enctype="multipart/form-data">
 		<main>
 			<section id="reply__area">
-				<div class="reply-content"></div>
+				<div class="reply-content">
+				<span>${sessionScope.user_name}</span>
+				<span><a href="#">수정</a></span>
+				<span><a href="#">삭제</a></span>
+				<span><a href="#">2026-02-22 12:39:45</a></span>
+				<span><a href="#">2026-02-22 12:39:45(수정됨)</a></span>
+				<span><a href="#">신고</a></span>
+				<span>별점: ★★★★☆</span>
+					<div class="reply-photo">
+						<div class="photo-area"></div>
+					</div>
+					<div class="reply-text"></div>
+				</div>
 			</section>
+			<div>
+				<button type="button" id="studycafeReplyBtn">이용후기 남기기</button>
+			</div>
 			<section id="reply_layout">
 				<div class="review-photo">
 					<h2>사진 / 영상 추가</h2>
-					<input id="reviewFileInput" name="reviewFiles" type="file"
-						accept="image/*, video/*" multiple hidden="true">
+					<input id="reviewFileInput" name="reviewFiles" type="file" accept="image/*, video/*" multiple hidden="true">
 					<button type="button" id="reviewFileInputBtn"
 						class="review-upload-btn">+ 파일 추가</button>
 					<div id="reviewPreviewContainer"></div>
@@ -184,7 +219,6 @@ body {
 					<div id="ratingRegister">
 						<div class="rating_value">평점:</div>
 						<div id="ratingRegister">
-
 							<span class="star" data-value="1">☆</span> <span class="star"
 								data-value="2">☆</span> <span class="star" data-value="3">☆</span>
 
@@ -197,7 +231,7 @@ body {
 					<input type="hidden" name="rating" id="ratingValue" value="0">
 					<textarea id="writeReview" name="studycafe_reply"></textarea>
 					<div>
-						<label for="writeReview" id="countWriteReview">0/400</label>
+						<label for="writeReview" id="countWriteReview">0/200</label>
 					</div>
 					<button type="submit" id="reviewWrite">리뷰 작성하기</button>
 				</div>
@@ -212,6 +246,13 @@ body {
 	type="text/javascript"></script>
 
 <script>
+document.getElementById('reply_layout').style.display='none';
+if(document.querySelector('.reply-text').textContent == ''){
+	document.querySelector('.reply-text').style.display='none';
+}
+document.getElementById('studycafeReplyBtn').addEventListener('click',function(){
+	document.getElementById('reply_layout').style.display='';
+})
 	var xhr = null;
 	document.getElementById('studycafeReview').addEventListener('submit',
 			function(e) {
@@ -234,6 +275,7 @@ body {
 		formData.append("studycafe_reply", document
 				.getElementById('writeReview').value);
 		formData.append("studycafe_rating", ratingInput.value);
+		formData.append("studycafe_idx", ${studycafe_idx});
 		if (selectedReviewFiles != null) {
 			selectedReviewFiles.forEach(function(reviewFiles) {
 				formData.append("reviewFiles", reviewFiles);
@@ -253,10 +295,12 @@ body {
 						console.log(fileList);
 						str += fileList;
 					})
-					document.querySelector('.reply-content').innerHTML += str;
+					document.querySelector('.photo-area').innerHTML += str;
 				}
 				if (fileData.studycafe_reply != null) {
-					document.querySelector('.reply-content').innerHTML = fileData.studycafe_reply;
+					document.querySelector('.reply-text').innerHTML += fileData.studycafe_reply;
+					document.querySelector('.reply-text').innerHTML += fileData.studycafe_rating;
+					document.querySelector('.reply-text').style.display='';
 				}
 			}
 		}

@@ -73,7 +73,10 @@
 	<bean id="mentoringDAO" class="com.histudy.mentoring.model.MentoringDAOImple">
 		<constructor-arg ref="sqlSessionTemplate"/>
 	</bean>
-		<bean id="studycafeDAO" class="com.histudy.studycafe.model.StudycafeDAOImple">
+	<bean id="studycafeReplyDAO" class="com.histudy.studycafe.model.StudycafeReplyDAOImple">
+		<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
+	</bean>
+	<bean id="studycafeDAO" class="com.histudy.studycafe.model.StudycafeDAOImple">
 		<constructor-arg ref="sqlSessionTemplate"/>
 	</bean>
 	<bean id="lmsDAO" class="com.histudy.lms.model.LmsDAOImple">
