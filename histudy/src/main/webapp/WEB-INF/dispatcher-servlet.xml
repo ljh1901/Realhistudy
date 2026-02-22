@@ -121,4 +121,7 @@
 	<bean id="notificationsService" class="com.histudy.notifications.service.NotificationsServiceImple">
 		<constructor-arg ref="notificationsDAO"></constructor-arg>
 	</bean>
+		<bean id="userSupportService" class="com.histudy.usersupport.service.UserSupportServiceImple">
+		<constructor-arg ref="userSupportDAO"></constructor-arg>
+	</bean>
 </beans>
