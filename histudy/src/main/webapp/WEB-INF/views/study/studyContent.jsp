@@ -82,7 +82,7 @@
 					</div>
 					<div class="studyContent__right__btns">
 						<input type="button" value="참여 신청하기" class="btn1" onclick="studyApplyModal()">
-						<input type="button" value="문의하기" class="btn2">
+						<input type="button" value="문의하기" class="btn2" onclick="userInquiry()">
 					</div>
 					<p class="trtr">신청 후 알림함을 통해 승인 여부가 전송됩니다.</p>
 				</div>
@@ -206,6 +206,10 @@ function submitApply(){
 	}
 	
 	location.href='studyApply.do?study_idx='+${dto.study_idx}+'&sa_intro='+encodeURIComponent(intro);
+}
+
+function userInquiry(){
+	location.href='userInquiryList.do';
 }
 </script>
 </html>

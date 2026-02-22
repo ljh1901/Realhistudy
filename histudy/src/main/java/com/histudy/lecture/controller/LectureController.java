@@ -27,7 +27,7 @@ import com.histudy.membership.service.MembershipService;
 public class LectureController {
 
    @Autowired
-    private LectureService lectureService;
+   private LectureService lectureService;
    @Autowired
    private MembershipService membershipService;
    
@@ -83,7 +83,7 @@ public class LectureController {
        mav.addObject("scIdx", scIdx);
        mav.addObject("grade", grade);
        
-       Integer review_idx = lectureService.myReview(user_idx);
+       Integer review_idx = lectureService.myReview(map);
        mav.addObject("myReview", review_idx);
        
        List<LectureReviewDTO> lists = lectureService.reviewList(lecture_idx);
@@ -92,14 +92,14 @@ public class LectureController {
        //apah메모
        LectureNoteDTO memo = lectureService.lectureMemoList(map);
        if (memo == null) {
-           LectureNoteDTO dto = new LectureNoteDTO();
-           dto.setLecture_idx(lecture_idx);
-           dto.setUser_idx(user_idx);
-           dto.setNote_title("제목을 입력해주세요");
-           dto.setNote_content("");
-           lectureService.lectureNoteInsert(dto);
+           LectureNoteDTO ndto = new LectureNoteDTO();
+           ndto.setLecture_idx(lecture_idx);
+           ndto.setUser_idx(user_idx);
+           ndto.setNote_title("제목을 입력해주세요");
+           ndto.setNote_content("");
+           lectureService.lectureNoteInsert(ndto);
            // insert 후 다시 조회하거나 새 객체를 담아줌
-           mav.addObject("memo", dto);
+           mav.addObject("memo", ndto);
        } else {
            mav.addObject("memo", memo);
        }

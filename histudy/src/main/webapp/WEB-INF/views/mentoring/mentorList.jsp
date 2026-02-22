@@ -36,11 +36,11 @@
     <!-- ===== 카테고리 필터 ===== -->
     <div class="mentor-filter">
       <a class="${activeCategory == 0 ? 'active' : ''}" href="mentorList.do">전체</a>
-      <a class="${activeCategory == 1 ? 'active' : ''}" href="mentorList.do?sc_idx=1&kw=${param.kw}">개발</a>
+      <a class="${activeCategory == 1 ? 'active' : ''}" href="mentorList.do?sc_idx=1&kw=${param.kw}">코딩</a>
       <a class="${activeCategory == 2 ? 'active' : ''}" href="mentorList.do?sc_idx=2&kw=${param.kw}">언어</a>
-      <a class="${activeCategory == 3 ? 'active' : ''}" href="mentorList.do?sc_idx=3&kw=${param.kw}">취업</a>
+      <a class="${activeCategory == 3 ? 'active' : ''}" href="mentorList.do?sc_idx=3&kw=${param.kw}">학업</a>
       <a class="${activeCategory == 4 ? 'active' : ''}" href="mentorList.do?sc_idx=4&kw=${param.kw}">자격증</a>
-      <a class="${activeCategory == 5 ? 'active' : ''}" href="mentorList.do?sc_idx=5&kw=${param.kw}">학업</a>
+      <a class="${activeCategory == 5 ? 'active' : ''}" href="mentorList.do?sc_idx=5&kw=${param.kw}">취업</a>
     </div>
  
 </section>
@@ -57,18 +57,41 @@
 
       <c:otherwise>
         <c:forEach var="m" items="${mentorList}">
-          <div class="mentor-card" onclick="openMentorProfile(${m.mentor_idx})">
+          <div class="mentor-card" onclick="openMentorProfile(${m.mentor_idx})" style="position: relative;">
+          
+          <!-- 하트 아이콘 추가 -->
+          <div class="wish-icon-wrap" onclick="event.stopPropagation(); toggleWish(this, ${m.mentor_idx}, '${sessionScope.user_idx}')" style="position: absolute; top: 20px; right: 20px; z-index: 10;">
+			    <img src="mypage-img/heart (1).png" class="wish-heart" style="width: 24px; height: 24px; cursor: pointer;" data-status="off">
+			</div>
+			
+			<div class="wish-icon-wrap" data-idx="${m.mentor_idx}" onclick="event.stopPropagation(); toggleWish(this, ${m.mentor_idx}, '${sessionScope.user_idx}')" style="position: absolute; top: 20px; right: 20px; z-index: 10;">
+			    <img src="mypage-img/heart (1).png" class="wish-heart" style="width: 24px; height: 24px; cursor: pointer;" data-status="off">
+			</div>
+          
             <div class="card-top">
-              <div class="avatar"></div>
+              <div class="avatar">
+  <c:choose>
+    <c:when test="${not empty m.profile_img}">
+        <img src="${pageContext.request.contextPath}/mypage-img/pimg/${m.profile_img}" 
+             style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+    </c:when>
+    <c:otherwise>
+        <div style="width: 100%; height: 100%; border-radius: 12px; background: #f1f5f9; 
+                    display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            👤
+        </div>
+    </c:otherwise>
+  </c:choose>
+</div>
               <div>
                 <div class="m-name"><c:out value="${m.user_name}"/></div>
                 <div class="m-meta">
                   <c:choose>
-                    <c:when test="${m.sc_idx == 1}">개발</c:when>
+                    <c:when test="${m.sc_idx == 1}">코딩</c:when>
                     <c:when test="${m.sc_idx == 2}">언어</c:when>
-                    <c:when test="${m.sc_idx == 3}">취업</c:when>
+                    <c:when test="${m.sc_idx == 3}">학업</c:when>
                     <c:when test="${m.sc_idx == 4}">자격증</c:when>
-                    <c:when test="${m.sc_idx == 5}">학업</c:when>
+                    <c:when test="${m.sc_idx == 5}">취업</c:when>
                     <c:otherwise>기타</c:otherwise>
                   </c:choose>
                 </div>
@@ -81,9 +104,9 @@
                 <c:choose>
                   <c:when test="${m.sc_idx == 1}">IT/개발</c:when>
                   <c:when test="${m.sc_idx == 2}">언어</c:when>
-                  <c:when test="${m.sc_idx == 3}">취업</c:when>
+                  <c:when test="${m.sc_idx == 3}">학업</c:when>
                   <c:when test="${m.sc_idx == 4}">자격증</c:when>
-                  <c:when test="${m.sc_idx == 5}">학업</c:when>
+                  <c:when test="${m.sc_idx == 5}">취업</c:when>
                   <c:otherwise>기타</c:otherwise>
                 </c:choose>
               </span>
@@ -137,7 +160,6 @@ function openMentorProfile(mentor_idx) {
    location.href = "mentorProfile.do?mentor_idx=" + mentor_idx;
 }
 
-/* ===== 모달 토글(팀원이 하던 방식) ===== */
 function openMentorGuideModal(){
   document.getElementById("mentorGuideModal").style.display = "block";
 }
@@ -180,6 +202,68 @@ function closeByBackdrop(e, modalId){
   </script>
 </c:if>
 
+<!-- ================찜하기================ -->
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+    const userIdx='${sessionScope.user_idx}';
+    if(!userIdx) return;
+    let savedWishes=JSON.parse(localStorage.getItem('wish_'+userIdx))||[];
+    const wishWraps=document.querySelectorAll('.wish-icon-wrap');
+    wishWraps.forEach(wrap=>{
+        const mIdx=parseInt(wrap.getAttribute('data-idx'));
+        if(savedWishes.includes(mIdx)){
+            const img=wrap.querySelector('.wish-heart');
+            img.src='mypage-img/heart.png';
+            img.setAttribute('data-status','on');
+        }
+    });
+});
 
+function toggleWish(element,targetIdx,userIdx){
+    if(!userIdx||userIdx===''){
+        alert('로그인이 필요한 기능입니다.');
+        return;
+    }
+    const imgElement=element.querySelector('.wish-heart');
+    const currentStatus=imgElement.getAttribute('data-status');
+    const requestData={
+        w_target_type:'멘토링',
+        w_target_idx:targetIdx,
+        user_idx:userIdx
+    };
+    const url=(currentStatus==='off')?'insertWish.do':'deleteWish.do';
+    fetch(url,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(requestData)
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        if(data.result==='success'){
+            let savedWishes=JSON.parse(localStorage.getItem('wish_'+userIdx))||[];
+            if(currentStatus==='off'){
+                imgElement.src='mypage-img/heart.png';
+                imgElement.setAttribute('data-status','on');
+                if(!savedWishes.includes(targetIdx)){
+                    savedWishes.push(targetIdx);
+                    localStorage.setItem('wish_'+userIdx,JSON.stringify(savedWishes));
+                }
+            }else{
+                imgElement.src='mypage-img/heart (1).png';
+                imgElement.setAttribute('data-status','off');
+                savedWishes=savedWishes.filter(id=>id!==targetIdx);
+                localStorage.setItem('wish_'+userIdx,JSON.stringify(savedWishes));
+            }
+        }else{
+            alert('오류발생~');
+        }
+    })
+    .catch(error=>{
+        console.error('Error:',error);
+    });
+}
+</script>
 </body>
 </html>

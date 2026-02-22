@@ -235,8 +235,7 @@ public class LmsController {
 			mav.addObject("taskSubmitOkCount", taskSubmitOkCount);
 
 			// 완료된 스터디 리스트
-			int study_status = 2;
-			List<StudyDTO> finishStudyList = ls.finishStudy(study_status);
+			List<StudyDTO> finishStudyList = ls.finishStudy(user_idx);
 			mav.addObject("finishStudyList", finishStudyList);
 			mav.addObject("finishStudyCount", finishStudyList.size());
 			mav.setViewName("lms/lms");

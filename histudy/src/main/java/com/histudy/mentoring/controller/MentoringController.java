@@ -12,15 +12,24 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.ArrayList;
+import com.histudy.notifications.model.*;
+import com.histudy.notifications.service.*;
 
 import com.histudy.mentoring.model.*;
 import com.histudy.mentoring.service.*;
+import com.histudy.admin.model.ReportDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MentoringController {
 
     @Autowired
     private MentoringService mentoringService;
+    
+    @Autowired
+    private NotificationsService notificationsService;
 
     @GetMapping("/mentorList.do")
     public String mentorList(
@@ -143,32 +152,26 @@ public class MentoringController {
         System.out.println("skillTags=" + skillTags);
         System.out.println("scheduleJson=" + scheduleJson);
 
-        
-        // 1. 로그인 체크
         if (user_idx == null) {
             ra.addFlashAttribute("msg", "로그인이 필요합니다.");
             return "redirect:/mentorList.do";
         }
 
-        // 2. 멘토 식별값(mentor_idx) 가져오기
         int mentor_idx = mentoringService.findMentorIdxAndUserIdx(user_idx);
         if (mentor_idx <= 0) {
             ra.addFlashAttribute("msg", "멘토 등록이 필요합니다.");
             return "redirect:/mentorList.do";
         }
 
-        // DTO에 멘토 번호 세팅
         dto.setMentor_idx(mentor_idx);
 
         try {
-            // 3. 서비스 호출 (메인 저장 + JSON 파싱 및 스케줄 반복 저장)
             mentoringService.createMentoring(dto, scheduleJson, skillTags);
             
             ra.addFlashAttribute("msg", "멘토링 개설이 성공적으로 완료되었습니다!");
             return "redirect:/mentorList.do";
             
         } catch (IllegalArgumentException e) {
-            // 서비스에서 던진 에러 메시지 (예: "스케줄을 선택하세요") 처리
             ra.addFlashAttribute("msg", e.getMessage());
             return "redirect:/mentoringCreate.do";
         } catch (Exception e) {
@@ -412,7 +415,66 @@ public class MentoringController {
       return "redirect:/mentorProfile.do?mentor_idx=" + mentor_idx;
     }
 
+    @GetMapping("/getNoticeList.do")
+    @ResponseBody 
+    public List<Map<String, Object>> getNoticeList(HttpSession session) {
+        
+        Integer user_idx = (Integer) session.getAttribute("user_idx");
+        
+        if (user_idx == null) {
+            return new ArrayList<>(); 
+        }
+        return mentoringService.selectNotificationList(user_idx);
+    }
 
+    @PostMapping("/reportSubmit.do")
+    @ResponseBody
+    public String reportSubmit(ReportDTO dto, 
+                               @RequestParam(value="report_photo_file", required=false) MultipartFile file, 
+                               HttpSession session) {
+        
+        // 1. 세션에서 신고자(현재 로그인 유저) ID 가져오기
+        Integer reporter_idx = (Integer) session.getAttribute("user_idx");
+        if (reporter_idx == null) return "login_required";
+        dto.setReporter_idx(reporter_idx);
+
+        // 2. 사진 파일 실제 저장 처리
+        if (file != null && !file.isEmpty()) {
+            try {
+                // 서버 내 실제 물리적 경로 찾기
+                String uploadPath = session.getServletContext().getRealPath("/resources/upload/report");
+                
+                // 폴더가 없으면 생성
+                java.io.File folder = new java.io.File(uploadPath);
+                if (!folder.exists()) {
+                    folder.mkdirs();
+                }
+
+                // 파일명 중복 방지 (현재시간_원본이름)
+                String originalName = file.getOriginalFilename();
+                String saveName = System.currentTimeMillis() + "_" + originalName;
+                
+                // 지정된 경로에 파일 복사(저장)
+                java.io.File destination = new java.io.File(uploadPath, saveName);
+                file.transferTo(destination);
+
+                // 중요!! DB에는 웹에서 접근 가능한 상대 경로를 저장
+                dto.setReport_photo("/resources/upload/report/" + saveName);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "file_error"; 
+            }
+        } else {
+            // 사진을 선택하지 않은 경우 null 처리
+            dto.setReport_photo(null); 
+        }
+        
+        // 3. 서비스 호출 (이제 dto 안에는 사진 경로가 포함되어 있습니다)
+        int result = mentoringService.reportUser(dto);
+        
+        return result > 0 ? "success" : "fail";
+    }
 
 }
 

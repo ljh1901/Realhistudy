@@ -9,6 +9,7 @@ public class MentorListDTO {
     private String mentor_intro;
     private String mentor_link;
     private String mentor_tel;
+    private String profile_img;
 
     public MentorListDTO() {
     }
@@ -61,8 +62,16 @@ public class MentorListDTO {
 		this.mentor_tel = mentor_tel;
 	}
 
+	public String getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+
 	public MentorListDTO(int mentor_idx, String user_name, int sc_idx, String mentor_intro, String mentor_link,
-			String mentor_tel) {
+			String mentor_tel, String profile_img) {
 		super();
 		this.mentor_idx = mentor_idx;
 		this.user_name = user_name;
@@ -70,7 +79,6 @@ public class MentorListDTO {
 		this.mentor_intro = mentor_intro;
 		this.mentor_link = mentor_link;
 		this.mentor_tel = mentor_tel;
+		this.profile_img = profile_img;
 	}
-
-    
 }

@@ -139,7 +139,5 @@ public class StudyCafeViewController {
 	    }
 	    return mav;
 	}
-
-
-
+	
 }

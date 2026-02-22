@@ -1,6 +1,7 @@
    package com.histudy.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,9 +64,11 @@ public class UserController {
    // 2. 회원가입 완료
    @PostMapping("/userSignUp.do")
    public String signup(UserDTO dto, HttpServletRequest request) {
+	   if (dto.getProfile_img() == null || dto.getProfile_img().trim().isEmpty()) {
+           dto.setProfile_img("user.png"); 
+       }
       userService.userSignUp(dto);
       UserDTO user = userService.userInfo(dto.getUser_id());
-      userService.insertDefaultMypage(user.getUser_idx());
       request.setAttribute("msg", "회원가입 완료");
       return "redirect:/index.do";
    }
@@ -92,7 +95,8 @@ public class UserController {
          session.setAttribute("role_idx", loginUser.getRole_idx());
          session.setAttribute("user_name", loginUser.getUser_name());
 
-sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
+         sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
+         
          // [중요] 세션에 DTO 객체를 저장해둬야 마이페이지 수정 시 편리합니다.
          session.setAttribute("user", loginUser);
 
@@ -121,8 +125,10 @@ sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
    // 4. 로그아웃 및 중복체크
    @RequestMapping(value = "/userLogout.do", method = RequestMethod.GET)
    public String logout(HttpSession session) {
-      session.invalidate();
+
+      Integer user_idx = (Integer) session.getAttribute("user_idx"); 
        sa_Service.userLogoutTimeUpdate(user_idx);
+       session.invalidate();
       return "redirect:/index.do";
    }
 
@@ -149,7 +155,11 @@ sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
       mav.addObject("user", dto);
       mav.setViewName("user/myPage");
       
-      List<Map<String, Object>> list = membershipService.getPayment(userIdx);
+      Map<String, Object> map = new HashMap<>();
+      map.put("user_idx", userIdx);
+      map.put("start", 1); 
+      map.put("end", 5);
+      List<Map<String, Object>> list = membershipService.getPayment(map);
       mav.addObject("list", list); 
 		
       return mav;
@@ -173,7 +183,7 @@ sa_Service.userLoginTimeUpdate(loginUser.getUser_idx());
       // 1. 이미지 파일이 있으면 저장 (기존 로직 활용)
       // UserController.java의 이미지 저장 부분 수정
       if (uploadFile != null && !uploadFile.isEmpty()) {
-         String savePath = session.getServletContext().getRealPath("/mypage-img/");
+         String savePath = session.getServletContext().getRealPath("/mypage-img/pimg");
          String fileName = uploadFile.getOriginalFilename();
 
          // 경로와 파일명 사이에 File.separator 또는 "/" 추가 필요

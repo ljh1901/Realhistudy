@@ -41,9 +41,13 @@
    <select id="studyTotalCnt" parameterType="Integer" resultType="Integer">
       SELECT count(*)
       FROM study
-      <if test="sc_idx != null">
-      		WHERE sc_idx=#{sc_idx}
-      </if>
+      <where>
+	      	TRUNC(study_end_date) >= TRUNC(sysdate)
+	      	
+	      	<if test="sc_idx != null">
+	      		and sc_idx=#{sc_idx}
+	        </if>
+      </where>
    </select>
    
    <!-- 스터디 개설 페이지 이동 시 로그인된 사용자 정보 조회 -->
@@ -57,7 +61,7 @@
    <select id="studyMaxCreate" parameterType="Integer" resultType="Integer">
       SELECT count(*)
       FROM study JOIN usertb ON study.user_idx=usertb.user_idx
-      WHERE study.user_idx=#{user_idx}
+      WHERE study.user_idx=#{user_idx} and study_status != 2
    </select>
    
    <!-- 스터디 내용 페이지 입장 시 필요한 데이터 조회 -->

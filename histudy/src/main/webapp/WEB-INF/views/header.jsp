@@ -38,9 +38,7 @@
 
             <ul class="user-menu" id="userMenu">
                 <li><a href="${pageContext.request.contextPath}/myPage.do">프로필 관리</a></li>
-                <li><a href="#">알림함</a></li>
-                <li><a href="#">활동 내역</a></li>
-                <li><a href="#">관심 스터디</a></li>
+				<li><a href="javascript:void(0);" onclick="openNotiModal();">알림함</a></li>              
                 <li class="logout-item">
                     <a href="javascript:void(0);"
                        onclick="if(confirm('로그아웃 하시겠습니까?')) location.href='${pageContext.request.contextPath}/userLogout.do'"
@@ -53,3 +51,38 @@
     </c:if>
 </div>
 </header>
+<script>
+function openNotiModal() {
+    fetch("notification.do")
+        .then(function(response) {
+            if (!response.ok) throw new Error("알림함 서버 응답 오류");
+            return response.text();
+        })
+        .then(function(html) {
+        	var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');            
+			var fragment = doc.querySelector('main'); 
+            var modalContent = document.getElementById('modalContent');
+            var overlay = document.getElementById('modalOverlay');
+            if (modalContent && overlay) {
+            	modalContent.innerHTML = fragment ? fragment.innerHTML : html;                overlay.style.display = 'flex';
+                var closeBtn = document.createElement('div');
+                closeBtn.className = 'close-btn';
+                closeBtn.innerHTML = '&times;';
+                closeBtn.onclick = function() { overlay.style.display = 'none'; };
+                Object.assign(modalContent.style, {
+                    width: '900px'
+                });
+                Object.assign(closeBtn.style, {
+                    position: 'absolute', right: '25px', top: '20px',
+                    cursor: 'pointer', fontSize: '20px'
+                });
+                modalContent.appendChild(closeBtn);
+            }
+        })
+        .catch(function(error) { 
+            console.error(error); 
+            alert('알림함을 불러오는 데 실패했습니다.');
+        });
+}
+</script>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +29,44 @@
 				</ul>
 			</nav>
 		</aside>
+		<!-- 1.프리미엄회원 잔여일(비회원이면 안뜸) -->
+		<section>
+		<c:choose>
+			<c:when test="${sessionScope.membership=='premium'}">
+				<div>프리미엄 회원 잔여일</div>
+				<p>이용 가능 기간이 ${restDays}일 남았습니다.</p>
+			</c:when>
+			<c:otherwise>
+				일반 회원입니다.
+			</c:otherwise>
+		</c:choose>
+		</section>
+		<!-- 2.스카 이용률 그래프(한달, 이용안했으면 안뜸) -->
+		<section>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<canvas id="usageChart" width="400" height="200"></canvas>
+		<script>
+		fetch('getMyMonthlyUsage.do')
+		    .then(res=>res.json())
+		    .then(data=>{
+		        const labels=data.map(item=>item.date);
+		        const usageData=data.map(item=>item.usage_count);
+		        const ctx=document.getElementById('usageChart').getContext('2d');
+		        new Chart(ctx,{
+		            type:'line',
+		            data:{
+		                labels:labels,
+		                datasets:[{
+		                    label:'최근 30일 내 이용 건수',
+		                    data:usageData,
+		                    borderColor:'rgb(75, 192, 192)',
+		                    tension:0.1
+		                }]
+		            }
+		        });
+		    });
+		</script>
+		</section>
 	</div>
 </div>
 </main>

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>스터디 모임 관리</title>
 <link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
-<%@ include file="../adminCheck.jsp" %>
+<%@ include file="../adminCheck.jsp"%>
 
 </head>
 <body>
@@ -32,10 +32,10 @@
 				<div class="admin__study__item">
 					<div class="study__info__left">
 						<div class="study__meta">
-							<span class="study__cate">${s.sc_name}</span> 
-                            <a href="adminStudyDetail.do?study_idx=${s.study_idx}" class="study__title__link">
-                                <span class="study__title_text">${s.study_title}</span>
-                            </a>
+							<span class="study__cate">${s.sc_name}</span> <a
+								href="adminStudyDetail.do?study_idx=${s.study_idx}"
+								class="study__title__link"> <span class="study__title_text">${s.study_title}</span>
+							</a>
 						</div>
 						<div class="study__details">
 							<span><img src="/histudy/main-img/user.png" width="14">
@@ -50,8 +50,11 @@
 
 					<div class="admin__actions">
 						<c:choose>
-							<c:when test="${s.study_current_members >= s.study_max_members}">
-								<span class="study__status study__status__closed">마감</span>
+							<c:when test="${s.study_status == 2}">
+								<span class="study__status study__status__closed">완료됨</span>
+							</c:when>
+							<c:when test="${s.study_status == 1}">
+								<span class="study__status study__status__ongoing">진행중</span>
 							</c:when>
 							<c:otherwise>
 								<span class="study__status study__status__recruiting">모집중</span>

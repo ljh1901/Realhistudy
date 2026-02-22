@@ -80,4 +80,31 @@ public class InquiryController {
         mav.setViewName("inquiry/userInquiryList");
         return mav;
     }
+    
+    @RequestMapping("/userInquiryDetail.do")
+    public ModelAndView userInquiryDetail(@RequestParam("inquiry_idx") int inquiry_idx, HttpSession session) {
+        
+        Integer userIdx = (Integer) session.getAttribute("user_idx");
+        ModelAndView mav = new ModelAndView();
+
+        if (userIdx == null) {
+            mav.addObject("msg", "로그인이 필요한 서비스입니다.");
+            mav.addObject("url", "userSignIn.do");
+            mav.setViewName("admin/adminMsg");
+            return mav;
+        }
+
+        InquiryDTO dto = inquiryService.getInquiryDetail(inquiry_idx);
+        
+        if (dto == null || dto.getUser_idx() != userIdx) {
+            mav.addObject("msg", "해당 글이 존재하지 않거나 접근 권한이 없습니다.");
+            mav.addObject("url", "userInquiryList.do");
+            mav.setViewName("admin/adminMsg");
+            return mav;
+        }
+        
+        mav.addObject("dto", dto);
+        mav.setViewName("inquiry/userInquiryDetail");
+        return mav;
+    }
 }

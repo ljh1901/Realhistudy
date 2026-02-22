@@ -13,7 +13,6 @@
     <h1>공지사항 관리</h1>
 
     <fieldset class="notice__category">
-        <legend>카테고리 선택</legend>
         <ul class="notice__category__list">
             <li class="notice__category__item ${empty selectedCategory or selectedCategory == 0 ? 'active' : ''}" 
                 onclick="location.href='adminNotice.do'">전체</li>

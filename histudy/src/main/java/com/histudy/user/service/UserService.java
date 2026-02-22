@@ -1,4 +1,5 @@
 package com.histudy.user.service;
+import com.histudy.mypage.model.WishListDTO;
 import com.histudy.user.model.UserDTO;
 
 public interface UserService {
@@ -10,5 +11,5 @@ public interface UserService {
 	public int updateProfile(UserDTO dto);
 	public String userFindId(String user_name,String user_tel);
 	public String userFindPw(String user_id,String user_name,String user_tel);
-	public void insertDefaultMypage(int user_idx);
+	public int insertDefaultMypage(String user_id);
 }

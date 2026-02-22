@@ -17,7 +17,7 @@ public interface StudycafeSerivce {
 	public int studycafeListCount(String region);
 	public StudycafeDTO studycafe(int studycafe_idx);
 	public StudycafeJoinReservationDTO seatReservation(int seat_idx);
-	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx);
+	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx, int studycafe_idx);
 	public List<SeatDTO> seatInfo(int studycafe_idx);
 	public int orderPay(PayDTO payOrder);
 	public int paySeat(PayDTO paydto);

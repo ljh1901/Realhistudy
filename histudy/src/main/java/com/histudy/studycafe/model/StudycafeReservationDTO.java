@@ -1,5 +1,6 @@
 package com.histudy.studycafe.model;
 
+import java.io.File;
 import java.sql.Timestamp;
 
 public class StudycafeReservationDTO {

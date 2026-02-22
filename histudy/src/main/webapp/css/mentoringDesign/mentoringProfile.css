@@ -26,7 +26,6 @@
   .mp-tab:hover { background:#f1f5f9; }
   .mp-tab small { font-weight:900; color:#64748b; }
 
-  /* ===== 별 표시 로직 수정 (자간 0으로 오차 제거) ===== */
   .stars {
     --rating: 0;
     position: relative;
@@ -178,4 +177,139 @@
   color:#0f172a;
   font-size:12px;
   font-weight:700;
+}
+
+/* 신고 모달 전체 배경 */
+.report-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* 모달 컨텐츠 박스 */
+.report-modal-content {
+    background: #fff;
+    width: 400px;
+    margin: 10% auto;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.report-modal-content h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #0f172a;
+}
+
+.report-modal-content p {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+/* 입력 필드들 */
+.report-form-group {
+    margin-bottom: 16px;
+}
+
+.report-form-group label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #334155;
+}
+
+.report-form-group select,
+.report-form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-size: 14px;
+    box-sizing: border-box; /* 패딩 때문에 박스 나가는 것 방지 */
+}
+
+.report-form-group textarea {
+    resize: none;
+}
+
+/* 버튼 영역 */
+.report-btn-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.btn-report-cancel {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-report-submit {
+    flex: 2;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #0f2d3a;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-report-submit:hover {
+    background: #1e3a47;
+}
+
+/* 링크 스타일 */
+.report-link {
+    color: #94a3b8;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.optional-text {
+    font-size: 12px;
+    font-weight: normal;
+    color: #94a3b8;
+    margin-left: 4px;
+}
+
+/* 파일 인풋 박스 */
+.file-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.report-form-group input[type="file"] {
+    border: 2px dashed #e2e8f0; /* 점선으로 만들어서 '업로드 영역' 느낌 주기 */
+    background: #f8fafc;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.report-form-group input[type="file"]:hover {
+    border-color: #cbd5e1;
+    background: #f1f5f9;
+}
+
+/* 도움말 텍스트 */
+.file-help-text {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 6px;
+    margin-left: 2px;
 }

@@ -24,8 +24,13 @@ public class UserServiceImple implements UserService {
 	@Override
 	public int userSignUp(UserDTO dto) {
 		dto.setUser_pw(com.histudy.security.PwdModule.securityPwd(dto.getUser_pw()));
-		mdao.insertBasic(dto.getUser_idx());
-		return dao.userSignUp(dto);
+		int result = dao.userSignUp(dto);
+		if(result>0){
+	        dao.insertDefaultMypage(dto.getUser_id());
+	    }
+		UserDTO newUser=dao.userInfo(dto.getUser_id());
+		mdao.insertBasic(newUser.getUser_idx());
+		return result;
 	}
 
 	@Override
@@ -109,7 +114,8 @@ public class UserServiceImple implements UserService {
 		return null;
 	}
 	@Override
-	public void insertDefaultMypage(int user_idx) {
-		dao.insertDefaultMypage(user_idx);
+	public int insertDefaultMypage(String user_id) {
+		// TODO Auto-generated method stub
+		return dao.insertDefaultMypage(user_id);
 	}
 }

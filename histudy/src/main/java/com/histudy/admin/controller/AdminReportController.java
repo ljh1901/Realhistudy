@@ -18,18 +18,24 @@ public class AdminReportController {
 
     // 신고 목록 페이지
     @RequestMapping("/adminReportList.do")
-    public ModelAndView adminReportList() {
-        List<ReportDTO> list = adminReportService.getReportList();
+    public ModelAndView adminReportList(@RequestParam(value = "status", required = false) String status) {
+        List<ReportDTO> list = adminReportService.getReportList(status);
+        
         ModelAndView mav = new ModelAndView();
         mav.addObject("reportList", list);
+        mav.addObject("currentStatus", status); 
         mav.setViewName("admin/adminReportList");
         return mav;
     }
-
-    // 신고 처리 완료 처리
-    @RequestMapping("/adminReportResolve.do")
-    public String adminReportResolve(@RequestParam("report_idx") int report_idx) {
-        adminReportService.resolveReport(report_idx);
-        return "redirect:adminReportList.do";
+    
+    @RequestMapping("/adminReportProcess.do")
+    public String reportProcess(@RequestParam("report_idx") int reportIdx, 
+                                @RequestParam("action") String action) {
+        
+        String status = "완료".equals(action) ? "완료" : "거절";
+        
+        adminReportService.updateReportStatus(reportIdx, status);
+        
+        return "redirect:/adminReportList.do";
     }
 }

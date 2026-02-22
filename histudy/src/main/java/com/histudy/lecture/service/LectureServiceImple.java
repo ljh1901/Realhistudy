@@ -113,9 +113,9 @@ public class LectureServiceImple implements LectureService {
 		return lectureDao.checkReviewCount(map);
 	}
    @Override
-	public Integer myReview(int user_idx) {
+   public Integer myReview(Map<String,Object> map) {
 		// TODO Auto-generated method stub
-		return lectureDao.myReview(user_idx);
+		return lectureDao.myReview(map);
 	}
    @Override
 	public int reviewUpdate(LectureReviewDTO dto) {

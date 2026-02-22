@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.histudy.mentoring.model.*;
+import com.histudy.admin.model.ReportDTO;
 
 
 public interface MentoringService {
@@ -23,7 +24,7 @@ public interface MentoringService {
     public MentorApplicationDTO selectMentorApplicationDetail(int ma_id);
 
     public int approveMentorApplication(int ma_id);
-    public int rejectMentorApplication(int ma_id, String reject_reason);
+    public int rejectMentorApplication(int ma_id);
     public int deleteMentorApplication(int ma_id);
 
     public MentorSummaryDTO selectMentorSummary(int mentor_idx);
@@ -41,5 +42,8 @@ public interface MentoringService {
     public Integer getWritableMatchId(int mentor_idx, int mentee_user_idx);
     public int writeReview(MentoringReviewDTO dto);
     
+    public List<Map<String, Object>> selectNotificationList(int user_idx);
+    
+    int reportUser(ReportDTO dto);
 
 }

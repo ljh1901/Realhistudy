@@ -6,6 +6,6 @@ import com.histudy.admin.model.ReportDTO;
 
 public interface AdminReportService {
 
-	public List<ReportDTO> getReportList();
-	public int resolveReport(int report_idx);
+	public List<ReportDTO> getReportList(String status);
+	public void updateReportStatus(int reportIdx, String status);
 }

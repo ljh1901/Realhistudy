@@ -7,5 +7,7 @@ public interface MembershipDAO {
 	int insertPrimium(MembershipPaymentDTO paymentDTO);
 	int insertBasic(int user_idx);
 	String membershipGrade(int user_idx);
-	public List<Map<String, Object>> getPayment(int user_idx);
+	public List<Map<String, Object>> getPayment(Map<String,Object> map);
+	public int getPaymentTotalCnt(int user_idx);
+
 }

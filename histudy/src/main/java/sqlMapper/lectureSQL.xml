@@ -121,10 +121,11 @@
 	    INSERT INTO lecture_hate (hate_idx, user_idx, lecture_idx)
 	    VALUES (lecture_hate_idx.nextval, #{user_idx}, #{lecture_idx})
 	</insert>
-	<select id="myReview" parameterType="int" resultType="int">
+	<select id="myReview" parameterType="com.histudy.lecture.model.LectureReviewDTO" resultType="int">
 		select review_idx
 		from lecture_review
 		where user_idx=#{user_idx}
+			and lecture_idx=#{lecture_idx}
 	</select>
 	<update id="reviewUpdate" parameterType="com.histudy.lecture.model.LectureReviewDTO">
 		update lecture_review

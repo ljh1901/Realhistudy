@@ -27,7 +27,12 @@ public class MembershipServiceImple implements MembershipService {
 		return membershipDao.insertPrimium(paymentDTO);
 	}
 	@Override
-	public List<Map<String, Object>> getPayment(int user_idx){
-		return membershipDao.getPayment(user_idx);
+	public List<Map<String, Object>> getPayment(Map<String,Object> map){
+		return membershipDao.getPayment(map);
+	}
+	@Override
+	public int getPaymentTotalCnt(int user_idx) {
+		// TODO Auto-generated method stub
+		return membershipDao.getPaymentTotalCnt(user_idx);
 	}
 }

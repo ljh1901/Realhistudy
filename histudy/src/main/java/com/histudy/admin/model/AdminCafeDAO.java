@@ -8,9 +8,13 @@ import com.histudy.studycafe.model.TicketJoinTicketCategoryDTO;
 public interface AdminCafeDAO {
 	public List<StudycafeDTO> selectAllCafes();
 	public List<Map<String, Object>> selectSalesList(Map<String, Object> params);
+	public List<Map<String, Object>> selectCafePaymentList(int studycafe_idx);
+	
 	public void deleteLayoutByCafeIdx(int studycafe_idx);
-	public  void insertLayout(Map<String, Object> item);
+	public int insertLayout(Map<String, Object> layoutData);
 	public List<Map<String, Object>> getLayoutList(int studycafe_idx);
+	public int deleteSeatByCafeIdx(int studycafe_idx);
+	public int insertSeat(Map<String, Object> seatData);
     
 	public List<TicketCategoryDTO> getTicketCategoryList();
 	public List<TicketJoinTicketCategoryDTO> getTicketList(int studycafe_idx);

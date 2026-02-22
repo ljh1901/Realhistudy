@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.histudy.admin.model.ReportDTO;
 
 
 public class MentoringDAOImple implements MentoringDAO {
@@ -172,5 +173,25 @@ public class MentoringDAOImple implements MentoringDAO {
     @Override
     public int updateMentoringStatusClose(int mentoring_idx) {
         return sqlSession.update("com.histudy.mentoring.updateMentoringStatusClose", mentoring_idx);
+    }
+
+    @Override
+    public int insertMentoringMatchNotification(int ma_id) {
+        return sqlSession.insert("com.histudy.mentoring.insertMentoringMatchNotification", ma_id);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectNotificationList(int user_idx) {
+        return sqlSession.selectList("com.histudy.mentoring.selectNotificationList", user_idx);
+    }
+    
+    @Override
+    public int insertMentoringRejectNotification(Map<String, Object> map) {
+    	return sqlSession.insert("com.histudy.mentoring.insertMentoringRejectNotification", map);
+    }
+    
+    @Override
+    public int insertReport(ReportDTO dto) {
+        return sqlSession.insert("com.histudy.mentoring.insertReport", dto);
     }
 }
