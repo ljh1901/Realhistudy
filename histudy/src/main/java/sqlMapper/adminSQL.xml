@@ -21,15 +21,19 @@
 		,
 		SUM(p.totalAmount) AS total_amount
 		FROM studycafe_pay p
-		JOIN studycafe_reservation r ON p.paymentId = r.paymentId
-		JOIN seat s ON r.seat_idx = s.seat_idx
+		JOIN
+		studycafe_reservation r ON p.paymentId = r.paymentId
+		JOIN seat s ON
+		r.seat_idx = s.seat_idx
 		WHERE p.pay_status = 'PAID'
-		AND s.studycafe_idx = #{studycafe_idx}
+		AND s.studycafe_idx
+		= #{studycafe_idx}
 		<if test="startDate != null and startDate != ''">
 			AND (p.paidAt) &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
 		</if>
 		<if test="endDate != null and endDate != ''">
-			AND (p.paidAt) &lt;= TO_DATE(#{endDate} || ' 23:59:59', 'YYYY-MM-DD
+			AND (p.paidAt) &lt;= TO_DATE(#{endDate} || ' 23:59:59',
+			'YYYY-MM-DD
 			HH24:MI:SS')
 		</if>
 		GROUP BY
@@ -48,15 +52,20 @@
 		u.user_name,
 		u.user_id,
 		p.orderName AS seat_info, p.totalAmount,
-		TO_CHAR(p.paidAt, 'YYYY-MM-DD HH24:MI:SS') AS pay_date,
+		TO_CHAR(p.paidAt, 'YYYY-MM-DD
+		HH24:MI:SS') AS pay_date,
 		p.pay_status
 		FROM studycafe_pay p
-		JOIN usertb u ON p.user_idx = u.user_idx
-		JOIN studycafe_reservation r ON p.paymentId = r.paymentId
+		JOIN usertb u
+		ON p.user_idx = u.user_idx
+		JOIN studycafe_reservation r ON p.paymentId
+		= r.paymentId
 		JOIN seat s ON r.seat_idx = s.seat_idx
-		WHERE s.studycafe_idx = #{studycafe_idx}
+		WHERE
+		s.studycafe_idx = #{studycafe_idx}
 		AND p.pay_status = 'PAID'
-		ORDER BY p.paidAt DESC
+		ORDER BY
+		p.paidAt DESC
 	</select>
 
 	<insert id="insertStudyCafe"
@@ -81,19 +90,24 @@
 	</delete>
 
 	<insert id="insertLayout" parameterType="map">
-		INSERT INTO studycafe_layout (
-		layout_idx, studycafe_idx, type, label, x, y, width, height
+		INSERT INTO
+		studycafe_layout (
+		layout_idx, studycafe_idx, type, label, x, y, width,
+		height
 		) VALUES (
-		seq_layout_idx.nextval, #{studycafe_idx}, #{type}, #{label}, #{x}, #{y}, #{width}, #{height}
+		seq_layout_idx.nextval, #{studycafe_idx}, #{type},
+		#{label}, #{x}, #{y}, #{width}, #{height}
 		)
 	</insert>
 
 	<insert id="insertSeat" parameterType="map">
 		INSERT INTO seat (
 		seat_idx, seat_num, seat_type, seat_status,
-		seat_x, seat_y, seat_w, seat_h, studycafe_idx
+		seat_x, seat_y, seat_w,
+		seat_h, studycafe_idx
 		) VALUES (
-		seat_idx.nextval, #{label}, #{type}, 'FREE',
+		seat_idx.nextval, #{label}, #{type},
+		'FREE',
 		#{x}, #{y}, #{width}, #{height}, #{studycafe_idx}
 		)
 	</insert>
@@ -108,7 +122,8 @@
 	</select>
 
 	<delete id="deleteSeatByCafeIdx" parameterType="int">
-		DELETE FROM seat WHERE studycafe_idx = #{studycafe_idx}
+		DELETE FROM seat
+		WHERE studycafe_idx = #{studycafe_idx}
 	</delete>
 
 	<select id="getTicketCategoryList"
@@ -192,7 +207,8 @@
 		s.study_addr,
 		s.study_status
 		FROM study s
-		LEFT JOIN usertb u ON s.user_idx = u.user_idx
+		LEFT JOIN usertb u ON
+		s.user_idx = u.user_idx
 		<where>
 			<if test="sc_idx != null and sc_idx != 0">
 				AND s.sc_idx = #{sc_idx}
@@ -357,7 +373,7 @@
 		parameterType="com.histudy.admin.model.NoticeDTO">
 		delete from notice where notice_idx = #{notice_idx}
 	</delete>
-
+	<!-- 신고 관리 관련 -->
 	<select id="selectAllReportList" parameterType="hashmap"
 		resultType="com.histudy.admin.model.ReportDTO">
 		SELECT
@@ -368,15 +384,24 @@
 		r.report_content,
 		r.report_date,
 		r.report_status,
-		u.user_name AS reporter_name,
+		r.report_photo,
+		NVL(u.user_name, '알 수 없는 사용자') AS reporter_name,
+		(SELECT COUNT(*)
+		FROM report
+		WHERE report_type = r.report_type
+		AND target_idx = r.target_idx
+		AND report_status = '완료') AS report_count,
 		CASE
 		WHEN r.report_type = 'STUDY' THEN (SELECT study_title FROM study WHERE
 		study_idx = r.target_idx)
 		WHEN r.report_type = 'USER' THEN (SELECT user_name FROM usertb WHERE
 		user_idx = r.target_idx)
+		WHEN r.report_type = 'REVIEW' THEN (SELECT studycafe_reply FROM
+		studycafe_reply WHERE review_idx = r.target_idx)
+		ELSE '데이터 없음'
 		END AS target_name
 		FROM report r
-		JOIN usertb u ON r.reporter_idx = u.user_idx
+		LEFT JOIN usertb u ON r.reporter_idx = u.user_idx
 		<where>
 			<if test="status != null and status != ''">
 				AND r.report_status = #{status}
@@ -385,9 +410,10 @@
 		ORDER BY r.report_idx DESC
 	</select>
 
-	<update id="updateReportStatus" parameterType="int">
-		update report set
-		report_status = '완료' where report_idx = #{report_idx}
+	<update id="updateReportStatus" parameterType="hashmap">
+		UPDATE report
+		SET report_status = #{status}
+		WHERE report_idx = #{reportIdx}
 	</update>
 
 
