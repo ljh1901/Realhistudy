@@ -30,7 +30,7 @@ public class MembershipDAOImple implements MembershipDAO {
 		return sqlSession.selectList("getPayment",map);
 	}
 	@Override
-	public int getPaymentTotalCnt(int user_idx) {
+	public Integer getPaymentTotalCnt(int user_idx) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getPaymentTotalCnt",user_idx);
 	}

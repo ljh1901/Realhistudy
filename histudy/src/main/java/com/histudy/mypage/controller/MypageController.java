@@ -8,16 +8,24 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.histudy.lecture.model.LectureNoteDTO;
+import com.histudy.lecture.service.LectureService;
 import com.histudy.membership.model.MembershipPaymentDTO;
 import com.histudy.membership.service.MembershipService;
 import com.histudy.mentoring.model.MentoProfileDTO;
+import com.histudy.mentoring.model.MentorSummaryDTO;
+import com.histudy.mentoring.model.MentoringDetailDTO;
+import com.histudy.mentoring.model.MentoringScheduleDTO;
+import com.histudy.mentoring.service.MentoringService;
 import com.histudy.mypage.model.WishListDTO;
 import com.histudy.mypage.service.MypageService;
 import com.histudy.mypage.service.MypageServiceImple;
@@ -32,17 +40,33 @@ public class MypageController {
 	private MypageService mypageService;
 	@Autowired
 	private StudyService studyService;
+	@Autowired
+	private MentoringService mentoringService;
+	@Autowired
+	private LectureService lectureService;
 
 	@GetMapping("myDashboard.do")
 	public ModelAndView myDashboard(HttpSession session){
 	    ModelAndView mav=new ModelAndView();
 	    Integer user_idx=(Integer)session.getAttribute("user_idx");
 	    mav.addObject("restDays",0);
-	    
 	    Map<String, Integer> params = new HashMap<>();
 	    params.put("start_num", 1);
 	    params.put("end_num", 3);
+	    
 	    List<StudyDTO> study = studyService.getStudyList(params);
+	    mav.addObject("study",study);
+	    Integer mentor_idx = mypageService.getMentorIdxByMentee(user_idx);
+	    if(mentor_idx != null) {
+            MentoringDetailDTO mdto = mentoringService.selectMentoringDetailByMentor(mentor_idx);
+            mav.addObject("mentoring", mdto);
+        } 
+	    
+	    List<LectureNoteDTO> recentNotes = lectureService.selectRecentNotes(user_idx);
+	    mav.addObject("recentNotes", recentNotes);
+	    if (recentNotes != null && !recentNotes.isEmpty()) {
+	        mav.addObject("note", recentNotes.get(0));
+	    }
 	    
 	    if(user_idx!=null){
 	        Map<String,Object> map=new HashMap<>();
@@ -67,6 +91,8 @@ public class MypageController {
 	            }
 	        }
 	    }
+	    
+	    
 	    mav.setViewName("mypage/myDashboard");
 	    return mav;
 	}
@@ -105,6 +131,25 @@ public class MypageController {
 		List<Map<String, Object>> list=membershipService.getPayment(map);
 		mav.addObject("list",list);
 		mav.addObject("pageStr",pageStr);
+		
+		//쿠폰--==
+		//(1)최신 멤버십 결제 내역 가져오기
+        MembershipPaymentDTO membership = mypageService.getLastMembership(user_idx);
+        long now = System.currentTimeMillis();
+        boolean hasCoupon = false;
+        //(2)멤버십이 있고, 안 끝남
+        if (membership != null && membership.getEnd_date().getTime() >= now) {
+        	Map<String, Object> checkMap = new HashMap<>();
+            checkMap.put("user_idx", user_idx);
+            checkMap.put("membershipDate", membership.getPayment_date());
+            //(3)반값으로 결제한 적이 있는지?
+            int usedCount = mypageService.selectHalfPrice(checkMap);
+            //(4)사용한 적이 없다면 쿠폰이 있는 것으로..
+            if (usedCount == 0) {
+                hasCoupon = true;
+            }
+        }
+        mav.addObject("hasCoupon", hasCoupon);
 		mav.setViewName("mypage/myPurchase");
 		return mav;
 	}

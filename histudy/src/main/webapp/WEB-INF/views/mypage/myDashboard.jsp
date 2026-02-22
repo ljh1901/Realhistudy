@@ -31,89 +31,93 @@
 			</nav>
 		</aside>
 		<div class="dashboard-content">
-		<!-- 1.프리미엄회원 잔여일 -->
-		<section class="membership-card">
-		<div>👑프리미엄 회원 잔여일</div><br>
-		<c:choose>
-			<c:when test="${sessionScope.membership=='premium'}">
-				<p>이용 가능 기간이 ${restDays}일 남았습니다.</p>
-			</c:when>
-			<c:otherwise>
-				일반 회원입니다.
-			</c:otherwise>
-		</c:choose>
-		</section>
-		<!-- 2.스카 이용률 그래프(한달, 이용안했으면 안뜸) -->
-		<section class="chart-section">
-		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-		<canvas id="usageChart" width="400" height="200"></canvas>
-		<script>
-		fetch('getMyMonthlyUsage.do')
-		    .then(res=>res.json())
-		    .then(data=>{
-		        const labels=data.map(item=>item.date);
-		        const usageData=data.map(item=>item.usage_count);
-		        const ctx=document.getElementById('usageChart').getContext('2d');
-		        new Chart(ctx,{
-		            type:'line',
-		            data:{
-		                labels:labels,
-		                datasets:[{
-		                    label:'최근 30일 내 이용 건수',
-		                    data:usageData,
-		                    borderColor:'rgb(75, 192, 192)',
-		                    tension:0.1
-		                }]
-		            }
-		        });
-		    });
-		</script>
-		</section> 
-		<!-- 3.가입중인 스터디 -->
-		<section class="my-study-section">
-		    <div class="section-header">
-		        <h3>✍️ 참여중인 스터디</h3>
-		    </div>
+		    <section class="membership-card">
+		        <div>👑 프리미엄 회원 잔여일</div>
+		        <c:choose>
+		            <c:when test="${sessionScope.membership=='premium'}">
+		                <p>이용 가능 기간이 ${restDays}일 남았습니다.</p>
+		            </c:when>
+		            <c:otherwise>
+		                <p>일반 회원입니다.</p>
+		            </c:otherwise>
+		        </c:choose>
+		    </section>
 		
-		    <div class="study-grid">
-		        <c:forEach var="study" items="${study}">
-		            <div class="study-card">
-		                <div class="study-badge">${study.sc_name}</div>
-		                <h4 class="study-title">${study.study_title}</h4>
-		                
-		                <div class="study-info">
-		                    <span><img src="mypage-img/user.png" width="14"> ${study.user_name}</span>
+		    <section class="note-summary-section">
+		        <div class="section-header">
+		            <h3>📝 최근 작성한 학습 노트</h3>
+		        </div>
+		        <div class="study-grid">
+		            <c:choose>
+		                <c:when test="${not empty note}">
+		                    <div class="study-card" style="border-top: 5px solid #f1c40f;">
+		                        <div style="font-size: 11px; color: #999; margin-bottom: 5px; font-weight: 600;">
+		                            📚 ${note.lecture_name}
+		                        </div>
+		                        <h4 class="study-title">${not empty note.note_title ? note.note_title : '제목 없음'}</h4>
+		                        <p style="font-size: 13px; color: #666; height: 36px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; margin-bottom: 15px;">
+		                            ${note.note_content}
+		                        </p>
+		                        <div class="study-footer" style="display: flex; justify-content: flex-end;">
+		                            <button type="button" class="btn-enter" onclick="location.href='lectureContent.do?lecture_idx=${note.lecture_idx}'" style="background: #f1c40f; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">입장</button>
+		                        </div>
+		                    </div>
+		                </c:when>
+		                <c:otherwise>
+		                    <div class="empty-study" style="padding: 20px; text-align: center; color: #ccc;">작성된 노트가 없습니다.</div>
+		                </c:otherwise>
+		            </c:choose>
+		        </div>
+		    </section>
+		
+		    <section class="my-study-section">
+		        <div class="section-header">
+		            <h3>✍️ 참여중인 스터디</h3>
+		        </div>
+		        <div class="study-grid">
+		            <c:forEach var="study" items="${study}">
+		                <div class="study-card">
+		                    <div class="study-badge">${study.sc_name}</div>
+		                    <h4 class="study-title">${study.study_title}</h4>
+		                    <div class="study-footer">
+		                        <span class="d-day ${study.dday <= 3 ? 'urgent' : ''}">D-${study.dday}</span>
+		                        <button type="button" onclick="location.href='studyContent.do?study_idx=${study.study_idx}'">입장</button>
+		                    </div>
 		                </div>
+		            </c:forEach>
+		            <c:if test="${empty study}">
+		                <div class="empty-study">참여 중인 스터디가 없습니다.</div>
+		            </c:if>
+		        </div>
+		    </section>
 		
-		                <div class="study-footer">
-		                    <span class="d-day ${study.dday <= 3 ? 'urgent' : ''}">
-		                        <c:choose>
-		                            <c:when test="${study.dday > 0}">D-${study.dday}</c:when>
-		                            <c:when test="${study.dday == 0}">D-Day</c:when>
-		                            <c:otherwise>마감</c:otherwise>
-		                        </c:choose>
-		                    </span>
-		                    <button type="button" onclick="location.href='studyDetail.do?study_idx=${study.study_idx}'">입장</button>
-		                </div>
-		            </div>
-		        </c:forEach>
-		
-		        <c:if test="${empty study}">
-		            <div class="empty-study">
-		                <p>현재 참여 중인 스터디가 없습니다.</p>
-		                <a href="studyList.do">스터디 찾으러 가기</a>
-		            </div>
-		        </c:if>
-		    </div>
-		</section>
-		<!-- 4.가입중인 멘토링 -->
-		<section class="mentoring-section">
-		<h3>⏲ 가입중인 멘토링</h3>
-		
-		</section>
+		    <section class="mentoring-section">
+		        <div class="section-header">
+		            <h3>⏲ 참여 중인 멘토링</h3>
+		        </div>
+		        <div class="study-grid">
+		            <c:choose>
+		                <c:when test="${not empty mentoring}">
+		                    <div class="study-card">
+		                        <div class="study-badge" style="background: rgba(168, 85, 247, 0.1); color: #7c3aed;">${mentoring.job_group}</div>
+		                        <h4 class="study-title">${mentoring.mentoring_title}</h4>
+		                        <div class="study-info">
+		                            <img src="mypage-img/${not empty mentoring.mentor_profile_img ? mentoring.mentor_profile_img : 'user.png'}" width="22" height="22" style="border-radius: 50%;">
+		                            <span style="margin-left: 8px;"><strong>${mentoring.mentor_name}</strong> 멘토</span>
+		                        </div>
+		                        <div class="study-footer" style="display: flex; justify-content: flex-end;">
+		                            <button type="button" class="btn-enter" onclick="location.href='mentorProfile.do?mentor_idx=${mentoring.mentor_idx}'">입장</button>
+		                        </div>
+		                    </div>
+		                </c:when>
+		                <c:otherwise>
+		                    <div class="empty-study">참여 중인 멘토링이 없습니다.</div>
+		                </c:otherwise>
+		            </c:choose>
+		        </div>
+		    </section>
+		</div>
 	</div>
-	</div>
-</div>
 </main>
 <%@ include file="../footer.jsp"%>
 </body>

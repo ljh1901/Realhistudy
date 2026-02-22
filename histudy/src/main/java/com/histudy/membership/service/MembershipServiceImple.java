@@ -31,7 +31,7 @@ public class MembershipServiceImple implements MembershipService {
 		return membershipDao.getPayment(map);
 	}
 	@Override
-	public int getPaymentTotalCnt(int user_idx) {
+	public Integer getPaymentTotalCnt(int user_idx) {
 		// TODO Auto-generated method stub
 		return membershipDao.getPaymentTotalCnt(user_idx);
 	}

@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/root.css">
 <link rel="stylesheet" href="css/lectureDesign/lectureList.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/histudy/css/user/loginModal.css">
 </head>
 <body id="lectureListPage" class="lectureList">
 <%@include file="../header.jsp"%>
@@ -51,6 +52,7 @@
 		    </c:if>
 		</c:forEach>
        </tr>
+       <c:if test="${not empty lectureLists }">
        <tfoot>
        		<tr>
        			<td colspan="4">
@@ -58,6 +60,7 @@
       	 		</td>
       	 	</tr>
        </tfoot>
+       </c:if>
    </table>
    </form>
    </section>
@@ -77,7 +80,9 @@
    <br>
    </section>
    </form>
-   
+<div id="modalOverlay">
+		<div id="modalContent" class="login-modal-box"></div>
+</div>
 </main>
 <%@include file="../footer.jsp"%>
 </body>

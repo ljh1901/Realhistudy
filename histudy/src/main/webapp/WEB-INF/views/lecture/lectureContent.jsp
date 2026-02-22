@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/header.css" type="text/css">
 <link rel="stylesheet" href="css/footer.css" type="text/css">
 <link rel="stylesheet" href="css/lectureDesign/lectureContent.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/histudy/css/user/loginModal.css">
 <script>
 function load(){
 	var message="${msg}";
@@ -316,6 +317,9 @@ function dohate(lecture_idx, user_idx) {
 	</c:otherwise>
 </c:choose>
 </section>
+<div id="modalOverlay">
+		<div id="modalContent" class="login-modal-box"></div>
+</div>
 </main>
 <%@include file="../footer.jsp"%>
 </body>
