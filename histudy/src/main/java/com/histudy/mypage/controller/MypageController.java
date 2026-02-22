@@ -17,9 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.histudy.membership.model.MembershipPaymentDTO;
 import com.histudy.membership.service.MembershipService;
+import com.histudy.mentoring.model.MentoProfileDTO;
 import com.histudy.mypage.model.WishListDTO;
 import com.histudy.mypage.service.MypageService;
 import com.histudy.mypage.service.MypageServiceImple;
+import com.histudy.study.model.StudyDTO;
+import com.histudy.study.service.StudyService;
 	
 @Controller
 public class MypageController {
@@ -27,12 +30,20 @@ public class MypageController {
 	private MembershipService membershipService;
 	@Autowired
 	private MypageService mypageService;
+	@Autowired
+	private StudyService studyService;
 
 	@GetMapping("myDashboard.do")
 	public ModelAndView myDashboard(HttpSession session){
 	    ModelAndView mav=new ModelAndView();
 	    Integer user_idx=(Integer)session.getAttribute("user_idx");
 	    mav.addObject("restDays",0);
+	    
+	    Map<String, Integer> params = new HashMap<>();
+	    params.put("start_num", 1);
+	    params.put("end_num", 3);
+	    List<StudyDTO> study = studyService.getStudyList(params);
+	    
 	    if(user_idx!=null){
 	        Map<String,Object> map=new HashMap<>();
 	        map.put("user_idx",user_idx);
@@ -98,8 +109,15 @@ public class MypageController {
 		return mav;
 	}
 	@GetMapping("myHeart.do")
-	public ModelAndView myHeart() {
+	public ModelAndView myHeart(HttpSession session) {
 		ModelAndView mav=new ModelAndView();
+		Integer user_idx = (Integer)session.getAttribute("user_idx");
+		
+		List<Map<String, Object>> mlist=mypageService.selectWishMentorList(user_idx);
+		List<StudyDTO> slist=mypageService.selectWishStudyList(user_idx);
+		
+		mav.addObject("mlist",mlist);
+		mav.addObject("slist",slist);
 		mav.setViewName("mypage/myHeart");
 		return mav;
 	}
@@ -178,4 +196,13 @@ public class MypageController {
         }
         return response;
     }
+    //정기권환불
+    @GetMapping("myRefund.do")
+	public ModelAndView myRefund() {
+		ModelAndView mav=new ModelAndView();
+
+		
+		mav.setViewName("mypage/myRefund");
+		return mav;
+	}
 }

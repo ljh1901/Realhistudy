@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.mypage-wrapper{padding:40px 0;background:#f8fafc;min-height:100vh;}
+.mypage-container{display:flex;max-width:1200px;margin:0 auto;gap:40px;align-items:flex-start;}
+.mypage-sidebar{flex-shrink:0;width:250px;}
+.mypage-content{flex-grow:1;min-width:0;}
+
+.heart-header{margin-bottom:30px;}
+.tabs{display:flex;gap:10px;margin-bottom:25px;border-bottom:1px solid #e2e8f0;padding-bottom:15px;}
+.tab-btn{padding:10px 25px;border-radius:30px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-weight:600;transition:all 0.3s;font-size:15px;color:#64748b;}
+.tab-btn:hover{border-color:#0f172a;color:#0f172a;}
+.tab-btn.active{background:#0f172a;color:#fff;border-color:#0f172a;box-shadow:0 4px 6px -1px rgba(15,23,42,0.2);}
+
+.purchase-list{display:flex;flex-direction:column;gap:15px;}
+.purchase-card{background:#fff;border-radius:16px;padding:25px;border:1px solid #f1f5f9;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);transition:transform 0.3s;cursor:pointer;}
+.purchase-card:hover{transform:translateY(-3px);box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);}
+
+.pay-date{font-size:13px;color:#94a3b8;margin-bottom:12px;font-weight:600;letter-spacing:0.5px;}
+.pay-main{display:flex;justify-content:space-between;align-items:center;}
+.pay-info{display:flex;align-items:center;gap:15px;}
+.pay-badge{background:#f1f5f9;color:#0f172a;padding:5px 14px;border-radius:8px;font-size:12px;font-weight:700;text-transform:uppercase;}
+.pay-title{font-size:17px;color:#1e293b;font-weight:700;}
+.pay-price{font-size:20px;font-weight:800;color:#0f172a;}
+
+.empty-msg{text-align:center;padding:100px 0;background:#fff;border-radius:16px;border:2px dashed #e2e8f0;}
+.empty-msg p{margin:0;color:#94a3b8;font-size:16px;font-weight:500;}
+
+.pagination-wrapper{margin-top:40px;display:flex;justify-content:center;}

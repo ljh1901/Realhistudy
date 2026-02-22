@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.histudy.mentoring.model.MentoProfileDTO;
 import com.histudy.mypage.model.MypageDAO;
 import com.histudy.mypage.model.ScheduleDTO;
 import com.histudy.mypage.model.WishListDTO;
+import com.histudy.study.model.StudyDTO;
 
 public class MypageServiceImple implements MypageService {
 	@Autowired
@@ -61,5 +64,15 @@ public class MypageServiceImple implements MypageService {
 	public int deleteWish(WishListDTO dto) {
 		// TODO Auto-generated method stub
 		return mypageDao.deleteWish(dto);
+	}
+	@Override
+	public List<Map<String, Object>> selectWishMentorList(int user_idx) {
+		// TODO Auto-generated method stub
+		return mypageDao.selectWishMentorList(user_idx);
+	}
+	@Override
+	public List<StudyDTO> selectWishStudyList(int user_idx) {
+		// TODO Auto-generated method stub
+		return mypageDao.selectWishStudyList(user_idx);
 	}
 }

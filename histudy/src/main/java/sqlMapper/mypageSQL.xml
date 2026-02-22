@@ -91,4 +91,30 @@
 	    and w_target_idx=#{w_target_idx}
 	    and user_idx=#{user_idx}
 	</delete>
+	<select id="selectWishStudyList" parameterType="int" resultType="com.histudy.study.model.StudyDTO">
+	    select 
+	        s.*,
+	        u.user_name,
+	        m.profile_img
+	    from wish_list w
+	    join study s on w.w_target_idx=s.study_idx
+	    join usertb u on s.user_idx=u.user_idx
+	    left join mypage m on u.user_idx=m.user_idx
+	    where w.user_idx=#{user_idx}
+	    and w.w_target_type='스터디'
+	    order by w.wish_idx desc
+	</select>
+	<select id="selectWishMentorList" parameterType="int" resultType="map">
+	    select 
+	        m.*,
+	        u.user_name,
+	        p.profile_img
+	    from wish_list w
+	    join mento_profile m on w.w_target_idx=m.mentor_idx
+	    join usertb u on m.user_idx=u.user_idx
+	    left join mypage p on u.user_idx=p.user_idx
+	    where w.user_idx=#{user_idx}
+	    and w.w_target_type='멘토링'
+	    order by w.wish_idx desc
+	</select>
 </mapper>

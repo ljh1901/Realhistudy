@@ -3,6 +3,9 @@ package com.histudy.mypage.model;
 import java.util.List;
 import java.util.Map;
 
+import com.histudy.mentoring.model.MentoProfileDTO;
+import com.histudy.study.model.StudyDTO;
+
 public interface MypageDAO {
 	public List<ScheduleDTO> getMonthSchedule(Map<String, Object> param);
 	public int checkSchedule(Map<String, Object> param);
@@ -12,5 +15,6 @@ public interface MypageDAO {
 	public List<Map<String,Object>> selectMonthly(int user_idx);
 	public int insertWish(WishListDTO dto);
 	public int deleteWish(WishListDTO dto);
-
+	public List<StudyDTO> selectWishStudyList(int user_idx);
+	public List<Map<String, Object>> selectWishMentorList(int user_idx);
 }

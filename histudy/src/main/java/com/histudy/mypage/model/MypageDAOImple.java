@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.histudy.mentoring.model.MentoProfileDTO;
+import com.histudy.study.model.StudyDTO;
+
 public class MypageDAOImple implements MypageDAO {
 	private SqlSessionTemplate sqlSession;
 	public MypageDAOImple(SqlSessionTemplate sqlSession) {
@@ -45,5 +48,15 @@ public class MypageDAOImple implements MypageDAO {
 	public int deleteWish(WishListDTO dto) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("mypage.deleteWish",dto);
+	}
+	@Override
+	public List<Map<String, Object>> selectWishMentorList(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectWishMentorList",user_idx);
+	}
+	@Override
+	public List<StudyDTO> selectWishStudyList(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectWishStudyList", user_idx);
 	}
 }
