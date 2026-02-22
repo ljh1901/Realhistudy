@@ -383,7 +383,6 @@ FROM (
         m.career_years,
         m.description,
         m.pre_notice,
-
         m.mentor_idx,
         mp.user_idx AS mentor_user_idx,
         u.user_name AS mentor_name,
@@ -391,11 +390,11 @@ FROM (
 
         (SELECT ROUND(AVG(r.rating), 2)
            FROM mentoring_review r
-          WHERE r.mentoring_idx = m.mentoring_idx) AS avg_rating,
+          WHERE r.mentoring_idx IN (SELECT mentoring_idx FROM mentoring WHERE mentor_idx = m.mentor_idx)) AS avg_rating,
 
         (SELECT COUNT(*)
            FROM mentoring_review r
-          WHERE r.mentoring_idx = m.mentoring_idx) AS review_count
+          WHERE r.mentoring_idx IN (SELECT mentoring_idx FROM mentoring WHERE mentor_idx = m.mentor_idx)) AS review_count
 
     FROM mentoring m
     JOIN mento_profile mp ON mp.mentor_idx = m.mentor_idx
@@ -441,7 +440,11 @@ WHERE ROWNUM = 1
   FROM mentoring_review r
   JOIN usertb u ON u.user_idx = r.mentee_user_idx
   LEFT JOIN mypage p ON p.user_idx = u.user_idx
-  WHERE r.mentoring_idx = #{value}
+  WHERE r.mentoring_idx IN (
+      SELECT mentoring_idx 
+      FROM mentoring 
+      WHERE mentor_idx = (SELECT mentor_idx FROM mentoring WHERE mentoring_idx = #{value})
+  )
   ORDER BY r.review_date DESC
 </select>
 
@@ -537,16 +540,16 @@ WHERE ROWNUM = 1
         reporter_idx,
         report_content,
         report_date,
-        report_status
-    ) VALUES (
+        report_status,
+        report_photo  ) VALUES (
         report_seq.NEXTVAL,
         #{report_type},
         #{target_idx},
         #{reporter_idx},
         #{report_content},
         SYSDATE,
-        '대기'
-    )
+        '대기',
+        #{report_photo, jdbcType=VARCHAR} )
 </insert>
 
 
