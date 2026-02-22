@@ -20,6 +20,7 @@ public class StudyApplyDTO {
 	private int progress;
 	
 	private int activeCount;
+	private String profile_img;
 	
 	public StudyApplyDTO() {
 		// TODO Auto-generated constructor stub
@@ -27,7 +28,7 @@ public class StudyApplyDTO {
 
 	public StudyApplyDTO(int sa_idx, String sa_intro, String sa_status, String sa_reason, int user_idx, int study_idx,
 			String join_date, String login_time, String logout_time, String activeStatus, String user_name,
-			String user_email, int taskSubmitCount, int progress, int activeCount) {
+			String user_email, int taskSubmitCount, int progress, int activeCount, String profile_img) {
 		super();
 		this.sa_idx = sa_idx;
 		this.sa_intro = sa_intro;
@@ -44,6 +45,7 @@ public class StudyApplyDTO {
 		this.taskSubmitCount = taskSubmitCount;
 		this.progress = progress;
 		this.activeCount = activeCount;
+		this.profile_img = profile_img;
 	}
 
 	public int getSa_idx() {
@@ -166,7 +168,14 @@ public class StudyApplyDTO {
 		this.activeCount = activeCount;
 	}
 
-	
+	public String getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+
 	
 
 }
