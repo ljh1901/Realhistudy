@@ -36,17 +36,21 @@
         </div>
       </div>
 
-      <div class="card">
-        <h3 style="margin:0 0 12px 0;">멘토 정보</h3>
-        <div class="mentor-card">
-          <div class="mentor-avatar">
+     <div class="card">
+    <h3 style="margin:0 0 12px 0;">멘토 정보</h3>
+    <div class="mentor-card" style="display: flex; align-items: flex-start; gap: 16px;">
+        <div class="mentor-avatar" style="width: 80px; height: 80px; flex-shrink: 0; overflow: hidden; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center;">
             <c:choose>
-              <c:when test="${not empty detail.mentor_profile_img}">
-                <img src="<c:out value='${detail.mentor_profile_img}'/>" alt="mentor">
-              </c:when>
-              <c:otherwise><span>멘토</span></c:otherwise>
+                <c:when test="${not empty detail.mentor_profile_img}">
+                    <img src="${pageContext.request.contextPath}/mypage-img/pimg/${detail.mentor_profile_img}" 
+                         alt="mentor" 
+                         style="width: 100%; height: 100%; object-fit: cover;">
+                </c:when>
+                <c:otherwise>
+                    <span style="font-size: 14px; color: #64748b;">👤</span>
+                </c:otherwise>
             </c:choose>
-          </div>
+        </div>
           <div style="flex:1;">
             <div>이름: <b><c:out value="${detail.mentor_name}" /></b></div>
             <div class="mentor-meta">
@@ -69,7 +73,7 @@
         <h3>멘토 신고하기</h3>
         <p>신고 사유를 선택하고 상세 내용을 적어주세요.</p>
         
-        <form id="reportForm">
+        <form id="reportForm" enctype="multipart/form-data">
             <input type="hidden" name="target_idx" value="${detail.mentor_user_idx}">
             
             <div class="report-form-group">
@@ -273,32 +277,26 @@
   }
 
   document.getElementById('reportForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const formData = new FormData(this);
-      const data = Object.fromEntries(formData.entries());
-      
-      fetch('reportSubmit.do', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams(data)
-      })
-      .then(response => response.text())
-      .then(result => {
-          if (result === "success") {
-              alert("신고가 정상적으로 접수되었습니다. 관리자 확인 후 처리됩니다.");
-              closeReportModal();
-          } else if (result === "login_required") {
-              alert("로그인이 필요한 서비스입니다.");
-              location.href = "login.do";
-          } else {
-              alert("신고 처리 중 오류가 발생했습니다.");
-          }
-      })
-      .catch(error => console.error('Error:', error));
-  });
+	    e.preventDefault();
+	    
+
+	    const formData = new FormData(this);
+	    
+	    fetch('reportSubmit.do', {
+	        method: 'POST',
+	        body: formData 
+	    })
+	    .then(response => response.text())
+	    .then(result => {
+	        if (result === "success") {
+	            alert("신고가 정상적으로 접수되었습니다.");
+	            closeReportModal();
+	        } else {
+	            alert("처리 중 오류가 발생했습니다.");
+	        }
+	    })
+	    .catch(error => console.error('Error:', error));
+	});
 </script>
 </body>
 </html>

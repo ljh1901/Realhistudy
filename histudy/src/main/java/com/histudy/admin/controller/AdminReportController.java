@@ -27,11 +27,15 @@ public class AdminReportController {
         mav.setViewName("admin/adminReportList");
         return mav;
     }
-
-    // 신고 처리 완료 처리
-    @RequestMapping("/adminReportResolve.do")
-    public String adminReportResolve(@RequestParam("report_idx") int report_idx) {
-        adminReportService.resolveReport(report_idx);
-        return "redirect:adminReportList.do";
+    
+    @RequestMapping("/adminReportProcess.do")
+    public String reportProcess(@RequestParam("report_idx") int reportIdx, 
+                                @RequestParam("action") String action) {
+        
+        String status = "완료".equals(action) ? "완료" : "거절";
+        
+        adminReportService.updateReportStatus(reportIdx, status);
+        
+        return "redirect:/adminReportList.do";
     }
 }

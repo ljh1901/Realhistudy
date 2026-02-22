@@ -7,13 +7,13 @@
 <div>알림함</div>
 <table>
 <c:choose>
-	<c:when test="${empty list }">
-		<tr>
-			<td>알림함이 비어있습니다.</td>
-		</tr>		
-	</c:when>
-	<c:otherwise>
-		<c:forEach var="dto" items="${list}">
+   <c:when test="${empty list }">
+      <tr>
+         <td>알림함이 비어있습니다.</td>
+      </tr>      
+   </c:when>
+   <c:otherwise>
+      <c:forEach var="dto" items="${list}">
             <tr id="row_${dto.n_idx}">
                 <td>${dto.n_title}</td>
                 <td>${dto.n_content}</td>
@@ -25,7 +25,7 @@
                     </td>
             </tr>
         </c:forEach>
-	</c:otherwise>
+   </c:otherwise>
 </c:choose>
 </table>
 </main>

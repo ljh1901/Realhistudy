@@ -98,7 +98,7 @@
 					<div class="leaderCard__Container">
 						<div class="leaderCard__Container__data">
 							<div class="leaderCard__Container__data__imgBox">
-								<img src="/histudy/main-img/junbeom.png" alt="개설자 이미지">
+								<img src="/histudy/main-img/${creatorData.profile_img}" alt="개설자 이미지">
 							</div>
 							<div class="leaderCard__Container__data__textBox">
 								<div class="leaderCard__Container__data__textBox__name">
@@ -117,7 +117,7 @@
 							<div class="memberCard__Container">
 								<div class="memberCard__Container__data">
 									<div class="memberCard__Container__data__imgBox">
-										<img src="/histudy/main-img/defaultUser.png" alt="참여자 이미지">
+										<img src="/histudy/main-img/${m_list.profile_img}" alt="참여자 이미지">
 									</div>
 									<div class="memberCard__Container__data__textBox">
 										<div class="memberCard__Container__data__textBox__name">

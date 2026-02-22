@@ -44,20 +44,19 @@
 
       <!-- 오른쪽: 멘토 프로필 카드 -->
       <div class="ma-card ma-mentor">
-        <div class="ma-mentor-row">
-          <div class="ma-mentor-img">
-            <c:choose>
-              <c:when test="${not empty mentorSummary.mentor_profile_img}">
-      			<img src="${pageContext.request.contextPath}/upload/${mentorSummary.mentor_profile_img}" alt="멘토 프로필">
-    			</c:when>
-              <c:otherwise>
-     				 <div class="ma-mentor-img-fallback" style="background-color: #f1f5f9; 
-     				 font-size:30px; display: flex; align-items: center; justify-content: center;">
-          					👤
-    			  			</div>
-              </c:otherwise>
-            </c:choose>
+  <div class="ma-mentor-row">
+    <div class="ma-mentor-img">
+      <c:choose>
+        <c:when test="${not empty mentorSummary.mentor_profile_img}">
+          <img src="${pageContext.request.contextPath}/mypage-img/pimg/${mentorSummary.mentor_profile_img}" alt="멘토 프로필">
+        </c:when>
+        <c:otherwise>
+          <div class="ma-mentor-img-fallback" style="background-color: #f1f5f9; font-size:30px; display: flex; align-items: center; justify-content: center;">
+            👤
           </div>
+        </c:otherwise>
+      </c:choose>
+    </div>
 
           <div class="ma-mentor-info">
             <div class="ma-mentor-name"><c:out value="${mentorSummary.mentor_name}" default="멘토명"/></div>
@@ -151,6 +150,11 @@
         <span class="ma-badge ok">승인됨</span>
       </c:otherwise>
     </c:choose>
+    <button type="button" class="ma-btn ma-btn-ghost" 
+            style="color: #e11d48; border-color: #fecdd3;"
+            onclick="openMenteeReportModal('${a.mentee_user_idx}', '${fn:escapeXml(a.mentee_name)}')">
+        신고
+    </button>
 
   </div>
 </td>
@@ -195,6 +199,44 @@
     </div>
   </div>
 </div>
+<div id="menteeReportModal" class="report-modal">
+    <div class="report-modal-content">
+        <h3 id="reportTargetTitle">사용자 신고하기</h3>
+        <p><span id="targetMenteeName"></span> 님을 신고하시겠습니까?</p>
+        
+        <form id="menteeReportForm" enctype="multipart/form-data">
+            <input type="hidden" name="target_idx" id="target_user_idx">
+            
+            <div class="report-form-group">
+                <label>신고 유형</label>
+                <select name="report_type" required>
+                    <option value="">-- 사유 선택 --</option>
+                    <option value="노쇼">사전 연락 없는 노쇼</option>
+                    <option value="비매너">비매너 대화 및 태도</option>
+                    <option value="부적절한 요구">부적절한 요청</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+            
+            <div class="report-form-group">
+                <label>상세 내용</label>
+                <textarea name="report_content" rows="4" required placeholder="내용을 입력해주세요."></textarea>
+            </div>
+
+            <div class="report-form-group">
+                <label>증거 사진 <span class="optional-text">(선택)</span></label>
+                <div class="file-input-wrapper">
+                    <input type="file" name="report_photo_file" accept="image/*">
+                </div>
+            </div>
+            
+            <div class="report-btn-group">
+                <button type="button" class="btn-report-cancel" onclick="closeMenteeReportModal()">취소</button>
+                <button type="submit" class="btn-report-submit">신고 제출</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
   function closeByBackdrop(e, id){
@@ -216,13 +258,13 @@
     box.innerHTML = "";
     if(imgUrl && imgUrl !== "null"){
       const img = document.createElement("img");
-      img.src = "${pageContext.request.contextPath}/upload/" + imgUrl;
+      img.src = "${pageContext.request.contextPath}/mypage-img/pimg/" + imgUrl;
       img.alt = "프로필";
       box.appendChild(img);
       img.style.width = "100%";
       img.style.height = "100%";
       img.style.objectFit = "cover";
-      img.style.borderRadius = "50%";
+      img.style.borderRadius = "12px";
       box.appendChild(img);
       box.style.display = "block";
     } else {
@@ -232,12 +274,71 @@
         box.style.justifyContent = "center"; 
         box.style.fontSize = "30px";         
         box.style.backgroundColor = "#f1f5f9"; 
+        box.style.borderRadius = "12px";
       box.classList.add("fallback");
     }
     openModal("reasonModal");
   }
+  function openMenteeReportModal(userIdx, userName) {
 
-  
+	    const targetIdxInput = document.getElementById('target_user_idx');
+	    const targetNameSpan = document.getElementById('targetMenteeName');
+	    const modal = document.getElementById('menteeReportModal');
+
+	    if (targetIdxInput && targetNameSpan && modal) {
+	        targetIdxInput.value = userIdx;
+	        targetNameSpan.innerText = userName;
+
+	        modal.style.display = 'block';
+	    }
+	}
+
+	function closeMenteeReportModal() {
+	    const modal = document.getElementById('menteeReportModal');
+	    const form = document.getElementById('menteeReportForm');
+	    
+	    if (modal) modal.style.display = 'none';
+	    if (form) form.reset();
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+	    const reportForm = document.getElementById('menteeReportForm');
+	    
+	    if (reportForm) {
+	        reportForm.addEventListener('submit', function(e) {
+	            e.preventDefault();
+	            
+	            const formData = new FormData(this);
+	            
+
+	            fetch('reportSubmit.do', {
+	                method: 'POST',
+	                body: formData
+	            })
+	            .then(response => response.text())
+	            .then(result => {
+
+	                if (result.trim() === "success") {
+	                    alert("신고가 정상적으로 접수되었습니다.");
+	                    closeMenteeReportModal();
+	                } else {
+	                    alert("신고 접수에 실패했습니다. 다시 시도해주세요.");
+	                }
+	            })
+	            .catch(error => {
+	                console.error('Error:', error);
+	                alert("서버 통신 중 오류가 발생했습니다.");
+	            });
+	        });
+	    }
+	});
+
+	window.onclick = function(event) {
+	    const modal = document.getElementById('menteeReportModal');
+	    if (event.target == modal) {
+	        closeMenteeReportModal();
+	    }
+	}
 
   function filterRows(){
     const kw = (document.getElementById("kw").value || "").toLowerCase();
@@ -248,6 +349,8 @@
       r.style.display = (name.includes(kw) || email.includes(kw)) ? "" : "none";
     });
   }
+  
+  
 </script>
 
 <%@ include file="../footer.jsp"%>

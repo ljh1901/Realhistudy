@@ -264,7 +264,6 @@ public class MentoringServiceImple implements MentoringService {
         c.add(Calendar.HOUR, 1);
         return c.getTime();
     }
-    
     @Override
     public int reportUser(ReportDTO dto) {
         return mentoringDAO.insertReport(dto);
