@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.histudy.studycafe">
+  	<insert id="insertStudycafeReplySQL" parameterType="map">
+  	<selectKey keyProperty="review_idx" resultType="Integer" order="BEFORE">
+  		SELECT review_idx.nextval from dual
+  	</selectKey>
+  		INSERT INTO studycafe_reply(review_idx, user_idx, studycafe_idx, studycafe_reply, studycafe_rating, created_at) 
+  		VALUES(#{review_idx}, #{user_idx}, #{studycafe_idx}, #{studycafe_reply}, #{studycafe_rating}, sysdate)
+  	</insert>
+  	<insert id="insertStudycafeReplyFileSQL" parameterType="com.histudy.studycafe.model.StudycafeReplyFileDTO">
+  		INSERT INTO studycafe_reply_file(review_idx, review_file_idx, file_path, file_type, file_order, created_at)
+  		VALUES(#{review_idx}, review_file_idx.nextval, #{file_path}, #{file_type}, #{file_order}, sysdate)
+  	</insert>
+  	
+  	<select id="selectStudycafeReplySQL">
+  	
+  	</select>
+  </mapper>

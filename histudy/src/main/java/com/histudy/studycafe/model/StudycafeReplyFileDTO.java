@@ -1,16 +1,16 @@
 package com.histudy.studycafe.model;
 
-public class StudycafeReplyFile {
+public class StudycafeReplyFileDTO {
 	private int review_file_idx;
 	private int review_idx;
 	private String file_path;
 	private String file_type;
 	private int file_order;
 	private String created_at;
-	public StudycafeReplyFile() {
+	public StudycafeReplyFileDTO() {
 		super();
 	}
-	public StudycafeReplyFile(int review_file_idx, int review_idx, String file_path, String file_type, int file_order,
+	public StudycafeReplyFileDTO(int review_file_idx, int review_idx, String file_path, String file_type, int file_order,
 			String created_at) {
 		super();
 		this.review_file_idx = review_file_idx;

@@ -103,6 +103,9 @@
 	<bean id="studycafeService" class="com.histudy.studycafe.service.StudycafeServiceImple">
 		<constructor-arg ref="studycafeDAO"></constructor-arg>
 	</bean>
+	<bean id="studycafeReplyService" class="com.histudy.studycafe.service.StudycafeReplyServiceImple">
+		<constructor-arg ref="studycafeReplyDAO"></constructor-arg>
+	</bean>
 	<!-- LMS 서비스 -->
 	<bean id="lmsService" class="com.histudy.lms.service.LmsServiceImple">
 		<constructor-arg ref="lmsDAO"></constructor-arg>

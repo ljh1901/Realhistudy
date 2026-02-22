@@ -17,7 +17,6 @@
 	<mapper resource="sqlMapper/scheduleSQL.xml" />
 	<mapper resource="sqlMapper/notificationsSQL.xml"></mapper>
 	<mapper resource="sqlMapper/inquirySQL.xml" />
-	
-
+	<mapper resource="sqlMapper/studycafeReplySQL.xml"></mapper>
 </mappers>
 </configuration>
