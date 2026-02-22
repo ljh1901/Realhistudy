@@ -70,19 +70,19 @@
           
             <div class="card-top">
               <div class="avatar">
-              <c:choose>
-            <c:when test="${not empty m.profile_img}">
-                <img src="${pageContext.request.contextPath}/upload/${m.profile_img}" 
-                     style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-            </c:when>
-            <c:otherwise>
-                <div style="width: 100%; height: 100%; border-radius: 50%; background: #f1f5f9; 
-                            display: flex; align-items: center; justify-content: center; font-size: 20px;">
-                    👤
-                </div>
-            </c:otherwise>
-        </c:choose>
-    </div>
+  <c:choose>
+    <c:when test="${not empty m.profile_img}">
+        <img src="${pageContext.request.contextPath}/mypage-img/pimg/${m.profile_img}" 
+             style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+    </c:when>
+    <c:otherwise>
+        <div style="width: 100%; height: 100%; border-radius: 12px; background: #f1f5f9; 
+                    display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            👤
+        </div>
+    </c:otherwise>
+  </c:choose>
+</div>
               <div>
                 <div class="m-name"><c:out value="${m.user_name}"/></div>
                 <div class="m-meta">
