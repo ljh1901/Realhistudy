@@ -1,6 +1,7 @@
 @charset "UTF-8";
 #mentoringPage header{
 	background-color: white;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .mentoring-hero{
   background-color:#f4fff2;

@@ -73,7 +73,8 @@
   <c:choose>
     <c:when test="${not empty m.profile_img}">
         <img src="${pageContext.request.contextPath}/mypage-img/pimg/${m.profile_img}" 
-             style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;">
+             style="width: 100%; height: 100%; border-radius: 12px; object-fit: cover;"
+             onerror="this.src='${pageContext.request.contextPath}/main-img/defaultUser.png';">
     </c:when>
     <c:otherwise>
         <div style="width: 100%; height: 100%; border-radius: 12px; background: #f1f5f9; 

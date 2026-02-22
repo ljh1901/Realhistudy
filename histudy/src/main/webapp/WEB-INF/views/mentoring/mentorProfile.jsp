@@ -43,6 +43,7 @@
             <c:choose>
                 <c:when test="${not empty detail.mentor_profile_img}">
                     <img src="${pageContext.request.contextPath}/mypage-img/pimg/${detail.mentor_profile_img}" 
+                         onerror="this.src='${pageContext.request.contextPath}/main-img/defaultUser.png';"
                          alt="mentor" 
                          style="width: 100%; height: 100%; object-fit: cover;">
                 </c:when>
