@@ -1,60 +1,41 @@
-const starWrap = document.querySelector(".star_wrap");
 const stars = document.querySelectorAll(".star");
 const ratingInput = document.getElementById("ratingValue");
-const ratingText = document.querySelector(".rating_value");
 
-let fixedScore = 0; // 클릭으로 확정된 점수
+function paintStars(score) {
+  stars.forEach((star, index) => {
+    star.classList.remove("full", "half");
 
-function drawStars(score){
-    stars.forEach((star, idx)=>{
-        const starIndex = idx + 1;
+    const starNumber = index + 1;
 
-        if(score >= starIndex){
-            star.innerText = "★";
-        }
-        else if(score >= starIndex - 0.5){
-            star.innerText = "⯨"; // 반별
-        }
-        else{
-            star.innerText = "☆";
-        }
-    });
+    if (score >= starNumber) {
+      star.classList.add("full");
+    } 
+    else if (score >= starNumber - 0.5) {
+      star.classList.add("half");
+    }
+  });
 }
 
-function calculateScore(e){
-    const rect = starWrap.getBoundingClientRect();
-    let x = e.clientX - rect.left;
+stars.forEach((star, index) => {
 
-    if(x < 0) x = 0;
-    if(x > rect.width) x = rect.width;
+  star.addEventListener("mousemove", (e) => {
 
-    let percent = x / rect.width;
-    let score = percent * 5;
+    const rect = star.getBoundingClientRect();
+    const isHalf = (e.clientX - rect.left) < rect.width / 2;
+    const score = isHalf ? index + 0.5 : index + 1;
 
-    score = Math.round(score * 2) / 2;
+    paintStars(score);
+  });
 
-    if(score === 0) score = 0.5;
+  star.addEventListener("click", (e) => {
 
-    return score;
-}
+    const rect = star.getBoundingClientRect();
+    const isHalf = (e.clientX - rect.left) < rect.width / 2;
+    const score = isHalf ? index + 0.5 : index + 1;
 
-// hover 미리보기
-starWrap.addEventListener("mousemove", (e)=>{
-    const score = calculateScore(e);
-    drawStars(score);
-    ratingText.innerText = "평점: " + score;
-});
+    ratingInput.value = score;
+    paintStars(score);
+    document.querySelector('.rating_value').innerText = "평점: " + score;
+  });
 
-
-starWrap.addEventListener("mouseleave", ()=>{
-    drawStars(fixedScore);
-    ratingText.innerText = "평점: " + fixedScore;
-});
-
-// 클릭 시 확정
-starWrap.addEventListener("click", (e)=>{
-    fixedScore = calculateScore(e);
-    ratingInput.value = fixedScore;
-    drawStars(fixedScore);
-    ratingText.innerText = "평점: " + fixedScore;
 });

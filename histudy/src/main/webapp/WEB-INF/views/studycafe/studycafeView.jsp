@@ -405,7 +405,7 @@ for(let i = 0; i<document.querySelectorAll(".seat-a").length; i++){
 }
 // 티켓 정보 가져오기
 function seatTicketInfo(ticket_category_idx, seat_idx){
-	return fetch("seatTicket.do?ticket_category_idx="+ticket_category_idx+"&seat_idx="+seat_idx,{method: "GET"})
+	return fetch("seatTicket.do?ticket_category_idx="+ticket_category_idx+"&seat_idx="+seat_idx+"&studycafe_idx="+${studycafeOne.studycafe_idx},{method: "GET"})
 	.then(function(res){
 		if(res.ok){
 			return res.json();

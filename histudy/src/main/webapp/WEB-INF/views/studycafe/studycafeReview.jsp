@@ -9,17 +9,16 @@
 <link rel="stylesheet" href="css/header.css">
 <link rel="stylesheet" href="css/footer.css">
 <style>
-/* 전체 배경과 폰트 */
 body {
 	background-color: #f9f9f9;
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding-top: 80px;
 }
-#reply_layout{
+
+#reply_layout {
 	user-select: none;
 }
-/* 리뷰 폼 컨테이너만 가운데 */
 #studycafeReview {
 	width: 600px;
 	margin: 40px auto; /* 상하 40px, 가로 중앙 */
@@ -30,7 +29,6 @@ body {
 	box-sizing: border-box;
 }
 
-/* 사진/영상 업로드 박스 */
 .review-photo {
 	border: 2px dashed #ccc;
 	border-radius: 12px;
@@ -40,7 +38,6 @@ body {
 	background-color: #fafafa;
 }
 
-/* 파일 추가 버튼 */
 .review-upload-btn {
 	display: inline-block;
 	padding: 10px 20px;
@@ -131,16 +128,39 @@ body {
 	color: #333;
 	margin-right: 10px;
 }
+
 .star_wrap {
-    display: inline-block;
-    cursor: pointer;
+	display: flex;
 }
 
 .star {
-    font-size: 2rem;
-    color: #FFCA1A;
-    margin: 0 3px;
-    user-select: none;
+	position: relative;
+	font-size: 2rem;
+	cursor: pointer;
+	width: 32px;
+	height: 32px;
+}
+
+/* 기본 빈 별 */
+.star::before {
+	content: "☆";
+	position: absolute;
+	left: 0;
+	color: #ccc;
+}
+
+/* 채워진 별 */
+.star.full::before {
+	content: "★";
+	color: #FFCA1A;
+}
+
+/* 반쪽 별 */
+.star.half::before {
+	content: "★";
+	color: #FFCA1A;
+	width: 50%;
+	overflow: hidden;
 }
 </style>
 </head>
@@ -163,12 +183,16 @@ body {
 				<div class="writeReview">
 					<div id="ratingRegister">
 						<div class="rating_value">평점:</div>
-						<div class="star_wrap">
-							<span class="star">☆</span> <span class="star">☆</span> 
-							<span class="star">☆</span> 
-							<span class="star">☆</span> 
-							<span class="star">☆</span>
+						<div id="ratingRegister">
+
+							<span class="star" data-value="1">☆</span> <span class="star"
+								data-value="2">☆</span> <span class="star" data-value="3">☆</span>
+
+							<span class="star" data-value="4">☆</span> <span class="star"
+								data-value="5">☆</span>
 						</div>
+
+						<input type="hidden" id="ratingValue" value="0">
 					</div>
 					<input type="hidden" name="rating" id="ratingValue" value="0">
 					<textarea id="writeReview" name="studycafe_reply"></textarea>
@@ -182,55 +206,60 @@ body {
 	</form>
 	<%@include file="../footer.jsp"%>
 </body>
-<script src="js/studycafe/studycafereview/reviewWrite.js" type="text/javascript"></script>
-<script src="js/studycafe/studycafereview/ratingStarCal.js" type="text/javascript"></script>
+<script src="js/studycafe/studycafereview/reviewWrite.js"
+	type="text/javascript"></script>
+<script src="js/studycafe/studycafereview/ratingStarCal.js"
+	type="text/javascript"></script>
 
 <script>
-var xhr = null;
-document.getElementById('studycafeReview').addEventListener('submit', function(e){
-	e.preventDefault();
-	fileReview();
-})
-function fileReview(){
-	xhr = new XMLHttpRequest();
-	var formData = new FormData();
-	if(document.getElementById('writeReview').value == '' && ratingInput.value == 0 && selectedReviewFiles == ''){
-		alert('리뷰를 작성해주세요!');
-		return false;
-	}else if(ratingInput.value == 0){
-		alert('평점을 선택해주세요');
-		return false;
-	}
-	xhr.open("POST", "studycafeReviewFile.do", true);
-	xhr.onreadystatechange=fileReviewResult;
-	formData.append("studycafe_reply", document.getElementById('writeReview').value);
-	formData.append("studycafe_rating",ratingInput.value);
-	if( selectedReviewFiles !=null){
-	selectedReviewFiles.forEach(function(reviewFiles){
-		formData.append("reviewFiles",reviewFiles);
-	})
-	}
-	console.log(formData);
-	xhr.send(formData);
-	
-}
-function fileReviewResult(){
-	if(xhr.readyState==4){
-		if(xhr.status==200){
-			var str = '';
-			var fileData=JSON.parse(xhr.responseText);
-			if(fileData.replyFileList != null){
-			fileData.replyFileList.forEach(function(fileList){
-				console.log(fileList);
-				str +=fileList;
+	var xhr = null;
+	document.getElementById('studycafeReview').addEventListener('submit',
+			function(e) {
+				e.preventDefault();
+				fileReview();
 			})
-				document.querySelector('.reply-content').innerHTML += str;
-			}
-			if(fileData.studycafe_reply !=null){
-			document.querySelector('.reply-content').innerHTML=fileData.studycafe_reply;
+	function fileReview() {
+		xhr = new XMLHttpRequest();
+		var formData = new FormData();
+		if (document.getElementById('writeReview').value == ''
+				&& ratingInput.value == 0 && selectedReviewFiles == '') {
+			alert('리뷰를 작성해주세요!');
+			return false;
+		} else if (ratingInput.value == 0) {
+			alert('평점을 선택해주세요');
+			return false;
+		}
+		xhr.open("POST", "studycafeReviewFile.do", true);
+		xhr.onreadystatechange = fileReviewResult;
+		formData.append("studycafe_reply", document
+				.getElementById('writeReview').value);
+		formData.append("studycafe_rating", ratingInput.value);
+		if (selectedReviewFiles != null) {
+			selectedReviewFiles.forEach(function(reviewFiles) {
+				formData.append("reviewFiles", reviewFiles);
+			})
+		}
+		console.log(formData);
+		xhr.send(formData);
+
+	}
+	function fileReviewResult() {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				var str = '';
+				var fileData = JSON.parse(xhr.responseText);
+				if (fileData.replyFileList != null) {
+					fileData.replyFileList.forEach(function(fileList) {
+						console.log(fileList);
+						str += fileList;
+					})
+					document.querySelector('.reply-content').innerHTML += str;
+				}
+				if (fileData.studycafe_reply != null) {
+					document.querySelector('.reply-content').innerHTML = fileData.studycafe_reply;
+				}
 			}
 		}
 	}
-}
 </script>
 </html>

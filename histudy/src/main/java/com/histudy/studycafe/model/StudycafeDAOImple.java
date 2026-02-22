@@ -36,8 +36,8 @@ public class StudycafeDAOImple implements StudycafeDAO{
 		return seatInfo;
 	}
 	@Override
-	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx) {
-		List<TicketJoinTicketCategoryDTO> ticketInfo = sqlSession.selectList("selectTicketInfoSQL", ticket_category_idx);
+	public List<TicketJoinTicketCategoryDTO> ticketInfo(Map<String,Integer> map) {
+		List<TicketJoinTicketCategoryDTO> ticketInfo = sqlSession.selectList("selectTicketInfoSQL", map);
 		return ticketInfo;
 	}
 	@Override
