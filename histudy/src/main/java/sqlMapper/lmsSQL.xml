@@ -93,8 +93,8 @@
 		WHERE s.study_idx = #{study_idx}   
 	</select>
 	<select id="memberData" parameterType="Integer" resultType="com.histudy.study.model.StudyApplyDTO">
-		SELECT sa.*, u.user_name, u.user_email, u.user_idx 
-		FROM study_application sa JOIN usertb u ON sa.user_idx = u.user_idx
+		SELECT sa.*, u.user_name, u.user_email, u.user_idx, m.profile_img 
+		FROM study_application sa JOIN usertb u ON sa.user_idx = u.user_idx JOIN mypage m ON u.user_idx = m.user_idx
 		WHERE sa.sa_status='Approved' and study_idx = #{study_idx}
 	</select>
 	<select id="studyApplicationUser" parameterType="Integer" resultType="com.histudy.study.model.StudyApplyDTO">
@@ -113,8 +113,8 @@
 		WHERE study_idx=#{study_idx} and user_idx=#{user_idx}
 	</update>
 	<select id="studyCreatorData" parameterType="Integer" resultType="com.histudy.study.model.StudyDTO">
-		SELECT s.*, u.user_name, u.user_email 
-		FROM study s JOIN usertb u ON s.user_idx = u.user_idx
+		SELECT s.*, u.user_name, u.user_email, m.profile_img
+		FROM study s JOIN usertb u ON s.user_idx = u.user_idx JOIN mypage m ON u.user_idx = m.user_idx
 		WHERE s.study_idx = #{study_idx}
 	</select>
 	<select id="taskTotalCount" parameterType="Integer" resultType="Integer">

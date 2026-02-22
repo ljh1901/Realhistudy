@@ -33,6 +33,8 @@ public class StudyDTO {
 
 	private int dday;
 
+	private String profile_img;
+	
 	public StudyDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -42,7 +44,7 @@ public class StudyDTO {
 			double study_location_lat, String study_addr, String study_upload_img, int sc_idx, int user_idx,
 			String study_begin_date, int study_total_weeks, int study_status, String sysdate, int study_current_weeks,
 			String user_name, String user_email, String sc_name, int taskCount, int taskCount2, int studyProgress,
-			int dday) {
+			int dday, String profile_img) {
 		super();
 		this.study_idx = study_idx;
 		this.study_title = study_title;
@@ -69,6 +71,7 @@ public class StudyDTO {
 		this.taskCount2 = taskCount2;
 		this.studyProgress = studyProgress;
 		this.dday = dday;
+		this.profile_img = profile_img;
 	}
 
 	public int getStudy_idx() {
@@ -271,7 +274,15 @@ public class StudyDTO {
 		this.dday = dday;
 	}
 
-	
+	public String getProfile_img() {
+		return profile_img;
+	}
+
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+
+
 	
 
 
