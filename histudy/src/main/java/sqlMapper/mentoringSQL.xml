@@ -82,7 +82,6 @@
 
 <!-- 멘토링 개설 -->
 <insert id="insertMentoring" parameterType="com.histudy.mentoring.model.MentoringDTO">
-  <!-- Oracle: insert 전에 NEXTVAL 뽑아서 DTO에 세팅 -->
   <selectKey keyProperty="mentoring_idx" resultType="int" order="BEFORE">
     SELECT SEQ_MENTORING.NEXTVAL FROM dual
   </selectKey>
