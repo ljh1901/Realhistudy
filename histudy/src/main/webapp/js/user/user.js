@@ -240,14 +240,11 @@ function submitProfileUpdate() {
     if (fileInput.files.length > 0) {
         formData.append('uploadFile', fileInput.files[0]);
     }
-
-    // ★ 주소에 contextPath를 다시 살렸습니다!
     fetch(contextPath + '/updateProfile.do', {
         method: 'POST',
         body: formData
     })
     .then(response => {
-        // ★ 404 같은 주소 에러가 나면 여기서 바로 잡아냅니다!
         if (!response.ok) {
             throw new Error("서버 응답 에러 (상태 코드: " + response.status + ")");
         }
@@ -259,8 +256,7 @@ function submitProfileUpdate() {
             alert('프로필이 성공적으로 수정되었습니다.');
             location.reload();
         } else {
-            // ★ 서버가 'fail'을 뱉으면 그 이유를 보여줍니다.
-            alert('서버에서 수정을 거절했습니다. 응답: ' + realResult);
+            alert('서버에서 수정을 거절했습니다.' + realResult);
         }
     })
     .catch(error => {

@@ -1,9 +1,6 @@
 package com.histudy.admin.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.*;
 
 import com.histudy.admin.model.AdminReportDAO;
 import com.histudy.admin.model.ReportDTO;
@@ -21,10 +18,13 @@ public class AdminReportServiceImple implements AdminReportService {
 	public List<ReportDTO> getReportList(String status) {
 	    return adminReportDao.getReportList(status);
 	}
-
     @Override
-    public int resolveReport(int report_idx) {
-        return adminReportDao.updateReportStatus(report_idx);
+    public void updateReportStatus(int reportIdx, String status) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("reportIdx", reportIdx);
+        map.put("status", status);
+        
+        adminReportDao.updateReportStatus(map);
     }
 
 }

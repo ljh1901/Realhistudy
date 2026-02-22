@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.histudy.mentoring.model.*;
+import com.histudy.admin.model.ReportDTO;
 
 
 public interface MentoringService {
@@ -42,5 +43,7 @@ public interface MentoringService {
     public int writeReview(MentoringReviewDTO dto);
     
     public List<Map<String, Object>> selectNotificationList(int user_idx);
+    
+    int reportUser(ReportDTO dto);
 
 }

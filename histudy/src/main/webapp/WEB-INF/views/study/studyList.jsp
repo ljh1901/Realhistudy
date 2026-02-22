@@ -59,7 +59,15 @@
 	                   <div class="studyCard__thumb">
 	                     <img src="/histudy/study-img/${!empty dto.study_upload_img ? dto.study_upload_img : 'groupStudy.png'}" alt="스터디 이미지">
 	                   </div>
-	                   <div class="studyCard__content">
+						<div class="studyCard__content" style="position:relative;">	                   
+						
+	                    <!-- 찜하기 아이콘 추가 -->
+		                <div class="wish-icon-wrap" data-idx="${dto.study_idx}" 
+			                 onclick="event.preventDefault(); event.stopPropagation(); toggleStudyWish(this, ${dto.study_idx}, '${sessionScope.user_idx}')" 
+			                 style="position: absolute; top: 15px; right: 15px; z-index: 10;">
+			                <img src="/histudy/mypage-img/heart (1).png" class="wish-heart" style="width: 24px; height: 24px; cursor: pointer;" data-status="off">
+			            </div>
+	                   
 	                     <div class="studyCard__tags">
 	                        <span class="tag">${dto.sc_name}</span>
 	                     </div>
@@ -169,6 +177,67 @@
 			}
 		}	
 	}
-		
+
+	//=======찜하기=============
+document.addEventListener("DOMContentLoaded",function(){
+    const userIdx='${sessionScope.user_idx}';
+    if(!userIdx) return;
+    let savedWishes=JSON.parse(localStorage.getItem('study_wish_'+userIdx))||[];
+    const wishWraps=document.querySelectorAll('.wish-icon-wrap');
+    wishWraps.forEach(wrap=>{
+        const sIdx=parseInt(wrap.getAttribute('data-idx'));
+        if(savedWishes.includes(sIdx)){
+            const img=wrap.querySelector('.wish-heart');
+            img.src='/histudy/mypage-img/heart.png';
+            img.setAttribute('data-status','on');
+        }
+    });
+});
+
+function toggleStudyWish(element,targetIdx,userIdx){
+    if(!userIdx||userIdx===''){
+        alert('로그인이 필요한 기능입니다.');
+        return;
+    }
+    const imgElement=element.querySelector('.wish-heart');
+    const currentStatus=imgElement.getAttribute('data-status');
+    const requestData={
+        w_target_type:'스터디',
+        w_target_idx:targetIdx,
+        user_idx:userIdx
+    };
+    const url=(currentStatus==='off')?'insertWish.do':'deleteWish.do';
+    fetch(url,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(requestData)
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        if(data.result==='success'){
+            let savedWishes=JSON.parse(localStorage.getItem('study_wish_'+userIdx))||[];
+            if(currentStatus==='off'){
+                imgElement.src='/histudy/mypage-img/heart.png';
+                imgElement.setAttribute('data-status','on');
+                if(!savedWishes.includes(targetIdx)){
+                    savedWishes.push(targetIdx);
+                    localStorage.setItem('study_wish_'+userIdx,JSON.stringify(savedWishes));
+                }
+            }else{
+                imgElement.src='/histudy/mypage-img/heart (1).png';
+                imgElement.setAttribute('data-status','off');
+                savedWishes=savedWishes.filter(id=>id!==targetIdx);
+                localStorage.setItem('study_wish_'+userIdx,JSON.stringify(savedWishes));
+            }
+        }else{
+            alert('오류발생~');
+        }
+    })
+    .catch(error=>{
+        console.error('Error:',error);
+    });
+}
 </script>
 </html>

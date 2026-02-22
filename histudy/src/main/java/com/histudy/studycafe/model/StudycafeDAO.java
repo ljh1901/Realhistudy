@@ -8,7 +8,7 @@ public interface StudycafeDAO {
 	public int studycafeListCount(String region); // 스터디 카페 개수
 	public StudycafeDTO studycafe(int studycafe_idx);
 	public StudycafeJoinReservationDTO seatReservation(int seat_idx);
-	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx);
+	public List<TicketJoinTicketCategoryDTO> ticketInfo(Map<String, Integer> map);
 	public List<SeatDTO> seatInfo(int studycafe_idx);
 	public int orderPay(PayDTO payOrder);
 	public int paySeat(PayDTO paydto);

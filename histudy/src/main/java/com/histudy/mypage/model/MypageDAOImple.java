@@ -32,4 +32,18 @@ public class MypageDAOImple implements MypageDAO {
 	public int updateSchedule(Map<String, Object> param) {
 		return sqlSession.update("mypage.updateSchedule", param);
 	}
+	@Override
+	public List<Map<String,Object>> selectMonthly(int user_idx){
+	    return sqlSession.selectList("mypage.selectMonthly",user_idx);
+	}
+	@Override
+	public int insertWish(WishListDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mypage.insertWish",dto);
+	}
+	@Override
+	public int deleteWish(WishListDTO dto) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mypage.deleteWish",dto);
+	}
 }

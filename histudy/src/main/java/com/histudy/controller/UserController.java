@@ -69,7 +69,6 @@ public class UserController {
        }
       userService.userSignUp(dto);
       UserDTO user = userService.userInfo(dto.getUser_id());
-      userService.insertDefaultMypage(user.getUser_idx());
       request.setAttribute("msg", "회원가입 완료");
       return "redirect:/index.do";
    }
@@ -126,10 +125,10 @@ public class UserController {
    // 4. 로그아웃 및 중복체크
    @RequestMapping(value = "/userLogout.do", method = RequestMethod.GET)
    public String logout(HttpSession session) {
-      session.invalidate();
 
       Integer user_idx = (Integer) session.getAttribute("user_idx"); 
        sa_Service.userLogoutTimeUpdate(user_idx);
+       session.invalidate();
       return "redirect:/index.do";
    }
 

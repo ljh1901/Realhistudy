@@ -14,4 +14,5 @@ public interface UserDAO {
 	public void insertDefaultMypage(int user_idx);
 	public int userUpdateInfo(UserDTO dto);
 	public int userUpdateMypage(UserDTO dto);
+	public int insertDefaultMypage(String user_id );
 }

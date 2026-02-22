@@ -4,91 +4,213 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>신고 관리</title>
+<title>통합 신고 관리 시스템</title>
 <link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
 <%@ include file="adminCheck.jsp" %>
+<style>
+    .report__container { padding: 30px; font-family: 'Pretendard', -apple-system, sans-serif; background-color: #f8fafc; min-height: 100vh; }
+    .admin__title { font-size: 26px; color: #1e293b; margin-bottom: 30px; font-weight: 800; }
+
+    /* 리스트 테이블 */
+    .report__table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); overflow: hidden; }
+    .report__table th { background: #f1f5f9; padding: 15px; border-bottom: 2px solid #e2e8f0; font-size: 14px; color: #475569; }
+    .report__table td { padding: 15px; border-bottom: 1px solid #f1f5f9; text-align: center; color: #334155; }
+    
+    /* 상세 보기 섹션 */
+    .report__detail__section {
+        margin-top: 40px; padding: 30px; background: #fff;
+        border: 1px solid #e2e8f0; border-radius: 16px; display: none;
+        box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+    .detail__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; }
+    .detail__flex { display: flex; gap: 40px; }
+    
+    /* 이미지 박스 */
+    .detail__photo__box { 
+        flex: 1; min-width: 320px; background: #f8fafc; border-radius: 12px; 
+        padding: 20px; border: 2px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .detail__photo__box img { max-width: 100%; max-height: 450px; border-radius: 8px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .no__image__text { color: #94a3b8; font-size: 15px; }
+
+    /* 정보 영역 */
+    .detail__info { flex: 2; }
+    .count__badge { background: #fee2e2; color: #ef4444; padding: 4px 12px; border-radius: 6px; font-weight: 700; margin-left: 10px; }
+    .detail__content { 
+        background: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0;
+        min-height: 180px; margin: 20px 0; white-space: pre-wrap; color: #1e293b; line-height: 1.7;
+    }
+
+    /* 버튼 및 배지 */
+    .btn__group { display: flex; gap: 15px; margin-top: 30px; }
+    .btn__link { background: #fff; color: #2563eb; border: 1px solid #2563eb; padding: 10px 20px; cursor: pointer; border-radius: 8px; font-weight: 600; transition: all 0.2s; }
+    .btn__link:hover { background: #2563eb; color: #fff; }
+    .btn__resolve { background: #0f172a; color: white; border: none; padding: 14px 28px; cursor: pointer; border-radius: 8px; font-weight: 700; flex: 1; }
+    
+    .badge { padding: 5px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .type__USER { background: #dbeafe; color: #1e40af; }
+    .type__REVIEW { background: #fef3c7; color: #92400e; }
+    .type__STUDY { background: #dcfce7; color: #166534; }
+    .clickable { cursor: pointer; color: #2563eb; font-weight: 700; text-decoration: underline; }
+</style>
 </head>
 <body id="adminReportList">
 
-    <div class="repory__container"> <div class="admin__header">
-            <h1 class="admin__title">신고 관리</h1>
+    <div class="report__container"> 
+        <div class="admin__header">
+            <h1 class="admin__title">통합 신고 관리</h1>
         </div>
 
-        <div class="inquiry__category">
-            <ul class="inquiry__category__list">
-                <li class="inquiry__category__item ${empty param.status ? 'active' : ''}" 
-                    onclick="location.href='adminReportList.do'">전체</li>
-                <li class="inquiry__category__item ${param.status == '대기' ? 'active' : ''}" 
-                    onclick="location.href='adminReportList.do?status=대기'">처리대기</li>
-                <li class="inquiry__category__item ${param.status == '완료' ? 'active' : ''}" 
-                    onclick="location.href='adminReportList.do?status=완료'">처리완료</li>
-            </ul>
-        </div>
-
-        <form action="adminReportList.do" method="get" class="inquiry__cat">
-            <input type="hidden" name="status" value="${param.status}">
-        </form>
-
-        <table class="inquiry__list__table">
+        <table class="report__table">
             <thead>
                 <tr>
                     <th width="80">번호</th>
-                    <th width="120">신고 유형</th>
-                    <th width="180">신고 대상(ID/제목)</th>
-                    <th>신고 사유</th>
+                    <th width="120">유형</th>
+                    <th width="200">대상</th>
+                    <th>신고 사유 요약</th>
                     <th width="120">신고자</th>
                     <th width="100">상태</th>
-                    <th width="120">관리</th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach var="r" items="${reportList}">
                     <tr>
-                        <td align="center">${r.report_idx}</td>
-                        <td align="center">
-                            <span class="badge inquiry__cat__item">${r.report_type}</span>
+                        <td>${r.report_idx}</td>
+                        <td><span class="badge type__${r.report_type}">${r.report_type}</span></td>
+                        <td>
+                            <span class="clickable" onclick="showReportDetail('${r.report_idx}', '${r.report_type}', '${r.target_idx}', `${r.report_content}`, '${r.report_photo}', '${r.report_status}', '${r.report_count}')">
+                                ${r.report_type} #${r.target_idx}
+                            </span>
                         </td>
-                        <td align="center"><strong>${r.target_name}</strong></td>
-                        <td style="text-align: left; padding-left: 15px;">
-                            <div style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${r.report_content}">
-                                ${r.report_content}
-                            </div>
+                        <td style="text-align: left; padding-left: 20px;">
+                            <div style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.report_content}</div>
                         </td>
-                        <td align="center">${r.reporter_name}</td>
-                        <td align="center">
+                        <td>${r.reporter_name}</td>
+                        <td>
                             <c:choose>
-                                <c:when test="${r.report_status == '대기'}">
-                                    <span class="badge inquiry__status__ok__wait">처리대기</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="badge inquiry__status__ok">처리완료</span>
-                                </c:otherwise>
+                                <c:when test="${r.report_status == '대기'}"><span style="color:#f59e0b; font-weight:800;">대기</span></c:when>
+                                <c:otherwise><span style="color:#64748b;">${r.report_status}</span></c:otherwise>
                             </c:choose>
-                        </td>
-                        <td align="center">
-                            <c:if test="${r.report_status == '대기'}">
-                                <button class="inquiry__btn__search" style="padding: 5px 10px; font-size: 12px;"
-                                    onclick="resolveReport(${r.report_idx})">처리완료</button>
-                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
-                
-                <c:if test="${empty reportList}">
-                    <tr>
-                        <td colspan="7" align="center" style="padding: 80px 0; color: #64748b;">
-                            신고 내역이 없습니다.
-                        </td>
-                    </tr>
-                </c:if>
             </tbody>
         </table>
+
+        <div id="reportDetailArea" class="report__detail__section">
+            <div class="detail__header">
+                <h2 style="margin:0; color:#0f172a;">신고 상세 정보 <small style="font-weight:400; color:#94a3b8;">(No.<span id="dispIdx"></span>)</small></h2>
+                <button type="button" class="btn__link" onclick="goToTarget()">원본 게시물 확인 🔗</button>
+            </div>
+            
+            <div class="detail__flex">
+                <div class="detail__photo__box">
+                    <span id="noImgText" class="no__image__text">증빙 사진이 없습니다.</span>
+                    <img id="dispImg" src="" alt="증빙 사진">
+                </div>
+                
+                <div class="detail__info">
+                    <p style="margin-top:0; font-size: 16px;">
+                        <strong>대상 분류:</strong> <span id="dispTypeBadge" class="badge"></span>
+                        <strong style="margin-left:15px;">대상 ID:</strong> <span id="dispTargetIdx"></span>
+                        <span id="countBadgeArea" class="count__badge">누적 완료: <span id="dispReportCount">0</span>회</span>
+                    </p>
+                    <p style="margin-bottom:0;"><strong>신고 사유 상세:</strong></p>
+                    <div id="dispContent" class="detail__content"></div>
+                    
+                    <div id="reportBtnGroup" class="btn__group">
+                        <button type="button" class="btn__resolve" onclick="submitProcess('완료')">처리 완료</button>
+                        <button type="button" style="background:#f1f5f9; color:#475569; border:none; padding: 14px 28px; cursor:pointer; border-radius:8px; font-weight:700;" onclick="submitProcess('거절')">신고 거절</button>
+                    </div>
+                    <div id="statusMsg" style="display:none; margin-top:20px; padding: 15px; background:#f8fafc; border-radius:8px; text-align:center; color:#64748b; font-weight:700;">
+                        이 신고 건은 이미 <span id="finalStatus"></span> 상태입니다.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        function resolveReport(idx) {
-            if(confirm("해당 신고를 처리 완료로 변경하시겠습니까?")) {
-                location.href = "adminReportResolve.do?report_idx=" + idx;
+        let currentReport = { idx: '', type: '', targetIdx: '' };
+
+        function showReportDetail(idx, type, targetIdx, content, photo, status, reportCount) {
+            currentReport = { idx, type, targetIdx };
+            document.getElementById('reportDetailArea').style.display = 'block';
+            
+            // 데이터 매핑
+            document.getElementById('dispIdx').innerText = idx;
+            document.getElementById('dispTargetIdx').innerText = targetIdx;
+            document.getElementById('dispContent').innerText = content;
+            
+            // 누적 횟수 세팅
+            const countVal = reportCount || 0;
+            document.getElementById('dispReportCount').innerText = countVal;
+            
+            // 횟수에 따른 강조 (예: 3회 이상이면 배경색 더 진하게)
+            const countBadge = document.getElementById('countBadgeArea');
+            if(parseInt(countVal) >= 3) {
+                countBadge.style.background = '#fecaca'; // 더 진한 빨강
+            } else {
+                countBadge.style.background = '#fee2e2';
+            }
+            
+            const badge = document.getElementById('dispTypeBadge');
+            badge.innerText = type;
+            badge.className = 'badge type__' + type;
+
+            // --- 이미지 깜빡임 방지 로직 ---
+            const imgElement = document.getElementById('dispImg');
+            const placeholder = document.getElementById('noImgText');
+            
+            imgElement.style.display = 'none'; 
+            imgElement.onerror = null;
+
+            if (photo && photo !== 'null' && photo.trim() !== '') {
+                imgElement.src = 'upload/' + photo; 
+                imgElement.onload = function() {
+                    this.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                imgElement.onerror = function() {
+                    this.style.display = 'none';
+                    placeholder.style.display = 'block';
+                    placeholder.innerText = "이미지를 불러올 수 없습니다.";
+                    this.onerror = null;
+                };
+            } else {
+                imgElement.style.display = 'none';
+                placeholder.style.display = 'block';
+                placeholder.innerText = "증빙 사진이 없습니다.";
+            }
+
+            // --- 상태에 따른 버튼 처리 ---
+            if(status === '대기') {
+                document.getElementById('reportBtnGroup').style.display = 'flex';
+                document.getElementById('statusMsg').style.display = 'none';
+            } else {
+                document.getElementById('reportBtnGroup').style.display = 'none';
+                document.getElementById('statusMsg').style.display = 'block';
+                document.getElementById('finalStatus').innerText = status;
+            }
+
+            document.getElementById('reportDetailArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function goToTarget() {
+            let url = "";
+            const tIdx = currentReport.targetIdx;
+            // 타입별 경로 설정 (프로젝트 URL에 맞게 수정 필요)
+            if(currentReport.type === 'USER') url = "adminUserDetail.do?user_idx=" + tIdx;
+            else if(currentReport.type === 'REVIEW') url = "studycafeReview.do?review_idx=" + tIdx;
+            else if(currentReport.type === 'STUDY') url = "studyContent.do?study_idx=" + tIdx;
+            
+            if(url) window.open(url, '_blank');
+        }
+
+        function submitProcess(action) {
+            const msg = action === '완료' ? "해당 신고를 '완료' 처리하시겠습니까?\n(누적 완료 횟수가 1 증가합니다.)" : "신고를 거절하시겠습니까?";
+            if(confirm(msg)) {
+                location.href = "adminReportProcess.do?report_idx=" + currentReport.idx + "&action=" + action;
             }
         }
     </script>
