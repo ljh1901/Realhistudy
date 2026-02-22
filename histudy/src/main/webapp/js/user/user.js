@@ -240,6 +240,7 @@ function submitProfileUpdate() {
     if (fileInput.files.length > 0) {
         formData.append('uploadFile', fileInput.files[0]);
     }
+
     fetch(contextPath + '/updateProfile.do', {
         method: 'POST',
         body: formData

@@ -22,7 +22,6 @@
 	<delete id="deleteNotice" parameterType="int">
 		delete from notifications 
 		where n_idx=#{n_idx}
->>>>>>> develop
 	</delete>
 	
 </mapper>

@@ -172,7 +172,6 @@ document.getElementById("btn-save").onclick = function() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
     })
-
     .then(res => res.text())
     .then(res => {
         if (res === "success") {

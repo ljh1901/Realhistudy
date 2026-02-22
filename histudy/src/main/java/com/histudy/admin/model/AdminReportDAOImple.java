@@ -16,6 +16,7 @@ public class AdminReportDAOImple implements AdminReportDAO {
 	public List<ReportDTO> getReportList(String status) {
 	    return session.selectList("selectAllReportList", status);
 	}
+    
     @Override
     public void updateReportStatus(Map<String, Object> map) {
        session.update("updateReportStatus", map);

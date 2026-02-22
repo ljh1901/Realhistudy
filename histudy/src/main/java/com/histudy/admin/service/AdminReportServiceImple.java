@@ -18,6 +18,7 @@ public class AdminReportServiceImple implements AdminReportService {
 	public List<ReportDTO> getReportList(String status) {
 	    return adminReportDao.getReportList(status);
 	}
+    
     @Override
     public void updateReportStatus(int reportIdx, String status) {
         Map<String, Object> map = new HashMap<>();

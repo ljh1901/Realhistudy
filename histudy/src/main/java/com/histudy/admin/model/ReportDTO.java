@@ -107,5 +107,6 @@ public class ReportDTO {
 	public void setReport_count(int report_count) {
 		this.report_count = report_count;
 	}
+
 	
 }

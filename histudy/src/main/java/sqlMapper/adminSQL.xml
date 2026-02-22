@@ -409,6 +409,7 @@
 		</where>
 		ORDER BY r.report_idx DESC
 	</select>
+
 	<update id="updateReportStatus" parameterType="hashmap">
 		UPDATE report
 		SET report_status = #{status}
