@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-/* 페이지 배경 / 헤더 */
 #mentoringCreatePage header{
   background-color: white;
 }
@@ -11,7 +10,7 @@
   background-color:#f4fff2;
 }
 
-/* 카드 공통 */
+
 .card{
   max-width: 900px;
   margin: 0 auto 22px;
@@ -21,7 +20,6 @@
   box-shadow: 0 8px 24px rgba(17,24,39,0.08);
 }
 
-/* 섹션 제목 */
 .section-title{
   margin: 0 0 18px;
   font-size: 1.35rem;
@@ -30,7 +28,6 @@
   padding-bottom: 10px;
 }
 
-/* 라벨/필수표시 */
 label{
   display:block;
   font-weight: 800;
@@ -45,7 +42,6 @@ label.required::after{
   font-weight:900;
 }
 
-/* 입력 공통 */
 input[type="text"],
 input[type="number"],
 select,
@@ -72,14 +68,12 @@ textarea:focus{
   box-shadow: 0 0 0 3px rgba(17,24,39,0.10);
 }
 
-/* 2열 그리드 */
 .grid-2{
   display:grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
-/* 카테고리 버튼 */
 .cat-grid{
   display:flex;
   flex-wrap:wrap;
@@ -105,7 +99,6 @@ textarea:focus{
   color:#fff;
 }
 
-/* 힌트/경고 */
 .hint{
   margin-top:10px;
   font-size: 0.85rem;
@@ -117,7 +110,6 @@ textarea:focus{
   color:#ef4444;
 }
 
-/* 태그 입력 */
 .tag-row{
   display:flex;
   gap:10px;
@@ -139,7 +131,6 @@ textarea:focus{
   background:#374151;
 }
 
-/* 태그 칩 */
 .chips {
   margin-top: 12px;
   display: flex;
@@ -223,7 +214,6 @@ table.schedule td.slot.selected:hover{
   background:#c9ffbf;
 }
 
-/* 하단 버튼 */
 .bottom-actions{
   display:flex;
   justify-content:flex-end;
@@ -254,7 +244,6 @@ table.schedule td.slot.selected:hover{
   background:#374151;
 }
 
-/* 반응형 */
 @media (max-width: 700px){
   .grid-2{
     grid-template-columns: 1fr;
