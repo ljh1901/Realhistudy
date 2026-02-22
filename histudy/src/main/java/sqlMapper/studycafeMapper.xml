@@ -57,7 +57,7 @@
 		st.ticket_time, tc.ticket_category_name
 		from studycafe_ticket st
 		join ticket_category tc on st.ticket_category_idx = tc.ticket_category_idx
-		where tc.ticket_category_idx = #{ticket_category_idx} 
+		where tc.ticket_category_idx = #{ticket_category_idx} and studycafe_idx = #{studycafe_idx}
 	</select>
 
 	<!-- 4. 티켓 금액 조회 -->

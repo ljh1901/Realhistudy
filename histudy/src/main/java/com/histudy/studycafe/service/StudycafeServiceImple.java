@@ -60,8 +60,11 @@ public class StudycafeServiceImple implements StudycafeSerivce {
 	}
 
 	@Override
-	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx) {
-		List<TicketJoinTicketCategoryDTO> ticketInfo = studycafeDAO.ticketInfo(ticket_category_idx);
+	public List<TicketJoinTicketCategoryDTO> ticketInfo(int ticket_category_idx, int studycafe_idx) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("ticket_category_idx", ticket_category_idx);
+		map.put("studycafe_idx", studycafe_idx);
+		List<TicketJoinTicketCategoryDTO> ticketInfo = studycafeDAO.ticketInfo(map);
 		return ticketInfo;
 	}
 

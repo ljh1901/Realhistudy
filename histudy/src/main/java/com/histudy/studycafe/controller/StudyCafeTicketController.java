@@ -27,8 +27,8 @@ public class StudyCafeTicketController {
 	
 	// 티켓 정보
 	@GetMapping
-	public ResponseEntity<List<TicketJoinTicketCategoryDTO>> ticketInfo(@RequestParam int ticket_category_idx) {
-		List<TicketJoinTicketCategoryDTO> data = studycafeService.ticketInfo(ticket_category_idx);
+	public ResponseEntity<List<TicketJoinTicketCategoryDTO>> ticketInfo(@RequestParam int ticket_category_idx, @RequestParam(value="studycafe_idx") int studycafe_idx) {
+		List<TicketJoinTicketCategoryDTO> data = studycafeService.ticketInfo(ticket_category_idx, studycafe_idx);
 		ResponseEntity<List<TicketJoinTicketCategoryDTO>> re = new ResponseEntity<List<TicketJoinTicketCategoryDTO>>(data,HttpStatus.OK);
 		return re;
 	}
