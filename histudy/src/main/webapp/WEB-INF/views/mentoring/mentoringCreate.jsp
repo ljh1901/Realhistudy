@@ -3,7 +3,7 @@
 <%@ page import="java.util.*, java.text.SimpleDateFormat" %>
 
 <%
-    // 이번 주 월요일~일요일 날짜 계산 (DB 저장용 및 화면 표시용)
+
     Calendar cal = Calendar.getInstance();
     cal.setFirstDayOfWeek(Calendar.MONDAY);
     int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
@@ -185,7 +185,7 @@
   </form>
 
 <script>
-  /* [기능] 카테고리 선택 */
+
   function pickCategory(btn){
     const val = btn.getAttribute("data-val");
     const sc = document.getElementById("sc_idx");
@@ -194,12 +194,10 @@
     btn.classList.add("active");
   }
 
-  /* [기능] 스킬태그 관리 */
   const tags = []; 
   const tagInput = document.getElementById("tagInput");
   const tagChips = document.getElementById("tagChips");
 
-  // 1. 태그 추가 함수
   function addTag() {
       const rawValue = tagInput.value.trim();
       const tagValue = rawValue.replace(/\s+/g, ""); 
@@ -219,14 +217,12 @@
       renderTags(); 
   }
 
-  // 2. 태그 삭제 함수
   function removeTag(t) {
       const idx = tags.indexOf(t);
       if (idx >= 0) tags.splice(idx, 1); 
-      renderTags(); // 화면 갱신
+      renderTags();
   }
 
-  // 3. 화면에 태그 그려주는 함수
   function renderTags() {
     tagChips.innerHTML = ""; 
     
@@ -260,7 +256,6 @@
       }
   });
 
-  /* 스케줄 선택 */
   const selectedSlots = new Set();
 
   const dbDates = ["<%= dbDates[0] %>", "<%= dbDates[1] %>", "<%= dbDates[2] %>", "<%= dbDates[3] %>", "<%= dbDates[4] %>", "<%= dbDates[5] %>", "<%= dbDates[6] %>"];
@@ -269,7 +264,7 @@
   function onSlotClick(td) {
     const day = td.dataset.day;
     const time = td.dataset.time;
-    const actualDate = dbDates[dayMap[day]]; // 요일을 실제 날짜로 변환
+    const actualDate = dbDates[dayMap[day]]; 
 
     const key = actualDate + "_" + time;
 
@@ -293,7 +288,7 @@
   function submitMentoringForm(){
     const f = document.getElementById("mentoringOpenForm");
     const sessionMin = parseInt(document.getElementById("session_minutes").value || "0", 10);
-    const needSlots = sessionMin / 60; // 60분=1칸, 120분=2칸
+    const needSlots = sessionMin / 60; 
 
 
     if(!document.getElementById("sc_idx").value){ alert("카테고리를 선택해 주세요."); return; }

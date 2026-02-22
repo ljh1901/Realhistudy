@@ -48,7 +48,6 @@
         </div>
       </div>
 
-      <!-- ===== 멘토 정보(프로필 페이지 느낌) ===== -->
       <div class="card">
         <h3 class="title" style="font-size:18px;">멘토 정보</h3>
 
