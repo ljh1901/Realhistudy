@@ -77,7 +77,7 @@
 						        <div class="wish-thumb mentor">
 						            <c:choose>
 						                <c:when test="${not empty m.PROFILE_IMG}">
-						                    <img src="/histudy/mypage-img/pimg${m.PROFILE_IMG}" style="width:100%; height:100%; object-fit:cover;">
+						                    <img src="/histudy/mypage-img/pimg/${m.PROFILE_IMG}" style="width:100%; height:100%; object-fit:cover;">
 						                </c:when>
 						                <c:otherwise>
 						                    <span style="font-size: 50px;">👤</span>
