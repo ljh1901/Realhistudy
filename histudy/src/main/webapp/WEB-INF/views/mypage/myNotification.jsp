@@ -20,8 +20,8 @@
                 <td>${dto.n_date}</td>
                 <td style="text-align: right;">
                 <a href="javascript:void(0);" onclick="if(confirm('알림을 삭제하시겠습니까?')){ fetch('deleteNoti.do?n_idx=${dto.n_idx}').then(r=>r.text()).then(d=>{if(d.trim()==='success'){var row=document.getElementById('row_${dto.n_idx}');if(row)row.remove();}else{alert('삭제 실패');}}).catch(e=>console.error(e)); }">
-                <img src="mypage-img/trash-can.png" width="30">
-            </a>
+				    <img src="mypage-img/trash-can.png" width="30">
+				</a>
                     </td>
             </tr>
         </c:forEach>

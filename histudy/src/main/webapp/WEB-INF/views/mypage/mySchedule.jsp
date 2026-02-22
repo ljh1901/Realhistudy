@@ -17,12 +17,14 @@
         <aside class="mypage-sidebar">
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="myPage.do"><img src="mypage-img/user.png" width="25">프로필</a></li>
-                    <li><a href="myDashboard.do"><img src="mypage-img/report.png" width="25">대시보드</a></li>
-                    <li class="active"><a href="mySchedule.do"><img src="mypage-img/calendar.png" width="25">일정관리</a></li>
-                    <li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="25">구매 / 혜택</a></li>
-                    <li><a href="myHeart.do"><img src="mypage-img/heart.png" width="25">찜 목록</a></li>
-                    <li><a href="myAlarm.do"><img src="mypage-img/bell.png" width="25">알림 설정</a></li>
+						<li><a href="myPage.do"><img src="mypage-img/user.png" width="30">프로필</a>
+						<li><a href="myDashboard.do"><img src="mypage-img/report.png" width="30">대시보드</a>
+						<li><a href="mySchedule.do"><img src="mypage-img/calendar.png" width="30">일정관리</a>
+						<li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="30">구매 / 혜택</a>
+						<li><a href="myRefund.do"><img src="mypage-img/refund.png" width="30">정기권 환불</a>
+						<li><a href="myHeart.do"><img src="mypage-img/heart.png" width="30">찜 목록</a>
+						<li><a href="myAlarm.do"><img src="mypage-img/bell.png" width="30">알림 설정</a>
+						</li>
                 </ul>
             </nav>
         </aside>
@@ -60,7 +62,7 @@
                     <textarea id="memo-text"></textarea>
                     <div class="memo-buttons">
                         <button type="button" id="btn-save">등록하기</button>
-                        <button type="button" id="btn-delete" style="background:none;border:1px solid #e74c3c;color:#e74c3c;padding:12px;border-radius:10px;cursor:pointer;">삭제하기</button>
+                        <button type="button" id="btn-delete" style="background:none;border:1px solid black;padding:12px;border-radius:10px;cursor:pointer;">삭제하기</button>
                     </div>
                 </div>
             </div>

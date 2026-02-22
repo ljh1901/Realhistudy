@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+.dashboard-content {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;  
+    gap: 20px;       
+}
+.dashboard-content section {
+    flex: 0 0 calc(50% - 10px) !important; /* 강제로 딱 50% 크기 차지 */
+    width: calc(50% - 10px) !important;    /* 찌그러짐 방지 쐐기 */
+    box-sizing: border-box;
+    margin-bottom: 0 !important; /* gap으로 띄웠으니 마진 제거 */
+    
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    border: 1px solid #f1f5f9;
+}
+/* 개별 섹션 공통 카드 스타일 */
+section {
+    background: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    border: 1px solid #f1f5f9;
+}
+
+/* 1. 프리미엄 회원 섹션 */
+.membership-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #f1f5f9;
+}
+
+.membership-card div:first-child {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 18px;
+}
+
+.membership-card p {
+    margin: 0;
+    color: #00c1a1;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+/* 2. 그래프 섹션 */
+.chart-section {
+    min-height: 300px;
+}
+
+/* 3. 참여 중인 스터디 섹션 */
+.my-study-section {
+    margin-top: 0; /* section 공통 마진 사용 */
+}
+
+.section-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.study-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.study-card {
+    border: 1px solid #f1f5f9;
+    border-radius: 15px;
+    padding: 20px;
+    transition: all 0.2s;
+}
+
+.study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.study-badge {
+    display: inline-block;
+    background: rgba(0, 193, 161, 0.1);
+    color: #00c1a1;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.study-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #334155;
+}
+
+.study-info {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.study-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #e2e8f0;
+    padding-top: 15px;
+}
+
+.d-day {
+    font-weight: 800;
+    color: #00c1a1;
+    font-size: 16px;
+}
+
+.d-day.urgent { color: #ef4444; }
+
+.study-footer button {
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* 빈 상태 표시 */
+.empty-study {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px 0;
+    color: #94a3b8;
+}
+
+.empty-study a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #000000;
+    text-decoration: none;
+    font-weight: 600;
+}
