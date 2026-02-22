@@ -180,6 +180,12 @@ public class LmsServiceImple implements LmsService {
  		return dto;
  	}
  	
+ 	@Override
+ 	public String getStudyTitle(int study_idx) {
+ 		String studyTitle=l_dao.getStudyTitle(study_idx);
+ 		return studyTitle;
+ 	}
+ 	
  	/** ===== Controller에서 호출하는 로직 처리 메서드 ===== */
  	/** 과제 등록 처리 */
  	@Override

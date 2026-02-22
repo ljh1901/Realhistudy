@@ -85,6 +85,8 @@ public interface LmsDAO {
 	/** 스터디 승인 or 멤버삭제시 현재 멤버 수 업데이트하기 */
 	public int currentMembersUpdate(Map<String, Integer> map);
 	
+	public String getStudyTitle(int study_idx);
+	
 	/**==== LmsRestController에서 쓰는 DAO ====*/
 	/** 왼쪽 내 스터디 클릭 시 리더일 경우 해당 스터디의 과제만 추출 */
 	public List<LmsDTO> lmsRestLeaderSelectTask(Map<String, Integer> map);

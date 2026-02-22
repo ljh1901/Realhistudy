@@ -416,7 +416,8 @@ public class LmsController {
 	/** 스터디 승인 */
 	@GetMapping("/studyApplyJoin.do")
 	public ModelAndView studyApplyJoin(@RequestParam(value = "study_idx", defaultValue = "0") int study_idx,
-			@RequestParam(value = "user_idx", defaultValue = "0") int user_idx) {
+			@RequestParam(value = "user_idx", defaultValue = "0") int user_idx,
+			HttpSession session) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -425,7 +426,13 @@ public class LmsController {
 		mav.addObject("msg", msg);
 		mav.addObject("goPage", "memberManagement.do?study_idx=" + study_idx);
 		mav.setViewName("lms/lmsMsg");
-
+		
+		int senderIdx = (Integer)session.getAttribute("user_idx");
+		
+		
+		String studyTitle = ls.getStudyTitle(study_idx);
+		studyResultNotice(user_idx, "studyOK", "[" + studyTitle + "] 스터디 신청이 승인됐어요! 지금 바로 LMS를 확인해보세요!", "스터디 승인", senderIdx);
+		
 		return mav;
 
 	}
@@ -434,7 +441,8 @@ public class LmsController {
 	@GetMapping("/studyApplyReject.do")
 	public ModelAndView studyApplyReject(@RequestParam(value = "study_idx", defaultValue = "0") int study_idx,
 			@RequestParam(value = "user_idx", defaultValue = "0") int user_idx,
-			@RequestParam(value = "sa_reason", defaultValue = "0") String sa_reason) {
+			@RequestParam(value = "sa_reason", defaultValue = "0") String sa_reason,
+			HttpSession session) {
 
 		String msg = ls.rejectStudyMember(study_idx, user_idx, sa_reason);
 
@@ -442,6 +450,11 @@ public class LmsController {
 		mav.addObject("msg", msg);
 		mav.addObject("goPage", "memberManagement.do?study_idx=" + study_idx);
 		mav.setViewName("lms/lmsMsg");
+		
+		int senderIdx = (Integer)session.getAttribute("user_idx");
+		String studyTitle = ls.getStudyTitle(study_idx);
+		studyResultNotice(user_idx, "studyNO", "[" + studyTitle + "] 스터디 신청이 거절되었습니다.", "스터디 거부", senderIdx);
+		
 		return mav;
 
 	}
@@ -449,7 +462,8 @@ public class LmsController {
 	/** 스터디 멤버 삭제 */
 	@GetMapping("/studyMemberDelete.do")
 	public ModelAndView deleteStudyMember(@RequestParam(value = "study_idx", defaultValue = "0") int study_idx,
-			@RequestParam(value = "user_idx", defaultValue = "0") int user_idx) {
+			@RequestParam(value = "user_idx", defaultValue = "0") int user_idx,
+			HttpSession session) {
 
 		String msg = ls.deleteStudyMemberProcess(study_idx, user_idx);
 
@@ -457,6 +471,11 @@ public class LmsController {
 		mav.addObject("msg", msg);
 		mav.addObject("goPage", "memberManagement.do?study_idx=" + study_idx);
 		mav.setViewName("lms/lmsMsg");
+		
+		int senderIdx = (Integer)session.getAttribute("user_idx");
+		String studyTitle = ls.getStudyTitle(study_idx);
+		studyResultNotice(user_idx, "studyOUT", "[" + studyTitle + "] 스터디에서 퇴출 되었습니다.", "스터디 퇴출", senderIdx);
+		
 		return mav;
 	}
 	
@@ -489,4 +508,19 @@ public class LmsController {
 		return mav;
 		
 	}
+	
+	public void studyResultNotice(int memberIdx, String type, String noticeContent, String noticeTitle, int senderIdx) {
+		
+		NotificationsDTO n_dto = new NotificationsDTO();
+		
+		n_dto.setN_type(type);
+		n_dto.setN_content(noticeContent); // 안 쓰는 컬럼..?
+		n_dto.setN_sender_idx(senderIdx);
+		n_dto.setN_title(noticeTitle);	
+		n_dto.setN_read("안읽음");
+		n_dto.setUser_idx(memberIdx);
+
+		ns.sendNotice(n_dto);
+	}
+	
 }
