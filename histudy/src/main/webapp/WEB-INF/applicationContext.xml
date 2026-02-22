@@ -94,5 +94,8 @@
 	<bean id="mypageDAO" class="com.histudy.mypage.model.MypageDAOImple">
     	<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
 	</bean>
+	<bean id="userSupportDAO" class="com.histudy.usersupport.model.UserSupportDAOImple">
+    	<constructor-arg ref="sqlSessionTemplate"></constructor-arg>
+	</bean>
 </beans>
 

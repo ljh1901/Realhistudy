@@ -38,8 +38,8 @@
 					<div class="footer__right__box">	
 						<h5>고객지원</h5>	
 						<ul>
-							<li>FAQ</li>
-							<li>공지사항</li>
+							<li><a href="faqList.do">FAQ</a></li>
+							<li><a href="noticeList.do">공지사항</a></li>
 							<li><a href="userInquiryList.do">문의하기</a></li>
 						</ul>
 					</div>
@@ -50,7 +50,7 @@
 					<p>© 2026 Hi, Study. All rights reserved.</p>
 				</div>
 				<div>
-					<a href="#" id="footer__bottom__adminModeBtn">관리자모드</a>
+					<a href="adminMain.do" id="footer__bottom__adminModeBtn">관리자모드</a>
 				</div>
 				<div>
 					<p><a href="${pageContext.request.contextPath}/privacy.do">개인정보처리방침</a> &nbsp;|&nbsp; <a href="${pageContext.request.contextPath}/terms.do">이용약관</a> &nbsp;|&nbsp; <a href="#">Made with ❤️ by Hi, Study Team</a></p>
