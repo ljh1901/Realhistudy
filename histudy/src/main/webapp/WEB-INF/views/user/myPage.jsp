@@ -38,14 +38,14 @@
 			<main class="mypage-main">
 				<h2 class="content-title">내 프로필</h2>
 
-				<form action="${pageContext.request.contextPath}/updateProfile.do"
+				<form action="updateProfile.do"
 					method="post" enctype="multipart/form-data">
 					<input type="hidden" id="user_idx" value="${user.user_idx}">
 					<div class="profile-card">
 						<div class="profile-image-section">
 							<div class="image-container">
 								<img
-									src="mypage-img/${user.profile_img}"
+									src="mypage-img/pimg/${user.profile_img }"
 									id="profilePreview">
 							</div>
 

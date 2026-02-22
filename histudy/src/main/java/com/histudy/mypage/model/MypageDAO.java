@@ -9,4 +9,8 @@ public interface MypageDAO {
 	public int insertSchedule(Map<String, Object> param);
 	public int updateSchedule(Map<String, Object> param);
 	public int deleteSchedule(Map<String, Object> param);
+	public List<Map<String,Object>> selectMonthly(int user_idx);
+	public int insertWish(WishListDTO dto);
+	public int deleteWish(WishListDTO dto);
+
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.histudy.mypage.model.MypageDAO;
 import com.histudy.mypage.model.ScheduleDTO;
+import com.histudy.mypage.model.WishListDTO;
 
 public class MypageServiceImple implements MypageService {
 	@Autowired
@@ -26,10 +27,9 @@ public class MypageServiceImple implements MypageService {
 		for (ScheduleDTO dto : list) {
 			if (dto.getS_start_date() != null) {
 				String dateKey = sdf.format(dto.getS_start_date());
-				resultMap.put(dateKey, dto.getS_content());
+				resultMap.put(dateKey, dto.getS_title());
 			}
 		}
-
 		return resultMap;
 	}
 
@@ -46,5 +46,20 @@ public class MypageServiceImple implements MypageService {
 	@Override
 	public int deleteSchedule(Map<String, Object> param) {
 		return mypageDao.deleteSchedule(param);
+	}
+	@Override
+	public List<Map<String, Object>> selectMonthly(int user_idx) {
+		// TODO Auto-generated method stub
+		return mypageDao.selectMonthly(user_idx);
+	}
+	@Override
+	public int insertWish(WishListDTO dto) {
+		// TODO Auto-generated method stub
+		return mypageDao.insertWish(dto);
+	}
+	@Override
+	public int deleteWish(WishListDTO dto) {
+		// TODO Auto-generated method stub
+		return mypageDao.deleteWish(dto);
 	}
 }

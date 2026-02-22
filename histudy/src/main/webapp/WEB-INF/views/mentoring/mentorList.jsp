@@ -57,7 +57,17 @@
 
       <c:otherwise>
         <c:forEach var="m" items="${mentorList}">
-          <div class="mentor-card" onclick="openMentorProfile(${m.mentor_idx})">
+          <div class="mentor-card" onclick="openMentorProfile(${m.mentor_idx})" style="position: relative;">
+          
+          <!-- 하트 아이콘 추가 -->
+          <div class="wish-icon-wrap" onclick="event.stopPropagation(); toggleWish(this, ${m.mentor_idx}, '${sessionScope.user_idx}')" style="position: absolute; top: 20px; right: 20px; z-index: 10;">
+			    <img src="mypage-img/heart (1).png" class="wish-heart" style="width: 24px; height: 24px; cursor: pointer;" data-status="off">
+			</div>
+			
+			<div class="wish-icon-wrap" data-idx="${m.mentor_idx}" onclick="event.stopPropagation(); toggleWish(this, ${m.mentor_idx}, '${sessionScope.user_idx}')" style="position: absolute; top: 20px; right: 20px; z-index: 10;">
+			    <img src="mypage-img/heart (1).png" class="wish-heart" style="width: 24px; height: 24px; cursor: pointer;" data-status="off">
+			</div>
+          
             <div class="card-top">
               <div class="avatar">
               <c:choose>
@@ -192,6 +202,68 @@ function closeByBackdrop(e, modalId){
   </script>
 </c:if>
 
+<!-- ================찜하기================ -->
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+    const userIdx='${sessionScope.user_idx}';
+    if(!userIdx) return;
+    let savedWishes=JSON.parse(localStorage.getItem('wish_'+userIdx))||[];
+    const wishWraps=document.querySelectorAll('.wish-icon-wrap');
+    wishWraps.forEach(wrap=>{
+        const mIdx=parseInt(wrap.getAttribute('data-idx'));
+        if(savedWishes.includes(mIdx)){
+            const img=wrap.querySelector('.wish-heart');
+            img.src='mypage-img/heart.png';
+            img.setAttribute('data-status','on');
+        }
+    });
+});
 
+function toggleWish(element,targetIdx,userIdx){
+    if(!userIdx||userIdx===''){
+        alert('로그인이 필요한 기능입니다.');
+        return;
+    }
+    const imgElement=element.querySelector('.wish-heart');
+    const currentStatus=imgElement.getAttribute('data-status');
+    const requestData={
+        w_target_type:'멘토링',
+        w_target_idx:targetIdx,
+        user_idx:userIdx
+    };
+    const url=(currentStatus==='off')?'insertWish.do':'deleteWish.do';
+    fetch(url,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(requestData)
+    })
+    .then(response=>response.json())
+    .then(data=>{
+        if(data.result==='success'){
+            let savedWishes=JSON.parse(localStorage.getItem('wish_'+userIdx))||[];
+            if(currentStatus==='off'){
+                imgElement.src='mypage-img/heart.png';
+                imgElement.setAttribute('data-status','on');
+                if(!savedWishes.includes(targetIdx)){
+                    savedWishes.push(targetIdx);
+                    localStorage.setItem('wish_'+userIdx,JSON.stringify(savedWishes));
+                }
+            }else{
+                imgElement.src='mypage-img/heart (1).png';
+                imgElement.setAttribute('data-status','off');
+                savedWishes=savedWishes.filter(id=>id!==targetIdx);
+                localStorage.setItem('wish_'+userIdx,JSON.stringify(savedWishes));
+            }
+        }else{
+            alert('오류발생~');
+        }
+    })
+    .catch(error=>{
+        console.error('Error:',error);
+    });
+}
+</script>
 </body>
 </html>
