@@ -13,14 +13,15 @@
 		where user_idx=#{user_idx}
 		order by n_idx desc
 	</select>
-	<update id="updateNotice">
-		update table_name 
-		set status='읽음' 
-		where status='안읽음';
+	<update id="updateNotice" parameterType="int">
+		update notifications 
+		set n_read='읽음' 
+		where n_read='안읽음'
+			and user_idx=#{user_idx}
 	</update>
-	<delete id="deleteNotice">
-		delete from table_name 
-		where status='읽음';
+	<delete id="deleteNotice" parameterType="int">
+		delete from notifications 
+		where n_idx=#{n_idx}
 	</delete>
 	
 </mapper>

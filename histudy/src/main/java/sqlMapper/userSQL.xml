@@ -59,14 +59,6 @@
 		SET user_pw=#{user_pw}
 		WHERE user_id = #{user_id}
 	</update>
-	<insert id="insertDefaultMypage" parameterType="int">
-		INSERT INTO mypage values(
-			mypage_idx_seq.nextval, 
-			#{user_idx}, 
-			'',       
-			'user.png'      
-		)
-	</insert>
 	<update id="userUpdateInfoSQL" parameterType="com.histudy.user.model.UserDTO">
 	    UPDATE usertb
 	    SET user_name = #{user_name},
@@ -81,4 +73,8 @@
 	        profile_img = #{profile_img}
 	    WHERE user_idx = #{user_idx}
 	</update>
+	<insert id="insertDefaultMypage" parameterType="String">
+    insert into mypage
+	values(mypage_idx_seq.nextval,(select user_idx from usertb where user_id=#{user_id}),'','user.png')
+</insert>
 </mapper>

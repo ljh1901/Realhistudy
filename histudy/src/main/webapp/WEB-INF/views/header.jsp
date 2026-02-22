@@ -38,8 +38,7 @@
 
             <ul class="user-menu" id="userMenu">
                 <li><a href="${pageContext.request.contextPath}/myPage.do">프로필 관리</a></li>
-				<li><a href="javascript:void(0);" onclick="openNotiModal();">알림함</a></li>                <li><a href="#">활동 내역</a></li>
-                <li><a href="#">관심 스터디</a></li>
+				<li><a href="javascript:void(0);" onclick="openNotiModal();">알림함</a></li>              
                 <li class="logout-item">
                     <a href="javascript:void(0);"
                        onclick="if(confirm('로그아웃 하시겠습니까?')) location.href='${pageContext.request.contextPath}/userLogout.do'"
@@ -71,6 +70,9 @@ function openNotiModal() {
                 closeBtn.className = 'close-btn';
                 closeBtn.innerHTML = '&times;';
                 closeBtn.onclick = function() { overlay.style.display = 'none'; };
+                Object.assign(modalContent.style, {
+                    width: '900px'
+                });
                 Object.assign(closeBtn.style, {
                     position: 'absolute', right: '25px', top: '20px',
                     cursor: 'pointer', fontSize: '20px'

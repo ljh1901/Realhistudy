@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.histudy.membership.model.MembershipPaymentDTO;
 import com.histudy.membership.service.MembershipService;
+import com.histudy.mypage.model.WishListDTO;
 import com.histudy.mypage.service.MypageService;
 import com.histudy.mypage.service.MypageServiceImple;
 	
@@ -28,10 +29,42 @@ public class MypageController {
 	private MypageService mypageService;
 
 	@GetMapping("myDashboard.do")
-	public ModelAndView myDashboard() {
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("mypage/myDashboard");
-		return mav;
+	public ModelAndView myDashboard(HttpSession session){
+	    ModelAndView mav=new ModelAndView();
+	    Integer user_idx=(Integer)session.getAttribute("user_idx");
+	    mav.addObject("restDays",0);
+	    if(user_idx!=null){
+	        Map<String,Object> map=new HashMap<>();
+	        map.put("user_idx",user_idx);
+	        map.put("start",1);
+	        map.put("end",1);
+	        List<Map<String,Object>> list=membershipService.getPayment(map);
+	        if(list!=null&&!list.isEmpty()){
+	            Map<String,Object> latest=list.get(0);
+	            Object endDateObj=latest.get("END_DATE");
+	            if(endDateObj!=null){
+	                try{
+	                    String dateStr=String.valueOf(endDateObj);
+	                    java.text.SimpleDateFormat sdf=new java.text.SimpleDateFormat("yyyy년 MM월 dd일");
+	                    java.util.Date endDate=sdf.parse(dateStr);
+	                    java.util.Date today=new java.util.Date();
+	                    long diff=endDate.getTime()-today.getTime();
+	                    double days=diff/(1000.0*60*60*24);
+	                    long restDays=(long)Math.ceil(days);
+	                    mav.addObject("restDays",restDays>0?restDays:0);
+	                }catch(Exception e){}
+	            }
+	        }
+	    }
+	    mav.setViewName("mypage/myDashboard");
+	    return mav;
+	}
+	@GetMapping("/getMyMonthlyUsage.do")
+	@ResponseBody
+	public List<Map<String,Object>> getMyMonthlyUsage(HttpSession session){
+	    Integer user_idx=(Integer)session.getAttribute("user_idx");
+	    if(user_idx==null)return new java.util.ArrayList<>();
+	    return mypageService.selectMonthly(user_idx);
 	}
 	@GetMapping("mySchedule.do")
 	public ModelAndView mySchedule() {
@@ -91,18 +124,20 @@ public class MypageController {
         return mypageService.getMonthSchedule(user_idx, year, month);
     }
 
-    @PostMapping("/saveSchedule.do")
-    @ResponseBody
-    public String saveSchedule(@RequestBody Map<String, Object> param, HttpSession session) {
-        Integer user_idx= (Integer) session.getAttribute("user_idx");
-        if (user_idx== null) {
-            return "fail";
-        }
-        param.put("user_idx", user_idx);
-        
-        int result= mypageService.saveSchedule(param);
-        return result > 0 ? "success" : "fail";
-    }
+	@PostMapping("/saveSchedule.do")
+	@ResponseBody
+	public String saveSchedule(@RequestBody Map<String,Object> param,HttpSession session){
+	    Integer user_idx=(Integer)session.getAttribute("user_idx");
+	    if(user_idx==null)
+	    	return "fail";
+	    param.put("user_idx",user_idx);
+	    if(param.get("schedule_title")==null)
+	    	param.put("schedule_title","");
+	    if(param.get("schedule_content")==null)
+	    	param.put("schedule_content","");
+	    int result=mypageService.saveSchedule(param);
+	    return result>0?"success":"fail";
+	}
 
     @PostMapping("/deleteSchedule.do")
     @ResponseBody
@@ -116,10 +151,31 @@ public class MypageController {
         int result = mypageService.deleteSchedule(param);
         return result > 0 ? "success" : "fail";
     }
-    @GetMapping("notification.do")
-    public ModelAndView myNotification() {
-    	ModelAndView mav=new ModelAndView();
-    	mav.setViewName("mypage/myNotification");
-    	return mav;
+    //찜하기~~~~~
+    @ResponseBody
+    @PostMapping("/insertWish.do")
+    public Map<String, String> insertWish(@RequestBody WishListDTO dto) {
+        Map<String, String> response=new HashMap<>();
+        int result=mypageService.insertWish(dto); 
+        
+        if(result>0) {
+            response.put("result","success");
+        }else{
+            response.put("result","fail");
+        }
+        return response;
+    }
+    @ResponseBody
+    @PostMapping("/deleteWish.do")
+    public Map<String, String> deleteWish(@RequestBody WishListDTO dto) {
+        Map<String, String> response=new HashMap<>();
+        int result=mypageService.deleteWish(dto); 
+        
+        if(result>0) {
+            response.put("result","success");
+        }else{
+            response.put("result","fail");
+        }
+        return response;
     }
 }

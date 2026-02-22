@@ -69,7 +69,6 @@ public class UserController {
        }
       userService.userSignUp(dto);
       UserDTO user = userService.userInfo(dto.getUser_id());
-      userService.insertDefaultMypage(user.getUser_idx());
       request.setAttribute("msg", "회원가입 완료");
       return "redirect:/index.do";
    }

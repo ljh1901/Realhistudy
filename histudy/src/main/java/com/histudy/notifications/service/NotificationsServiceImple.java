@@ -26,13 +26,13 @@ public class NotificationsServiceImple implements NotificationsService {
 		return ndao.selectNotice(user_idx);
 	}
 	@Override
-	public int deleteNotice() {
+	public int deleteNotice(int user_idx) {
 		// TODO Auto-generated method stub
-		return ndao.deleteNotice();
+		return ndao.deleteNotice(user_idx);
 	}
 	@Override
-	public int updateNotice() {
+	public int updateNotice(int user_idx) {
 		// TODO Auto-generated method stub
-		return ndao.updateNotice();
+		return ndao.updateNotice(user_idx);
 	}
 }

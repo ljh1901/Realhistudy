@@ -26,13 +26,13 @@ public class NotificationsDAOImple implements NotificationsDAO {
 		return sqlSession.selectList("selectNotice",user_idx);
 	}
 	@Override
-	public int deleteNotice() {
+	public int deleteNotice(int user_idx) {
 		// TODO Auto-generated method stub
-		return sqlSession.delete("deleteNotice");
+		return sqlSession.delete("com.histudy.notifications.deleteNotice",user_idx);
 	}
 	@Override
-	public int updateNotice() {
+	public int updateNotice(int user_idx) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("updateNotice");
+		return sqlSession.update("com.histudy.notifications.updateNotice",user_idx);
 	}
 }
