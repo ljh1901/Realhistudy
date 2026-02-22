@@ -280,7 +280,7 @@
     openModal("reasonModal");
   }
   function openMenteeReportModal(userIdx, userName) {
-	    // hidden input에 대상자의 idx를 넣음
+
 	    const targetIdxInput = document.getElementById('target_user_idx');
 	    const targetNameSpan = document.getElementById('targetMenteeName');
 	    const modal = document.getElementById('menteeReportModal');
@@ -288,39 +288,36 @@
 	    if (targetIdxInput && targetNameSpan && modal) {
 	        targetIdxInput.value = userIdx;
 	        targetNameSpan.innerText = userName;
-	        
-	        // CSS 클래스를 조절하거나 style을 직접 변경하여 모달을 띄움
+
 	        modal.style.display = 'block';
 	    }
 	}
 
-	// 2. 신고 모달 닫기 함수
 	function closeMenteeReportModal() {
 	    const modal = document.getElementById('menteeReportModal');
 	    const form = document.getElementById('menteeReportForm');
 	    
 	    if (modal) modal.style.display = 'none';
-	    if (form) form.reset(); // 입력했던 내용 초기화
+	    if (form) form.reset();
 	}
 
-	// 3. 신고 제출 (Ajax 처리)
 	document.addEventListener('DOMContentLoaded', function() {
 	    const reportForm = document.getElementById('menteeReportForm');
 	    
 	    if (reportForm) {
 	        reportForm.addEventListener('submit', function(e) {
-	            e.preventDefault(); // 기본 submit 막기 (새로고침 방지)
+	            e.preventDefault();
 	            
 	            const formData = new FormData(this);
 	            
-	            // fetch를 이용해 서버(Controller)로 데이터 전송
+
 	            fetch('reportSubmit.do', {
 	                method: 'POST',
 	                body: formData
 	            })
 	            .then(response => response.text())
 	            .then(result => {
-	                // 서버에서 'success'라는 문자열을 보내준다고 가정
+
 	                if (result.trim() === "success") {
 	                    alert("신고가 정상적으로 접수되었습니다.");
 	                    closeMenteeReportModal();
@@ -336,7 +333,6 @@
 	    }
 	});
 
-	// (보너스) 모달 배경 클릭 시 닫기 기능
 	window.onclick = function(event) {
 	    const modal = document.getElementById('menteeReportModal');
 	    if (event.target == modal) {

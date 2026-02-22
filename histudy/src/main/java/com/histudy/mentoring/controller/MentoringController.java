@@ -433,32 +433,25 @@ public class MentoringController {
                                @RequestParam(value="report_photo_file", required=false) MultipartFile file, 
                                HttpSession session) {
         
-        // 1. 세션에서 신고자(현재 로그인 유저) ID 가져오기
         Integer reporter_idx = (Integer) session.getAttribute("user_idx");
         if (reporter_idx == null) return "login_required";
         dto.setReporter_idx(reporter_idx);
 
-        // 2. 사진 파일 실제 저장 처리
         if (file != null && !file.isEmpty()) {
             try {
-                // 서버 내 실제 물리적 경로 찾기
                 String uploadPath = session.getServletContext().getRealPath("/resources/upload/report");
                 
-                // 폴더가 없으면 생성
                 java.io.File folder = new java.io.File(uploadPath);
                 if (!folder.exists()) {
                     folder.mkdirs();
                 }
 
-                // 파일명 중복 방지 (현재시간_원본이름)
                 String originalName = file.getOriginalFilename();
                 String saveName = System.currentTimeMillis() + "_" + originalName;
                 
-                // 지정된 경로에 파일 복사(저장)
                 java.io.File destination = new java.io.File(uploadPath, saveName);
                 file.transferTo(destination);
 
-                // 중요!! DB에는 웹에서 접근 가능한 상대 경로를 저장
                 dto.setReport_photo("/resources/upload/report/" + saveName);
                 
             } catch (Exception e) {
@@ -466,26 +459,12 @@ public class MentoringController {
                 return "file_error"; 
             }
         } else {
-            // 사진을 선택하지 않은 경우 null 처리
             dto.setReport_photo(null); 
         }
         
-        // 3. 서비스 호출 (이제 dto 안에는 사진 경로가 포함되어 있습니다)
         int result = mentoringService.reportUser(dto);
         
         return result > 0 ? "success" : "fail";
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

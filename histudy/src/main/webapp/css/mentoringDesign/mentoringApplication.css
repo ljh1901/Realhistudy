@@ -289,7 +289,6 @@
   border-top:1px solid #eef2f7;
 }
 
-/* 페이징 */
 .paging{
   padding-bottom: 30px;
   display: flex;
@@ -303,7 +302,6 @@
   width: 30px;
 }
 
-/* 신고 모달 전체 배경 */
 .report-modal {
     display: none;
     position: fixed;
@@ -315,7 +313,6 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-/* 모달 컨텐츠 박스 */
 .report-modal-content {
     background: #fff;
     width: 400px;
@@ -337,7 +334,7 @@
     margin-bottom: 20px;
 }
 
-/* 입력 필드들 */
+
 .report-form-group {
     margin-bottom: 16px;
 }
@@ -358,21 +355,20 @@
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     font-size: 14px;
-    box-sizing: border-box; /* 패딩 때문에 박스 나가는 것 방지 */
+    box-sizing: border-box;
 }
 
 .report-form-group textarea {
     resize: none;
 }
 
-/* 파일 인풋 박스 특화 스타일 */
 .file-input-wrapper {
     position: relative;
     width: 100%;
 }
 
 .report-form-group input[type="file"] {
-    border: 2px dashed #e2e8f0; /* 점선으로 업로드 영역 강조 */
+    border: 2px dashed #e2e8f0; 
     background: #f8fafc;
     padding: 10px;
     cursor: pointer;
@@ -383,7 +379,6 @@
     border-color: #cbd5e1;
 }
 
-/* 버튼 영역 */
 .report-btn-group {
     display: flex;
     gap: 10px;
@@ -415,8 +410,6 @@
 .btn-report-submit:hover {
     background: #1e3a47;
 }
-
-/* 부가 텍스트 및 링크 */
 .optional-text {
     font-size: 12px;
     font-weight: normal;
