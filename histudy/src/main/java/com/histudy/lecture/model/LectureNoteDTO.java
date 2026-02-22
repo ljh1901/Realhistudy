@@ -6,8 +6,18 @@ public class LectureNoteDTO {
    String note_content;
    int user_idx;
    int lecture_idx;
+   String lecture_name;
+   
+   
+   public String getLecture_name() {
+	return lecture_name;
+}
 
-   public LectureNoteDTO() {
+public void setLecture_name(String lecture_name) {
+	this.lecture_name = lecture_name;
+}
+
+public LectureNoteDTO() {
       // TODO Auto-generated constructor stub
    }
    

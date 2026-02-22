@@ -142,4 +142,9 @@ public class LectureServiceImple implements LectureService {
 		// TODO Auto-generated method stub
 		return lectureDao.lectureAvgCount(lecture_idx);
 	}
+   @Override
+	public List<LectureNoteDTO> selectRecentNotes(int user_idx) {
+		// TODO Auto-generated method stub
+	   return lectureDao.selectRecentNotes(user_idx);	
+	}
 }

@@ -146,6 +146,9 @@
     var contextPath = "${pageContext.request.contextPath}";
 </script>
 	<script src="${pageContext.request.contextPath}/js/user/user.js"></script>
+	<div id="modalOverlay">
+		<div id="modalContent" class="login-modal-box"></div>
+	</div>
 	<%@ include file="../footer.jsp"%>
 </body>
 </html>

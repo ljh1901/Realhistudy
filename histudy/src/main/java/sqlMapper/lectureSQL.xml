@@ -156,4 +156,20 @@
         (select count(*) from lecture) as LECTURE_COUNT
     from dual
 	</select>
+	<select id="selectRecentNotes" parameterType="int" resultType="com.histudy.lecture.model.LectureNoteDTO">
+	    SELECT * FROM (
+	        SELECT 
+	            n.note_idx,
+	            n.note_title,
+	            n.note_content,
+	            n.lecture_idx,
+	            n.user_idx,
+	            l.lecture_name 
+	        FROM lecture_note n
+	        JOIN lecture l ON n.lecture_idx = l.lecture_idx
+	        WHERE n.user_idx = #{user_idx} 
+	          AND n.note_content IS NOT NULL  
+	        ORDER BY n.note_idx DESC 
+	    ) WHERE <![CDATA[ ROWNUM <= 1 ]]>
+	</select>
 </mapper>

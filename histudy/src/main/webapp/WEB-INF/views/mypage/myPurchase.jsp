@@ -66,11 +66,22 @@
             </div>
 
             <div id="sale-section" class="wish-section">
-                <div class="empty-msg">
-                    <img src="mypage-img/shopping-cart.png" width="50">
-                    <p>받은 혜택 내역이 없습니다.</p>
-                    <a href="membership.do" class="go-link">멤버십 가입하러 가기</a>
-                </div>
+	            <c:choose>
+			        <c:when test="${hasCoupon}">
+			            <div class="coupon-card">
+			                <h2>멤버십 50% 할인권</h2>
+			                <p>스터디카페 전용</p>
+			                <button onclick="location.href='studyCafe.do?useCoupon=Y'">사용하기</button>
+			            </div>
+			        </c:when>
+			        <c:otherwise>
+	                	<div class="empty-msg">
+	                    <img src="mypage-img/promo-code.png" width="50">
+	                    <p>받은 혜택 내역이 없습니다.</p>
+	                    <a href="membership.do" class="go-link">멤버십 가입하러 가기</a>
+		                </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </section>
     </div>

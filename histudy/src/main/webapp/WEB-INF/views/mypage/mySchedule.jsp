@@ -115,7 +115,8 @@ function renderCalendarHTML(year, month) {
                 
                 if (currentMonthData[key]) {
                     var titleStr = typeof currentMonthData[key] === 'object' ? currentMonthData[key].title : currentMonthData[key];
-                    row += "<div class='memo-preview'><span class='dot'>●</span>" + titleStr + "</div>";                }
+                    var displayTitle = titleStr.split(' | ').join('<br>● ');
+                    row += "<div class='memo-preview'><span class='dot'>●</span>" + displayTitle + "</div>";                }
                 row += "</td>";
                 dateNum++;
             }

@@ -117,4 +117,46 @@
 	    and w.w_target_type='멘토링'
 	    order by w.wish_idx desc
 	</select>
+	<select id="getMyStudyDates" parameterType="int" resultType="com.histudy.study.model.StudyDTO">
+	    SELECT 
+	        study_title, 
+	        TO_CHAR(study_start_date, 'yyyy-mm-dd') as study_start_date, 
+	        TO_CHAR(study_end_date, 'yyyy-mm-dd') as study_end_date
+	    FROM study
+	    WHERE user_idx = #{user_idx}
+	    UNION
+	    SELECT 
+	        s.study_title, 
+	        TO_CHAR(s.study_start_date, 'yyyy-mm-dd') as study_start_date, 
+	        TO_CHAR(s.study_end_date, 'yyyy-mm-dd') as study_end_date
+	    FROM study_application sa
+	    JOIN study s ON sa.study_idx = s.study_idx
+	    WHERE sa.user_idx = #{user_idx}
+	      AND sa.sa_status = 'Approved' 
+	</select>
+	<!-- 반값인지 확인 -->
+	<select id="selectHalfPrice" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM studycafe_pay p
+	    JOIN studycafe_ticket st ON p.orderName = st.ticket_name
+	    WHERE p.user_idx = #{user_idx}
+	      AND p.pay_status = 'PAID'
+	      AND p.paid = (st.ticket_amount / 2)
+	      AND p.paidAt >= #{membershipDate} 
+	</select>
+	<!-- 마지막 멤버십 결제 확인 -->
+	<select id="getLastMembership" resultType="com.histudy.membership.model.MembershipPaymentDTO">
+	    select * from(
+	        select * from membership_payment 
+	        where user_idx=#{user_idx} 
+	          and payment_status='완료' 
+	        order by end_date DESC
+	    )where rownum=1
+	</select>
+	<select id="getMentorIdxByMentee" parameterType="int" resultType="int">
+	  SELECT mentor_idx
+	  FROM mentoring_match
+	  WHERE mentee_user_idx = #{user_idx}
+	    AND status = '매칭됨'
+	</select>
 </mapper>

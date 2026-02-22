@@ -126,4 +126,9 @@ public class LectureDAOImple implements LectureDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("lectureAvgCount",lecture_idx);
 	}
+   @Override
+	public List<LectureNoteDTO> selectRecentNotes(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectRecentNotes",user_idx);
+	}
 }

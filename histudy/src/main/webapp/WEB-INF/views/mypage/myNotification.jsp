@@ -15,6 +15,7 @@
    <c:otherwise>
       <c:forEach var="dto" items="${list}">
             <tr id="row_${dto.n_idx}">
+                <td>${dto.n_type}</td>
                 <td>${dto.n_title}</td>
                 <td>${dto.n_content}</td>
                 <td>${dto.n_date}</td>

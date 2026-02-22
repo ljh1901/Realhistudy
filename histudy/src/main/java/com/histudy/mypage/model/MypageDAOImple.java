@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.histudy.membership.model.MembershipPaymentDTO;
 import com.histudy.mentoring.model.MentoProfileDTO;
 import com.histudy.study.model.StudyDTO;
 
@@ -58,5 +59,25 @@ public class MypageDAOImple implements MypageDAO {
 	public List<StudyDTO> selectWishStudyList(int user_idx) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("selectWishStudyList", user_idx);
+	}
+	@Override
+	public int selectHalfPrice(Map<String,Object> map){
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("selectHalfPrice",map);
+	}
+	@Override
+	public MembershipPaymentDTO getLastMembership(int user_idx) {
+	// TODO Auto-generated method stub
+		return sqlSession.selectOne("getLastMembership",user_idx);
+	}
+	@Override
+	public List<StudyDTO> getMyStudyDates(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getMyStudyDates",user_idx);
+	}
+	@Override
+	public Integer getMentorIdxByMentee(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getMentorIdxByMentee",user_idx);
 	}
 }
