@@ -57,6 +57,51 @@
               </div>
             </div>
           </div>
+          
+    <div style="margin-top: 10px; text-align: right;">
+    <a href="javascript:void(0);" onclick="openReportModal()" class="report-link">
+        이 멘토 신고하기
+    </a>
+</div>
+
+<div id="reportModal" class="report-modal">
+    <div class="report-modal-content">
+        <h3>멘토 신고하기</h3>
+        <p>신고 사유를 선택하고 상세 내용을 적어주세요.</p>
+        
+        <form id="reportForm">
+            <input type="hidden" name="target_idx" value="${detail.mentor_user_idx}">
+            
+            <div class="report-form-group">
+                <label>신고 유형</label>
+                <select name="report_type" required>
+                    <option value="">-- 사유 선택 --</option>
+                    <option value="부적절한 프로필">부적절한 프로필/사진</option>
+                    <option value="허위 경력">허위 경력 의심</option>
+                    <option value="광고/스팸">광고 및 스팸성 게시글</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+            
+            <div class="report-form-group">
+                <label>상세 내용</label>
+                <textarea name="report_content" rows="4" required placeholder="신고 사유를 자세히 적어주세요."></textarea>
+            </div>
+           <div class="report-form-group">
+    <label>증거 사진 첨부 <span class="optional-text">(선택)</span></label>
+    <div class="file-input-wrapper">
+        <input type="file" name="report_photo_file" id="reportFile" accept="image/*">
+    </div>
+    <p class="file-help-text">문제가 되는 부분을 캡처해서 올려주시면 처리가 빨라집니다.</p>
+</div>
+            
+            <div class="report-btn-group">
+                <button type="button" onclick="closeReportModal()" class="btn-report-cancel">취소</button>
+                <button type="submit" class="btn-report-submit">신고 제출</button>
+            </div>
+        </form>
+    </div>
+</div>
         </div>
         <div style="margin-top:16px;">
           <c:choose>
@@ -169,7 +214,7 @@
 <%@ include file="../footer.jsp"%>
 
 <script>
-  // 1. 부드러운 스크롤 이동
+
   document.querySelectorAll('.mp-tab').forEach(a => {
     a.addEventListener('click', (e) => {
       const href = a.getAttribute('href');
@@ -180,7 +225,6 @@
     });
   });
 
-  // 2. 리뷰 더보기 로직
   (function() {
     const items = Array.from(document.querySelectorAll('#reviewList .review-item'));
     const btn = document.getElementById('btnMore');
@@ -194,7 +238,7 @@
     btn.addEventListener('click', () => { shown += 5; apply(); });
   })();
 
-  // 3. 별점 클릭 보정 (정밀도 개선)
+  // 리뷰 별
   (function() {
     const area = document.getElementById('ratingClick');
     const stars = document.getElementById('ratingStars');
@@ -206,14 +250,11 @@
       const rect = area.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const width = rect.width;
-      
-      // 0~5점 사이 위치 계산
+
       let rawRating = (x / width) * 5;
       
-      // 0.5 단위 올림 처리 (사용자가 별 앞부분만 눌러도 해당 별점이 선택되게)
       let finalRating = Math.ceil(rawRating * 2) / 2;
       
-      // 범위 제한 (최소 0.5, 최대 5.0)
       finalRating = Math.max(0.5, Math.min(5, finalRating));
       
       stars.style.setProperty('--rating', finalRating);
@@ -221,6 +262,43 @@
       text.textContent = finalRating.toFixed(1);
     });
   })();
+  
+  function openReportModal() {
+      document.getElementById('reportModal').style.display = 'block';
+  }
+
+  function closeReportModal() {
+      document.getElementById('reportModal').style.display = 'none';
+      document.getElementById('reportForm').reset();
+  }
+
+  document.getElementById('reportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      
+      fetch('reportSubmit.do', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams(data)
+      })
+      .then(response => response.text())
+      .then(result => {
+          if (result === "success") {
+              alert("신고가 정상적으로 접수되었습니다. 관리자 확인 후 처리됩니다.");
+              closeReportModal();
+          } else if (result === "login_required") {
+              alert("로그인이 필요한 서비스입니다.");
+              location.href = "login.do";
+          } else {
+              alert("신고 처리 중 오류가 발생했습니다.");
+          }
+      })
+      .catch(error => console.error('Error:', error));
+  });
 </script>
 </body>
 </html>
