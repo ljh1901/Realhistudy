@@ -5,11 +5,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- OG (Open Graph Data)-->
+<meta property="og:title" content="Hi, Study" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="배포후 생성된 URL" />
+<meta property="og:image" content="배포후에 생성된 이미지 URL" />
+
+<!-- GoogleFont -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/root.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/lmsDesign/memberManagement.css">
+
+<!-- JavaScript (아이콘) -->
 <script src="https://kit.fontawesome.com/3f5acacf0e.js" crossorigin="anonymous"></script>
 </head>
 <body id="memberManagementBody">
@@ -98,7 +117,7 @@
 					<div class="leaderCard__Container">
 						<div class="leaderCard__Container__data">
 							<div class="leaderCard__Container__data__imgBox">
-								<img src="/histudy/main-img/${creatorData.profile_img}" alt="개설자 이미지">
+								<img src="/histudy/mypage-img/pimg/${creatorData.profile_img}" alt="개설자 이미지">
 							</div>
 							<div class="leaderCard__Container__data__textBox">
 								<div class="leaderCard__Container__data__textBox__name">
@@ -117,7 +136,7 @@
 							<div class="memberCard__Container">
 								<div class="memberCard__Container__data">
 									<div class="memberCard__Container__data__imgBox">
-										<img src="/histudy/main-img/${m_list.profile_img}" alt="참여자 이미지">
+										<img src="/histudy/mypage-img/pimg/${m_list.profile_img}" alt="참여자 이미지">
 									</div>
 									<div class="memberCard__Container__data__textBox">
 										<div class="memberCard__Container__data__textBox__name">
@@ -220,7 +239,7 @@ function studyApplySelectResult(){
 	
 			'<div class="studyApplyCard">' +
 				'<div class="studyApplyCard__left">' +
-					'<img src="/histudy/main-img/'+jsonData[i].profile_img+'" alt="참여자 이미지">' +
+					'<img src="/histudy/mypage-img/pimg/'+jsonData[i].profile_img+'" alt="참여자 이미지">' +
 				'</div>' +
 				'<div class="studyApplyCard__center">' +
 					'<div class="studyApplyCard__center__top">' +

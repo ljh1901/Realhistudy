@@ -11,6 +11,12 @@
 <meta name="author" content="파이널 프로젝트" />
 <link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
 
+<!-- OG (Open Graph Data)-->
+<meta property="og:title" content="Hi, Study" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="배포후 생성된 URL" />
+<meta property="og:image" content="배포후에 생성된 이미지 URL" />
+
 <!-- GoogleFont -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

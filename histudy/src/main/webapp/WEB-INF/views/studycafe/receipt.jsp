@@ -4,7 +4,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>하이 스터디 카페</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- OG (Open Graph Data)-->
+<meta property="og:title" content="Hi, Study" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="배포후 생성된 URL" />
+<meta property="og:image" content="배포후에 생성된 이미지 URL" />
+
+<!-- GoogleFont -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"

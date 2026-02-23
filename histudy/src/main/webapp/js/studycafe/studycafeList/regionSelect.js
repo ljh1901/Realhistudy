@@ -35,7 +35,7 @@
 						+'<div class="studycafeInfo">'
 						+'<div>'+respJsonData.studycafe_name+'</div>'
 						+'<div><a href="studycafeReview.do?studycafe_idx='+respJsonData.studycafe_idx+'">이용 후기</a></div></div></div><div class="studycafeList__body">'
-						+'<div>💺' +respJsonData.avaliable+'/'+respJsonData.all+'석</div>'
+						+'<div><i class="fa-solid fa-couch"></i>' +respJsonData.avaliable+'/'+respJsonData.all+'석</div>'
 						+'<div>'+respJsonData.studycafe_addr+'</div></div><div class="studycafeList__footer">'
 						+'<button class="studycafeUse" value="'+respJsonData.studycafe_idx+'">이용하기</button></div></div>'	
 					});
