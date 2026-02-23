@@ -191,19 +191,27 @@ body {
 		<main>
 		평점: ★${avgRating}
 			<section id="reply__area">
+			<c:forEach var="reply" items="${reply}">
 				<div class="reply-content">
 				<span>${sessionScope.user_name}</span>
 				<span><a href="#">수정</a></span>
 				<span><a href="#">삭제</a></span>
-				<span><a href="#">2026-02-22 12:39:45</a></span>
-				<span><a href="#">2026-02-22 12:39:45(수정됨)</a></span>
+				<span><a href="#">${reply.created_at}</a></span>
+				<span><a href="#"></a></span>
 				<span><a href="#">신고</a></span>
 				<span>별점: ★★★★☆</span>
 					<div class="reply-photo">
-						<div class="photo-area"></div>
+					<c:forEach var="photo" items="${reply.fileList}">
+						<div class="photo-area">
+							<img src="${photo.file_path}">
+						</div>
+						</c:forEach>
 					</div>
-					<div class="reply-text"></div>
+					<div class="reply-text">
+					${reply.studycafe_reply}
+					</div>
 				</div>
+				</c:forEach>
 			</section>
 			<div>
 				<button type="button" id="studycafeReplyBtn">이용후기 남기기</button>
