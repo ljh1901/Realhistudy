@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,12 @@ public class StudycafeReviewController {
 	@GetMapping("studycafeReview.do")
 	public ModelAndView studycafeReply(@RequestParam(required = true, value = "studycafe_idx") int studycafe_idx) {
 		ModelAndView mav = new ModelAndView();
+		studycafeReplyService.replyList(studycafe_idx);
+		double avgRating=studycafeReplyService.studycafeAvgRating(studycafe_idx);
+		DecimalFormat df = new DecimalFormat("0.##");
+		avgRating= Double.parseDouble(df.format(avgRating));
 		mav.addObject("studycafe_idx", studycafe_idx);
+		mav.addObject("avgRating", avgRating);
 		mav.setViewName("studycafe/studycafeReview");
 		return mav;
 	}
