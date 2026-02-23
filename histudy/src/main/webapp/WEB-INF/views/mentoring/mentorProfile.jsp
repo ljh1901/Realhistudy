@@ -79,7 +79,7 @@
             
             <div class="report-form-group">
                 <label>신고 유형</label>
-                <select name="report_type" required>
+                <select name="report_category" required>
                     <option value="">-- 사유 선택 --</option>
                     <option value="부적절한 프로필">부적절한 프로필/사진</option>
                     <option value="허위 경력">허위 경력 의심</option>
