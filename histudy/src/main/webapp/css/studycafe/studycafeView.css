@@ -1,0 +1,249 @@
+/* ================= 기본 리셋 ================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #4f46e5;
+    --primary-light: #6366f1;
+    --bg-light: #f9fafb;
+    --border-light: #e5e7eb;
+    --text-main: #111827;
+    --reserved: #dc2626;
+}
+
+main {
+    margin-top: 120px;
+    background: var(--bg-light);
+    min-height: 100vh;
+}
+
+/* ================= 카드 레이아웃 ================= */
+
+section {
+    width: 95%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+/* ================= 상단 탭 ================= */
+
+section h1 {
+    display: flex;
+    gap: 30px;
+    font-size: 20px;
+    margin-bottom: 25px;
+}
+
+section h1 a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 2px solid transparent;
+    transition: 0.2s;
+}
+
+section h1 a:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* ================= 카페 목록 ================= */
+
+#studycafeList {
+    list-style: none;
+    margin-bottom: 30px;
+}
+
+#studycafeList li a {
+    display: block;
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    background: #f3f4f6;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: 0.2s;
+}
+
+#studycafeList li a:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* ================= 지도 ================= */
+
+#map {
+    width: 100% !important;
+    height: 350px;
+    border-radius: 16px;
+    margin-top: 20px;
+}
+
+/* ================= SVG 좌석 ================= */
+
+#studycafeSeat {
+    background: #f8fafc;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+/* 좌석 기본 */
+.seat-a {
+    fill: #ffe4e6;
+    stroke: #fca5a5;
+    stroke-width: 1;
+    transition: 0.2s;
+}
+
+/* hover */
+.seat-a:hover {
+    fill: #c7d2fe;
+    stroke: var(--primary);
+    cursor: pointer;
+}
+
+/* 예약 좌석 */
+.seat-a[data-seat-status="RESERVED"] {
+    fill: var(--reserved);
+    stroke: var(--reserved);
+}
+
+.seat-a[data-seat-status="RESERVED"]:hover {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* ================= 구조물 (클래스 기반) ================= */
+
+rect[data-layout-type="WALL"] {
+    fill: #cda56d;
+}
+
+rect[data-layout-type="DOOR"] {
+    fill: #93c5fd;
+}
+
+rect[data-layout-type="HALL"] {
+    fill: #f1f5f9;
+}
+
+rect[data-layout-type="ZONE_A"],
+rect[data-layout-type="ZONE_B"] {
+    fill: #ffffff;
+    stroke: #e5e7eb;
+    stroke-width: 2;
+}
+
+rect[data-layout-type="ROOM_SMALL"] {
+    fill: #eef2ff;
+    stroke: #c7d2fe;
+    stroke-width: 2;
+}
+
+/* ================= 모달 ================= */
+
+.payseat {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-box {
+    position: relative;
+    width: 420px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-close {
+    margin-left: auto;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* 버튼 */
+
+#reserveBtn,
+.ticketGrid button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#reserveBtn:hover,
+.ticketGrid button:hover {
+    background: var(--primary-light);
+}
+
+.ticketGrid {
+    display: grid;
+    gap: 12px;
+    margin-top: 15px;
+}
+.ticket {
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 5%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* hover */
+.ticket:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    filter: brightness(1.05);
+}
+
+/* 클릭 */
+.ticket:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+/* 포커스 접근성 */
+.ticket:focus-visible {
+    outline: 3px solid rgba(0,0,0,0.2);
+    outline-offset: 2px;
+}
