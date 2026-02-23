@@ -54,21 +54,23 @@ public class NoticeController {
 			@RequestParam("uploadFile") MultipartFile file,
 			HttpServletRequest request) {
 
-		if (!file.isEmpty()) {
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/upload");
+		if (file != null && !file.isEmpty()) {
+	        String savePath = request.getSession().getServletContext().getRealPath("/resources/upload");
 
-			File folder = new File(savePath);
-			if(!folder.exists()) folder.mkdirs();
+	        File folder = new File(savePath);
+	        if(!folder.exists()) folder.mkdirs();
 
-			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+	        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
 
-			try {
-				file.transferTo(new File(savePath, fileName));
-				dto.setNotice_file(fileName); 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	        try {
+	            file.transferTo(new File(savePath, fileName));
+	            dto.setNotice_file(fileName); 
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    } else {
+	        dto.setNotice_file(null);
+	    }
 
 		int result = noticeService.insertNotice(dto);
 
