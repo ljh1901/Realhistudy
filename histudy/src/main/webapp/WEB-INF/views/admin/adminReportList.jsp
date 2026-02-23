@@ -67,7 +67,7 @@
                     <th width="80">번호</th>
                     <th width="120">유형</th>
                     <th width="200">대상</th>
-                    <th>신고 사유 요약</th>
+                    <th>신고 유형</th>
                     <th width="120">신고자</th>
                     <th width="100">상태</th>
                 </tr>
@@ -83,7 +83,7 @@
                             </span>
                         </td>
                         <td style="text-align: left; padding-left: 20px;">
-                            <div style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.report_content}</div>
+                            <div style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.report_category}</div>
                         </td>
                         <td>${r.reporter_name}</td>
                         <td>
