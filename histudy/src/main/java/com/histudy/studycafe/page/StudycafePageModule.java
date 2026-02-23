@@ -14,7 +14,10 @@ public class StudycafePageModule {
 			sb.append(url);
 			sb.append("?currentPage=");
 			sb.append((userGroup-1)*pageSize+pageSize);
-			sb.append("'>&gt;&gt;</a>");
+			sb.append("'>");
+			sb.append("<img src='");
+			sb.append("/histudy/main-img/prev.png'>");
+			sb.append("</a>");
 		}
 		for(int i=1; i <=totalPage; i++) {
 			if(i > totalPage) {
@@ -35,7 +38,10 @@ public class StudycafePageModule {
 			sb.append(url);
 			sb.append("?currentPage=");
 			sb.append((userGroup+1)*pageSize+pageSize+1);
-			sb.append("'>&lt;&lt;</a>");
+			sb.append("'>");
+			sb.append("<img src='");
+			sb.append("/histudy/main-img/next.png'>");
+			sb.append("</a>");
 		}
 		return sb.toString();
 	}

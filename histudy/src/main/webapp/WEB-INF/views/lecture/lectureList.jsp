@@ -5,7 +5,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- OG (Open Graph Data)-->
+<meta property="og:title" content="Hi, Study" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="배포후 생성된 URL" />
+<meta property="og:image" content="배포후에 생성된 이미지 URL" />
+
+<!-- GoogleFont -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/histudy/css/mainLayout.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
@@ -19,10 +36,16 @@
 	<section class="lectureListContainer">
    <form name="lectureFm">
    <section class="top">
-   <fieldset>
-	   <p>Hi, Study 프리미엄 멤버십 29,000원 / <del>50,000원</del></p>
-	   <p>분야별 전문 강사의 강의 제공 !! 스터디 카페 이용권 할인 혜택 !!</p>
-   </fieldset>
+		 <div class="promo-banner">
+		    <span class="badge">PREMIUM</span>
+		    <p class="price">
+		      Hi, Study 프리미엄 멤버십 <strong>29,000원</strong>
+		      <del>50,000원</del>
+		    </p>
+		    <p class="desc">
+		      분야별 전문 강사의 강의 제공 · 스터디 카페 이용권 할인 혜택
+		    </p>
+		 </div>
    </section>
    <c:set var="count" value="0" />
    <table>

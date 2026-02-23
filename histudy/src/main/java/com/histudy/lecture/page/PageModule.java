@@ -18,7 +18,10 @@ public class PageModule {
 			sb.append("?cp=");
 			int temp=(userGroup-1)*pageSize+pageSize;
 			sb.append(temp);
-			sb.append("'>&lt;&lt;</a>");
+			sb.append("'>");
+			sb.append("<img src='");
+			sb.append("/histudy/main-img/prev.png'>");
+			sb.append("</a>");
 		}
 		
 		for(int i=userGroup*pageSize+1; i<=userGroup*pageSize+pageSize; i++){
@@ -41,7 +44,10 @@ public class PageModule {
 			sb.append("?cp=");
 			int temp=(userGroup+1)*pageSize+1;
 			sb.append(temp);
-			sb.append("'>&gt;&gt;</a>");
+			sb.append("'>");
+			sb.append("<img src='");
+			sb.append("/histudy/main-img/next.png'>");
+			sb.append("</a>");
 		}
 		return sb.toString();
 	}

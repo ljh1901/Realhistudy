@@ -5,7 +5,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- OG (Open Graph Data)-->
+<meta property="og:title" content="Hi, Study" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="배포후 생성된 URL" />
+<meta property="og:image" content="배포후에 생성된 이미지 URL" />
+
+<!-- GoogleFont -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
 <link rel="stylesheet" href="css/userSignIn.css">
 <script>
 window.onload=function(){
@@ -43,11 +60,11 @@ window.onload=function(){
 
 			<div class="login-footer-links"
 				style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 13px;">
-				<span onclick="showSection('find-id')" style="cursor: pointer;">아이디
-					찾기</span> <span style="color: #ccc">|</span> <span
-					onclick="showSection('find-pw')" style="cursor: pointer;">비밀번호
-					찾기</span> <span style="color: #ccc">|</span> <a href="userSignUp.do"
-					style="text-decoration: none; color: inherit;">회원가입</a>
+				<span onclick="showSection('find-id')" style="cursor: pointer;">아이디 찾기</span>
+				<span style="color: #ccc">|</span>
+				<span onclick="showSection('find-pw')" style="cursor: pointer;">비밀번호 찾기</span>
+				<span style="color: #ccc">|</span>
+				<a href="userSignUp.do" style="text-decoration: none; color: inherit;">회원가입</a>
 			</div>
 		</div>
 
