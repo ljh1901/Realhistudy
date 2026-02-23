@@ -49,6 +49,7 @@
       <c:choose>
         <c:when test="${not empty mentorSummary.mentor_profile_img}">
           <img src="${pageContext.request.contextPath}/mypage-img/pimg/${mentorSummary.mentor_profile_img}" alt="멘토 프로필"
+          
           onerror="this.src='${pageContext.request.contextPath}/main-img/defaultUser.png';">
         </c:when>
         <c:otherwise>

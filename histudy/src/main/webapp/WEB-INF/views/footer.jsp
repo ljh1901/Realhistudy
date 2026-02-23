@@ -22,7 +22,7 @@
 					<div class="footer__right__box">	
 						<h5>멘토링</h5>	
 						<ul>
-							<li>멘토 목록</li>
+							<li><a href="mentorList.do">멘토 목록</a></li>
 							<li>멘토링 신청</li>
 							<li>후기</li>
 						</ul>
