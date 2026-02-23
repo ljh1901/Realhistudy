@@ -49,6 +49,7 @@
       <c:choose>
         <c:when test="${not empty mentorSummary.mentor_profile_img}">
           <img src="${pageContext.request.contextPath}/mypage-img/pimg/${mentorSummary.mentor_profile_img}" alt="멘토 프로필"
+          
           onerror="this.src='${pageContext.request.contextPath}/main-img/defaultUser.png';">
         </c:when>
         <c:otherwise>
@@ -260,7 +261,9 @@
     if(imgUrl && imgUrl !== "null"){
       const img = document.createElement("img");
       img.src = "${pageContext.request.contextPath}/mypage-img/pimg/" + imgUrl;
-      img.alt = "프로필";
+      img.onerror = function() {
+          this.src = '${pageContext.request.contextPath}/main-img/defaultUser.png';
+      };
       box.appendChild(img);
       img.style.width = "100%";
       img.style.height = "100%";

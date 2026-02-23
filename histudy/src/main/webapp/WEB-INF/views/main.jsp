@@ -5,19 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- GoogleFont -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="/histudy/css/mainLayout.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/histudy/css/mainLayout.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/root.css">
-<link rel="stylesheet" type="text/css"
-	href="/histudy/css/user/loginModal.css">
+<link rel="stylesheet" type="text/css" href="/histudy/css/user/loginModal.css">
 <script>
 if(${!empty msg}){
 	alert(${requestScope.msg});
@@ -35,9 +39,12 @@ if(${!empty msg}){
 				<p class="description">목표에 맞는 스터디 그룹과 멘토링으로 학습을 이어가세요.</p>
 			</div>
 			<div class="home__btns">
-				<input type="button" value="스터디 시작하기" class="home__btn"> <input
+				<input type="button" value="스터디 시작하기" class="home__btn"
+				onclick="location.href='${pageContext.request.contextPath}/studyList.do'">
+				<input
 					type="button" value="멘토링 신청" class="home__btn"
-					id="applyMentoringBtn">
+					id="applyMentoringBtn"
+					onclick="location.href='${pageContext.request.contextPath}/mentorList.do'">
 			</div>
 		</section>
 
@@ -252,5 +259,6 @@ if(${!empty msg}){
    document.addEventListener('click', function() {
       selectBox.classList.remove('open');
    });
+   
 </script>
 </html>

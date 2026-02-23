@@ -21,5 +21,5 @@ public class StudycafeReservationController {
 	public StudycafeJoinReservationDTO seatReservation(@RequestBody Map<String,Integer> map) {
 		StudycafeJoinReservationDTO info = studycafeService.seatReservation(map.get("seat_idx"));
 		return info;
-	}
+	} 
 }
