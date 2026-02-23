@@ -36,4 +36,6 @@ public interface LectureService {
    public Map<String, Object> getCounts();
    public Map<String, Object> lectureAvgCount(int lecture_idx);
    public List<LectureNoteDTO> selectRecentNotes(int user_idx);
+   public String getUserPro(int user_idx);
+
 }

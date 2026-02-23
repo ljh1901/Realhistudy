@@ -134,27 +134,6 @@
 	    WHERE sa.user_idx = #{user_idx}
 	      AND sa.sa_status = 'Approved' 
 	</select>
-	<!-- 반값인지 확인 -->
-	<select id="selectHalfPrice" parameterType="map" resultType="int">
-	    SELECT COUNT(*)
-	    FROM studycafe_pay p
-	    JOIN studycafe_ticket st ON p.orderName = st.ticket_name
-	    WHERE p.user_idx = #{user_idx}
-	      AND p.pay_status = 'PAID'
-	      <![CDATA[
-	      AND p.paid < st.ticket_amount
-	      AND p.paidAt >= #{membershipDate}
-	      ]]> 
-	</select>
-	<!-- 마지막 멤버십 결제 확인 -->
-	<select id="getLastMembership" resultType="com.histudy.membership.model.MembershipPaymentDTO">
-	    select * from(
-	        select * from membership_payment 
-	        where user_idx=#{user_idx} 
-	          and payment_status='완료' 
-	        order by end_date DESC
-	    )where rownum=1
-	</select>
 	<select id="getMentorIdxByMentee" parameterType="int" resultType="int">
 	  SELECT mentor_idx
 	  FROM mentoring_match

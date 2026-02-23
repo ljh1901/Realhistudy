@@ -120,6 +120,9 @@ public class LectureController {
        Integer isHate = lectureService.lectureHate(hdto);
        mav.addObject("isHate", isHate);
 
+       String userPro=lectureService.getUserPro(user_idx);
+       mav.addObject("userPro",userPro);
+       
        mav.setViewName("lecture/lectureContent");
        return mav;
    }
