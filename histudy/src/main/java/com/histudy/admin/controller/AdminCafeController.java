@@ -27,7 +27,7 @@ public class AdminCafeController {
 	
 	// 스터디 카페 전체 목록
 		@GetMapping("/adminCafeList.do")
-		public ModelAndView adminList() {
+		public ModelAndView adminCafeList() {
 			List<StudycafeDTO> list = adminService.getCafeList(); 
 
 			ModelAndView mav = new ModelAndView();
@@ -73,11 +73,6 @@ public class AdminCafeController {
 		    mav.addObject("studycafe_idx", studycafe_idx);
 
 		    return mav;
-		}
-		// 스터디 카페 문의사항
-		@GetMapping("/adminCafeInquiryList.do")
-		public String adminCafeInquiryList() {
-			return "admin/adminCafe/adminCafeInquiryList";
 		}
 
 		// 스터디 카페 요금제 리스트

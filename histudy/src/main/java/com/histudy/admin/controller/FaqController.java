@@ -98,7 +98,7 @@ public class FaqController {
 	
 	//자주 묻는 질문 삭제
 	@RequestMapping("/adminFaqDelete.do")
-	public ModelAndView adminFaqDelete(@RequestParam("faq_idx") int faq_idx) {
+	public ModelAndView adminFaqDeletAe(@RequestParam("faq_idx") int faq_idx) {
 	    int result = faqService.deleteFaq(faq_idx);
 	    
 	    ModelAndView mav = new ModelAndView();
