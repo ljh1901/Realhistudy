@@ -392,11 +392,11 @@
 		AND target_idx = r.target_idx
 		AND report_status = '완료') AS report_count,
 		CASE
-		WHEN r.report_type = 'STUDY' THEN (SELECT study_title FROM study WHERE
+		WHEN r.report_type = 'study' THEN (SELECT study_title FROM study WHERE
 		study_idx = r.target_idx)
-		WHEN r.report_type = 'USER' THEN (SELECT user_name FROM usertb WHERE
+		WHEN r.report_type = 'user' THEN (SELECT user_name FROM usertb WHERE
 		user_idx = r.target_idx)
-		WHEN r.report_type = 'REVIEW' THEN (SELECT studycafe_reply FROM
+		WHEN r.report_type = 'review' THEN (SELECT studycafe_reply FROM
 		studycafe_reply WHERE review_idx = r.target_idx)
 		ELSE '데이터 없음'
 		END AS target_name
