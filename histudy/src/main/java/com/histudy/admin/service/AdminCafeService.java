@@ -19,4 +19,5 @@ public interface AdminCafeService {
     public void updateCafeLayout(int studycafe_idx, List<Map<String, Object>> layoutData);
     public List<Map<String, Object>> getLayoutList(int studycafe_idx);
     public int insertStudyCafe(StudycafeDTO dto);
+    public void deleteCafe(int studycafe_idx);
 }

@@ -162,5 +162,13 @@ public class AdminCafeController {
 	        mav.setViewName("admin/adminMsg");
 	        return mav;
 	    }
+	    
+	    //삭제
+	    @RequestMapping("/adminCafeDelete.do")
+	    public String adminCafeDelete(@RequestParam("studycafe_idx") int studycafe_idx) {
+	    	adminService.deleteCafe(studycafe_idx);
+	        
+	        return "redirect:/adminCafeList.do";
+	    }
 
 }

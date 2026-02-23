@@ -203,6 +203,10 @@
 		delete from
 		studycafe_ticket where ticket_idx = #{ticket_idx}
 	</delete>
+	
+	<delete id="deleteCafe" parameterType="int">
+    DELETE FROM studycafe WHERE studycafe_idx = #{studycafe_idx}
+</delete>
 
 	<!-- 스터디모임 관련 -->
 	<select id="selectAllStudyList" parameterType="int"
