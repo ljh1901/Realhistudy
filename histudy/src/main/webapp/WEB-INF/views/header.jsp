@@ -2,6 +2,8 @@
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mypage.css">
+<link rel="stylesheet" type="text/css"
+	href="/histudy/css/user/loginModal.css">
 <header class="header">
 	<div class="header__left">
 		<img src="/histudy/main-img/logo1.png" class="header__logo">
@@ -85,4 +87,9 @@ function openNotiModal() {
             alert('알림함을 불러오는 데 실패했습니다.');
         });
 }
+
 </script>
+<div id="modalOverlay">
+    <div id="modalContent" class="login-modal-box"></div>
+</div>
+<script src="${pageContext.request.contextPath}/js/user/user.js"></script>
