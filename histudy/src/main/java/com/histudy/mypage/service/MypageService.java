@@ -5,11 +5,12 @@ import java.util.Map;
 
 import com.histudy.membership.model.MembershipPaymentDTO;
 import com.histudy.mentoring.model.MentoProfileDTO;
+import com.histudy.mypage.model.ScheduleDTO;
 import com.histudy.mypage.model.WishListDTO;
 import com.histudy.study.model.StudyDTO;
 
 public interface MypageService {
-	public Map<String,String> getMonthSchedule(Integer user_idx,String year,String month);
+	public Map<String, Object> getMonthSchedule(Integer user_idx, String year, String month);
 	public int saveSchedule(Map<String, Object> param);
 	public int deleteSchedule(Map<String, Object> param);
 	public List<Map<String,Object>> selectMonthly(int user_idx);

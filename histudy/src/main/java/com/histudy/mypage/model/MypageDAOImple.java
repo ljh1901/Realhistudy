@@ -1,5 +1,6 @@
 package com.histudy.mypage.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +26,12 @@ public class MypageDAOImple implements MypageDAO {
 		return sqlSession.delete("mypage.deleteSchedule", param);
 	}
 	@Override
-	public List<ScheduleDTO> getMonthSchedule(Map<String, Object> param) {
-		return sqlSession.selectList("mypage.getMonthSchedule", param);
+	public List<ScheduleDTO> getMonthSchedule(Integer user_idx, String year, String month){
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("user_idx", user_idx);
+	    paramMap.put("year", year);
+	    paramMap.put("month", month);
+		return sqlSession.selectList("mypage.getMonthSchedule", paramMap);
 	}
 	@Override
 	public int insertSchedule(Map<String, Object> param) {

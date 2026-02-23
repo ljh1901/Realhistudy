@@ -8,8 +8,7 @@ import com.histudy.mentoring.model.MentoProfileDTO;
 import com.histudy.study.model.StudyDTO;
 
 public interface MypageDAO {
-	public List<ScheduleDTO> getMonthSchedule(Map<String, Object> param);
-	public int checkSchedule(Map<String, Object> param);
+	public List<ScheduleDTO> getMonthSchedule(Integer user_idx, String year, String month);	public int checkSchedule(Map<String, Object> param);
 	public int insertSchedule(Map<String, Object> param);
 	public int updateSchedule(Map<String, Object> param);
 	public int deleteSchedule(Map<String, Object> param);

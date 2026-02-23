@@ -75,7 +75,10 @@ public class MembershipController {
 	    
 	    membershipService.insertPrimium(dto);
 	    session.setAttribute("membership", "premium");
-	    
+        boolean hasCoupon = false;
+	    hasCoupon = true;
+        session.setAttribute("hasCoupon", hasCoupon);
+
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("result", "success");
 	    

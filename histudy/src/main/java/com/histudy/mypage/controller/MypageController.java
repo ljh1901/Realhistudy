@@ -132,24 +132,21 @@ public class MypageController {
 		mav.addObject("list",list);
 		mav.addObject("pageStr",pageStr);
 		
-		//쿠폰--==
-		//(1)최신 멤버십 결제 내역 가져오기
-        MembershipPaymentDTO membership = mypageService.getLastMembership(user_idx);
-        long now = System.currentTimeMillis();
-        boolean hasCoupon = false;
-        //(2)멤버십이 있고, 안 끝남
-        if (membership != null && membership.getEnd_date().getTime() >= now) {
-        	Map<String, Object> checkMap = new HashMap<>();
-            checkMap.put("user_idx", user_idx);
-            checkMap.put("membershipDate", membership.getPayment_date());
-            //(3)반값으로 결제한 적이 있는지?
-            int usedCount = mypageService.selectHalfPrice(checkMap);
-            //(4)사용한 적이 없다면 쿠폰이 있는 것으로..
-            if (usedCount == 0) {
-                hasCoupon = true;
-            }
-        }
-        mav.addObject("hasCoupon", hasCoupon);
+//		//쿠폰--==
+//		//(1)최신 멤버십 결제 내역 가져오기
+//        MembershipPaymentDTO membership = mypageService.getLastMembership(user_idx);
+//        long now = System.currentTimeMillis();
+//        boolean hasCoupon = false;
+//        //(2)멤버십이 있고, 안 끝남
+//        if (membership != null && membership.getEnd_date().getTime() >= now) {
+//        	Map<String, Object> checkMap = new HashMap<>();
+//            checkMap.put("user_idx", user_idx);
+//            checkMap.put("membershipDate", membership.getPayment_date());
+////            //(3)반값으로 결제한 적이 있는지?
+////            int usedCount = mypageService.selectHalfPrice(checkMap);
+//            //(4)사용한 적이 없다면 쿠폰이 있는 것으로..
+//            	hasCoupon = true;
+//        session.setAttribute("hasCoupon", hasCoupon);
 		mav.setViewName("mypage/myPurchase");
 		return mav;
 	}
@@ -166,16 +163,10 @@ public class MypageController {
 		mav.setViewName("mypage/myHeart");
 		return mav;
 	}
-	@GetMapping("myAlarm.do")
-	public ModelAndView myAlarm() {
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("mypage/myAlarm");
-		return mav;
-	}
 	
 	@GetMapping("/getScheduleList.do")
     @ResponseBody
-    public Map<String, String> getScheduleList(
+    public Map<String, Object> getScheduleList(
             @RequestParam("year") String year, 
             @RequestParam("month") String month, 
             HttpSession session) {
@@ -194,10 +185,10 @@ public class MypageController {
 	    if(user_idx==null)
 	    	return "fail";
 	    param.put("user_idx",user_idx);
-	    if(param.get("schedule_title")==null)
-	    	param.put("schedule_title","");
-	    if(param.get("schedule_content")==null)
-	    	param.put("schedule_content","");
+	    if(param.get("s_title")==null)
+	    	param.put("s_title","");
+	    if(param.get("s_content")==null)
+	    	param.put("s_content","");
 	    int result=mypageService.saveSchedule(param);
 	    return result>0?"success":"fail";
 	}

@@ -1,5 +1,8 @@
 @charset "UTF-8";
-
+#mySchdulePage header{
+	background-color: white;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
 .calendar-section { flex: 1; background: #fff; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
 #calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
 #calendar-header span { font-size: 22px; font-weight: 700; }

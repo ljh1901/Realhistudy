@@ -17,7 +17,8 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/header.css">
 </head>
-<body>
+<body id="myPage">
+
 	<%@ include file="../header.jsp"%>
 	<div class="mypage-wrapper">
 		<div class="mypage-container">
@@ -112,7 +113,7 @@
 							<div style="text-align: right; margin-top: 20px;">
 								<div id="view-buttons">
 									<button type="button" onclick="toggleEditMode(true)"
-										style="background-color: #4A90E2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+										style="background-color: black; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
 										수정하기</button>
 								</div>
 

@@ -1,5 +1,8 @@
 @charset "UTF-8";
-
+#myPage header{
+	background-color: white;
+box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
 /* [1] 마이페이지 전체 레이아웃 */
 .mypage-wrapper {
 	margin-top: 80px;

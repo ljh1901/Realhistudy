@@ -12,6 +12,7 @@
 <body>
 <%@ include file="../header.jsp"%>
 <main>
+<div class="mySchdulePage">
 <div class="mypage-wrapper">
     <div class="mypage-container">
         <aside class="mypage-sidebar">
@@ -23,7 +24,6 @@
 						<li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="30">구매 / 혜택</a>
 						<li><a href="myRefund.do"><img src="mypage-img/refund.png" width="30">정기권 환불</a>
 						<li><a href="myHeart.do"><img src="mypage-img/heart.png" width="30">찜 목록</a>
-						<li><a href="myAlarm.do"><img src="mypage-img/bell.png" width="30">알림 설정</a>
 						</li>
                 </ul>
             </nav>
@@ -68,6 +68,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </main>
 <%@ include file="../footer.jsp"%>
@@ -114,9 +115,15 @@ function renderCalendarHTML(year, month) {
                 row += "<td data-date='" + key + "' class='" + isSelected + "'><div class='date-num'>" + dateNum + "</div>";
                 
                 if (currentMonthData[key]) {
-                    var titleStr = typeof currentMonthData[key] === 'object' ? currentMonthData[key].title : currentMonthData[key];
-                    var displayTitle = titleStr.split(' | ').join('<br>● ');
-                    row += "<div class='memo-preview'><span class='dot'>●</span>" + displayTitle + "</div>";                }
+                    var data = currentMonthData[key];
+                    var titleStr = typeof data === 'object' ? (data.s_title || "") : (data || "");
+                    titleStr = String(titleStr);
+                    
+                    if (titleStr.trim() !== "") {
+                        var displayTitle = titleStr.split(' | ').join('<br>● ');
+                        row += "<div class='memo-preview'><span class='dot'>●</span>" + displayTitle + "</div>";                
+                    }
+                }
                 row += "</td>";
                 dateNum++;
             }
@@ -148,8 +155,9 @@ function setCellEvents() {
             document.getElementById("view-day-name").textContent = days[d.getDay()];
 
             if (currentMonthData[key]) {
-                var titleStr = typeof currentMonthData[key] === 'object' ? currentMonthData[key].title : currentMonthData[key];
-                var contentStr = typeof currentMonthData[key] === 'object' ? currentMonthData[key].content : ""; 
+                var data = currentMonthData[key];
+                var titleStr = typeof data === 'object' ? (data.s_title || "") : (data || "");
+                var contentStr = typeof data === 'object' ? (data.s_content || "") : ""; 
                 
                 document.getElementById("memo-title").value = titleStr;
                 document.getElementById("memo-text").value = contentStr; 

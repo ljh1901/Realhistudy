@@ -29,8 +29,8 @@
 					<div class="footer__right__box">	
 						<h5>강의</h5>	
 						<ul>
-							<li><a href="lectureList.do">전체강의</a></li>
-							<li><a href="lectureList.do">신규강의</a></li>
+							<li><a href="lecture.do">전체강의</a></li>
+							<li><a href="lecture.do">신규강의</a></li>
 						</ul>
 					</div>
 					<div class="footer__right__box">	
