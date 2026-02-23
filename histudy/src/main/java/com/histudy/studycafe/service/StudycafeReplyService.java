@@ -14,4 +14,5 @@ public interface StudycafeReplyService {
 			double studycafe_rating, int user_idx, int studycafe_idx) throws Exception;
 	public List<StudycafeReplyDTO> replyList(int studycafe_idx);
 	public double studycafeAvgRating(int studycafe_idx);
+	public int studycafeReviewDelete(int studycafe_idx, int review_idx,  int user_idx);
 }

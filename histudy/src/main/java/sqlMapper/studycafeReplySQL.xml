@@ -26,4 +26,14 @@
   		from studycafe_reply
   		where studycafe_idx = #{studycafe_idx}
   	</select>
+  	<delete id="deleteStudycafeReviewSQL" parameterType="map">
+  		delete 
+  		from studycafe_reply 
+  		where user_idx = #{user_idx} and review_idx = #{review_idx} and  studycafe_idx = #{studycafe_idx}
+  	</delete>
+  	  	<delete id="deleteStudycafeReviewFileSQL" parameterType="map">
+  		delete 
+  		from studycafe_reply_file 
+  		where review_idx = #{review_idx}
+  	</delete>
   </mapper>

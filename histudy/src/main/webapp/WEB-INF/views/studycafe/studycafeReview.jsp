@@ -13,7 +13,9 @@ body {
 	background-color: #f3f4f6;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
+#studycafeReviewBody header{
+	background-color: white;
+}
 /* 평균 평점 */
 main>span {
 	font-size: 1.2rem;
@@ -166,9 +168,20 @@ main>span {
 	width: 50%;
 	overflow: hidden;
 }
+#reviewFileInputBtn{
+	background: #4f46e5;
+	color: #fff;
+	padding: 12px 25px;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	transition: 0.2s;
+
+}
 </style>
 </head>
-<body>
+<body id="studycafeReviewBody">
 	<%@include file="../header.jsp"%>
 	<form id="studycafeReview" method="post" enctype="multipart/form-data">
 		<main>
@@ -176,10 +189,16 @@ main>span {
 						평점: ★${avgRating}
 				<c:forEach var="reply" items="${reply}">
 					<div class="reply-content">
-						<span>${sessionScope.user_name}</span> <span><a href="#">수정</a></span>
-						<span><a href="#">삭제</a></span> <span><a href="#">${reply.created_at}</a></span>
-						<span><a href="#"></a></span> <span><a href="#">신고</a></span> <span>별점:
-							${reply.studycafe_rating}</span>
+						<span id="${sessionScope.user_idx}">${reply.user_idx}</span> 
+						<c:if test="${sessionScope.user_idx == reply.user_idx}">
+							<span><a href="studycafeReviewUpdate.do?studycafe_idx=${studycafe_idx}&review_idx=${reply.review_idx}">수정</a></span>
+							<span><a href="studycafeReviewDelete.do?studycafe_idx=${studycafe_idx}&review_idx=${reply.review_idx}&user_idx=${reply.user_idx}">삭제</a></span>
+						</c:if> 
+						<span><a href="#">${reply.created_at}</a></span>
+						<c:if test="${sessionScope.user_idx !=reply.user_idx}">
+							<span><a href="javascript:window.open('studycafeReviewReport.do')">신고</a></span> 
+						</c:if>
+						<span>별점:${reply.studycafe_rating}</span>
 						<div class="reply-photo">
 							<c:if test="${!empty reply.fileList}">
 								<c:forEach var="file" items="${reply.fileList}">
@@ -201,8 +220,7 @@ main>span {
 					<h2>사진 / 영상 추가</h2>
 					<input id="reviewFileInput" name="reviewFiles" type="file"
 						accept="image/*, video/*" multiple hidden="true">
-					<button type="button" id="reviewFileInputBtn"
-						class="review-upload-btn">+ 파일 추가</button>
+					<button type="button" id="reviewFileInputBtn" class="review-upload-btn">+ 파일 추가</button>
 					<div id="reviewPreviewContainer"></div>
 				</div>
 				<div class="writeReview">
@@ -222,8 +240,9 @@ main>span {
 					<textarea id="writeReview" name="studycafe_reply"></textarea>
 					<div>
 						<label for="writeReview" id="countWriteReview">0/200</label>
+						<button type="submit" id="reviewWrite">리뷰 작성하기</button>
 					</div>
-					<button type="submit" id="reviewWrite">리뷰 작성하기</button>
+						<a href="#${sessionScope.user_idx}">내 리뷰로 이동</a>
 				</div>
 			</section>
 		</main>
@@ -237,9 +256,6 @@ main>span {
 
 <script>
 document.getElementById('reply_layout').style.display='none';
-if(document.querySelector('.reply-text').textContent == ''){
-	document.querySelector('.reply-text').style.display='none';
-}
 document.getElementById('studycafeReplyBtn').addEventListener('click',function(){
 	document.getElementById('reply_layout').style.display='';
 })

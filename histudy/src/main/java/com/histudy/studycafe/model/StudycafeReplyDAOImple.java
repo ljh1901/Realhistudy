@@ -49,5 +49,12 @@ public class StudycafeReplyDAOImple implements StudycafeReplyDAO {
 		double avgRating = sqlSession.selectOne("selectStudycafeRatingAvgSQL", studycafe_idx);
 		return avgRating;
 	}
-
+	@Override
+	public int studycafeReviewDelete(Map<String, Integer> map) {
+			int result = sqlSession.delete("deleteStudycafeReviewSQL", map);
+		if(result > 0) {
+			int delete=sqlSession.delete("deleteStudycafeReviewFileSQL", map);
+		}
+		return result;
+	}
 }
