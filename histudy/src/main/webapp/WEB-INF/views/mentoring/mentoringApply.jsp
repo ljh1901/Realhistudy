@@ -55,7 +55,8 @@
           <div class="mentor-avatar">
             <c:choose>
               <c:when test="${not empty mentorSummary.mentor_profile_img}">
-                <img src="<c:out value='${mentorSummary.mentor_profile_img}'/>" alt="mentor">
+                <img src="<c:out value='${mentorSummary.mentor_profile_img}'/>" alt="mentor"
+                onerror="this.src='${pageContext.request.contextPath}/main-img/defaultUser.png';">
               </c:when>
               <c:otherwise>
                 <span>멘토</span>

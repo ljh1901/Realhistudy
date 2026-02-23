@@ -260,7 +260,9 @@
     if(imgUrl && imgUrl !== "null"){
       const img = document.createElement("img");
       img.src = "${pageContext.request.contextPath}/mypage-img/pimg/" + imgUrl;
-      img.alt = "프로필";
+      img.onerror = function() {
+          this.src = '${pageContext.request.contextPath}/main-img/defaultUser.png';
+      };
       box.appendChild(img);
       img.style.width = "100%";
       img.style.height = "100%";
