@@ -35,7 +35,9 @@ if(${!empty msg}){
 				<p class="description">목표에 맞는 스터디 그룹과 멘토링으로 학습을 이어가세요.</p>
 			</div>
 			<div class="home__btns">
-				<input type="button" value="스터디 시작하기" class="home__btn"> <input
+				<input type="button" value="스터디 시작하기" class="home__btn"
+				onclick="location.href='${pageContext.request.contextPath}/studyList.do'">
+				<input
 					type="button" value="멘토링 신청" class="home__btn"
 					id="applyMentoringBtn"
 					onclick="location.href='${pageContext.request.contextPath}/mentorList.do'">

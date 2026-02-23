@@ -14,25 +14,23 @@
 					<div class="footer__right__box">	
 						<h5>스터디</h5>	
 						<ul>
-							<li>그룹 스터디</li>
-							<li>스터디 카페</li>
-							<li>LMS</li>
+							<li><a href="studyList.do">그룹 스터디</a></li>
+							<li><a href="studycafeList.do">스터디 카페</a></li>
+							<li><a href="lms.do">LMS</a></li>
 						</ul>
 					</div>
 					<div class="footer__right__box">	
 						<h5>멘토링</h5>	
 						<ul>
 							<li><a href="mentorList.do">멘토 목록</a></li>
-							<li>멘토링 신청</li>
-							<li>후기</li>
+							<li><a href="mentorList.do">멘토링 신청</a></li>
 						</ul>
 					</div>
 					<div class="footer__right__box">	
 						<h5>강의</h5>	
 						<ul>
-							<li>전체강의</li>
-							<li>인기강의</li>
-							<li>신규강의</li>
+							<li><a href="lectureList.do">전체강의</a></li>
+							<li><a href="lectureList.do">신규강의</a></li>
 						</ul>
 					</div>
 					<div class="footer__right__box">	
