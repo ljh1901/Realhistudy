@@ -131,4 +131,9 @@ public class LectureDAOImple implements LectureDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("selectRecentNotes",user_idx);
 	}
+   @Override
+	public String getUserPro(int user_idx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getUserPro",user_idx);
+	}
 }

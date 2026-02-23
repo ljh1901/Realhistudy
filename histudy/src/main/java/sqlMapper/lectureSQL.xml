@@ -138,12 +138,12 @@
 		delete from lecture_review
 		where review_idx=#{review_idx}
 	</delete>
-	<select id="userPro" parameterType="String">
-		select profile_img
-		from mypage join usertb
-		on mypage.mypage_idx=usertb.mypage_idx
-		where user_idx=#{user_idx}
-	</select>
+	<select id="getUserPro" parameterType="int" resultType="String">
+    SELECT m.profile_img
+    FROM mypage m
+    JOIN usertb u ON m.user_idx = u.user_idx
+    WHERE u.user_idx = #{user_idx}  
+    </select>
 	<select id="scIdx" parameterType="int" resultType="String">
 		select sc_name
 		from study_category,lecture
