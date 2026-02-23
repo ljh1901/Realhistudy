@@ -99,7 +99,6 @@
         <div id="reportDetailArea" class="report__detail__section">
             <div class="detail__header">
                 <h2 style="margin:0; color:#0f172a;">신고 상세 정보 <small style="font-weight:400; color:#94a3b8;">(No.<span id="dispIdx"></span>)</small></h2>
-                <button type="button" class="btn__link" onclick="goToTarget()">원본 게시물 확인 🔗</button>
             </div>
             
             <div class="detail__flex">
@@ -189,17 +188,6 @@
 
             document.getElementById('reportDetailArea').scrollIntoView({ behavior: 'smooth' });
         }
-
-        function goToTarget() {
-            let url = "";
-            const tIdx = currentReport.targetIdx;
-            if(currentReport.type === 'user') url = "adminUserDetail.do?user_idx=" + tIdx;
-            else if(currentReport.type === 'review') url = "studycafeReview.do?review_idx=" + tIdx;
-            else if(currentReport.type === 'study') url = "studyContent.do?study_idx=" + tIdx;
-            
-            if(url) window.open(url, '_blank');
-        }
-
         function submitProcess(action) {
             const msg = action === '완료' ? "해당 신고를 '완료' 처리하시겠습니까?\n(누적 완료 횟수가 1 증가합니다.)" : "신고를 거절하시겠습니까?";
             if(confirm(msg)) {

@@ -37,9 +37,7 @@
                             </a>
                         </td>
                         <td>
-                            <a href="adminCafeDetail.do?studycafe_idx=${cafe.studycafe_idx}&studycafe_name=${cafe.studycafe_name}">
-                                <button type="button" class="faq__btn__edit">상세보기</button>
-                            </a>
+                                <button type="button" class="faq__btn__del">카페 삭제</button>
                         </td>
                     </tr>
                 </c:forEach>
