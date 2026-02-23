@@ -64,5 +64,23 @@ public class StudycafeReviewController {
 			return null;
 		}
 	}
-
+	
+	@GetMapping("studycafeReviewDelete.do")
+	public ModelAndView studycafeReviewDelete(@RequestParam(value="review_idx")int review_idx, 
+			@RequestParam(value="studycafe_idx")int studycafe_idx, 
+			@RequestParam(value="user_idx")int user_idx, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if((Integer)session.getAttribute("user_idx") == user_idx) {
+			int result = studycafeReplyService.studycafeReviewDelete(studycafe_idx, review_idx, user_idx);
+			if(result>0) {
+				mav.addObject("msg", "리뷰 삭제 성공");
+				mav.addObject("studycafe_idx", studycafe_idx);
+				mav.setViewName("studycafe/studycafeReviewDeleteMsg");
+			}
+		}else {
+			mav.addObject("msg", "잘못된 접근 입니다.");
+			mav.setViewName("studycafe/studycafeReviewDeleteMsg");
+		}
+		return mav;
+	}
 }

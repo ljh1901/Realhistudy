@@ -40,7 +40,7 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	
 		
 		List<StudycafeReplyFileDTO> replyFileLists = new ArrayList<StudycafeReplyFileDTO>();
-		File f = new File("C:/Realhistudy/histudy/src/main/webapp/studycafe-reviewimg/");
+		File f = new File("C:/Realhistudy/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/histudy/studycafe-reviewimg/");
 		if (reviewFiles != null) {
 			for (int i = 0; i < reviewFiles.length; i++) {
 				copyFile(reviewFiles[i]); // 파일 복사
@@ -75,7 +75,7 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	}
 
 	public void copyFile(MultipartFile reviewFiles) {
-		String directoryReview = "C:/Realhistudy/histudy/src/main/webapp/studycafe-reviewimg/";
+		String directoryReview = "C:/Realhistudy/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/histudy/studycafe-reviewimg/";
 		try {
 			// 복사 용지 선택
 			byte[] bytes = reviewFiles.getBytes();
@@ -140,6 +140,16 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	public double studycafeAvgRating(int studycafe_idx) {
 		double avgRating = studycafeReplyDAO.studycafeAvgRating(studycafe_idx);
 		return avgRating;
+	}
+	
+	@Override
+	public int studycafeReviewDelete(int studycafe_idx, int review_idx, int user_idx) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("studycafe_idx", studycafe_idx);
+		map.put("review_idx", review_idx);
+		map.put("user_idx", user_idx);
+		int result = studycafeReplyDAO.studycafeReviewDelete(map);
+		return result;
 	}
 
 }
