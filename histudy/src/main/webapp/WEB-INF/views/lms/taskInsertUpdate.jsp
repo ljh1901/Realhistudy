@@ -61,10 +61,6 @@
 							oninput="studyContentCheck(this)"
                      		maxlength="300"
                      		required>${dto.a_content}</textarea>
-                     	<div class="TIF_card_keynum">
-							<p id="keynum">0</p>
-                     		<p>/300자</p>
-                     	</div>
 					</div>
 					<div class="TIF_card">
 						<div class="TIF_card_date">
@@ -105,15 +101,20 @@
 					</div>
 					<div class="TIF_card">
 						<div class="files">
-							<label>첨부 파일</label><span>${empty dto.a_fname?'첨부된 파일 없음':dto.a_fname}</span>
+							<label>첨부 파일</label>
+							<span class="current-file">
+					            ${empty dto.a_fname ? '첨부된 파일 없음' : dto.a_fname}
+					        </span>
 						</div>
 						<div class="TIF_card_file">
 							<div class="TIF_card_file_imgbox">
 								<img src="/histudy/lms-img/fileimg.png">
 							</div>
-							<p>파일을 드래그하거나 클릭하여 업로드</p>
-							<p>PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
-							<input type="file" name="prve_a_fname">
+							<p class="file-title">파일을 클릭하여 업로드</p>
+							<p class="file-desc">PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
+							<!-- 변경될 파일명 -->
+        					<span class="file-name">변경할 파일 없음</span>
+							<input type="file" name="prve_a_fname" onchange="fileName(this)">
 						</div>
 					</div>
 					<div class="TIF_card">
@@ -142,4 +143,20 @@
 </main>
 <%@include file="../footer.jsp" %>
 </body>
+<script>
+function fileName(input){
+    const name = input.files.length > 0
+        ? input.files[0].name
+        : '변경할 파일 없음';
+
+    const card = input.closest('.TIF_card');
+    card.querySelector('.file-name').textContent = name;
+
+    // 기존 파일 흐리게 (선택)
+    const current = card.querySelector('.current-file');
+    if(current){
+        current.style.opacity = '0.5';
+    }
+}
+</script>
 </html>

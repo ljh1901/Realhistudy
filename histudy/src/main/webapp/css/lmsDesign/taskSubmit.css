@@ -165,17 +165,42 @@
    .TIF_card div{
    	width: 100%;
    }
-   .TIF_card_file{
-   	 border: 1px double #ccc;
-   	 border-radius: 10px;
-   	 padding:5rem;
-   	 background-color: #F9FAFB;
-   	 text-align: center;
+      .TIF_card_file{
+    position: relative;
+    border: 2px dashed #CBD5E1;
+    border-radius: 12px;
+    padding: 4rem 2rem;
+    background-color: #F9FAFB;
+    text-align: center;
+    transition: all 0.25s ease;
    }
+   .TIF_card_file:hover{
+	    background-color: #F1F5F9;
+	    border-color: #6366F1;
+	}
+	.TIF_card_file input[type="file"]{
+	    position: absolute;
+	    inset: 0;
+	    opacity: 0;
+	    cursor: pointer;
+	}
    .TIF_card_file_imgbox img{
-   	 width: 80px;
-   	 height: 80px;
+	    width: 72px;
+	    height: 72px;
+	    margin-bottom: 1rem;
+	    border-radius: 100%;
    }
+   .file-title{
+	    font-size: 1.1rem;
+	    font-weight: 600;
+	    color: #111827;
+	}
+	.file-name{
+	    display: block;
+	    margin-top: 0.5rem;
+	    font-size: 0.9rem;
+	    color: #374151;
+	}
    .TIF_card_imgBox{
    	 max-width:70px;
    }
@@ -183,6 +208,7 @@
    	 width: 70px;
    	 height: 70px;
    }
+
    .task_guide{
    	 background-color: #FFFBEB;
    	 display: flex;
@@ -209,11 +235,6 @@
    		font-size: 1.7rem;
    		font-weight: 600;
    		margin-bottom: 20px;
-   }
-   .TIF_card_keynum{
-   		margin-top:10px;
-   		display: flex;
-   		justify-content: space-between;
    }
     .TIF_btns{
    	  display: flex;

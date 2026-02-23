@@ -26,7 +26,7 @@
 					</div>
 					<div class="lmsTopContainer__card__text">
 						<p class="lmsTopContainer__card__text__num">${studyCount}</p>
-						<p class="lmsTopContainer__card__text__sub">진행 중인 스터디</p>
+						<p class="lmsTopContainer__card__text__sub">내 스터디</p>
 					</div>
 				</div>
 				<div class="lmsTopContainer__card">
@@ -130,15 +130,17 @@
 				</div>
 			</div>
 			<div class="lmsCenterContainer__rightBox">
-				<div class="lmsCenterContainer__rightBox__title">
-					<h2>과제 관리</h2>
-					<c:if test="${!empty s_list}">
-						<a href="taskInsertForm.do">과제 등록</a>
-					</c:if>
-				</div>
-				<div class="lmsCenterContainer__rightBox__toggleBtns">
-					<input type="button" value="진행중" class="togglebtn toggle" onclick="taskCheck('진행중')">
-					<input type="button" value="제출 완료" class="togglebtn" onclick="taskCheck('제출 완료')">
+				<div class="lmsCenterContainer__rightBox__top">
+					<div class="lmsCenterContainer__rightBox__title">
+						<h2>과제 관리</h2>
+						<c:if test="${!empty s_list}">
+							<a href="taskInsertForm.do">과제 등록</a>
+						</c:if>
+					</div>
+					<div class="lmsCenterContainer__rightBox__toggleBtns">
+						<input type="button" value="진행중" class="togglebtn toggle" onclick="taskCheck('진행중')">
+						<input type="button" value="제출 완료" class="togglebtn" onclick="taskCheck('제출 완료')">
+					</div>
 				</div>
 				<div id="taskArea">
 					<c:if test="${!empty C_task_list}">

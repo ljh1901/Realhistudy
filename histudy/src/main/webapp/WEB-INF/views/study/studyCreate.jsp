@@ -121,11 +121,11 @@
                   <textarea name="study_content" rows="20" cols="40"
                      placeholder="스터디 목표와 진행 방식을 자세히 설명해주세요 / 진행방식 / 커리큘럼 / 준비물 (최대 300자)"
                      oninput="studyContentCheck(this)"
-                     maxlength="300"
+                     maxlength="1000"
                      required></textarea>
                   <div class="study_content_footer">
                      <p id="keynum">0</p>
-                     <p>/300자</p>
+                     <p>/1000자</p>
                   </div>
                </div>
             </div>
@@ -194,7 +194,7 @@
 	}
    // 스터디 내용 글자수 제한 유효성 검사 
    function studyContentCheck(el){
-      const MAX = 300;
+      const MAX = 1000;
       const count = el.value.length;
       const keynum = document.getElementById('keynum');
       

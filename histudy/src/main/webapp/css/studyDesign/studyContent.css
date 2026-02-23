@@ -353,9 +353,9 @@
 		background: #E5E7EB;
 	}
 	.modalBtns button:last-child{
-		background:#4e73df;
+		background:#111827;
 		color:white;
 	}
 	.modalBtns button:last-child:hover{
-		background-color: #3b5fc4;
+		background-color: var(--color-navy);
 	}

@@ -155,7 +155,7 @@
 		
 		<h2>스터디 참여 신청</h2>
 		
-		<textarea id="applyContent" name="sa_intro" placeholder="간단한 자기소개를 입력해주세요 (최대 30자)" rows="6"></textarea>
+		<textarea id="applyContent" name="sa_intro" placeholder="간단한 자기소개를 입력해주세요 (최대 30자)" rows="6" maxlength="30"></textarea>
 		
 		<div class="modalBtns">
 			<button onclick="closeModal()">취소하기</button>

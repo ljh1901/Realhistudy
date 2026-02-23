@@ -38,7 +38,19 @@
 							<p>첨부 파일</p>
 							<div class="files__file">
 								<img src="/histudy/lms-img/clip.png">
-								<span>${empty taskData.a_fname?'첨부된 파일이 없습니다.':taskData.a_fname}</span>
+								<span class="files__file-name">
+								    <c:choose>
+								        <c:when test="${not empty taskData.a_fname}">
+								            <a href="taskFileDownload.do?fileName=${taskData.a_fname}"
+								               class="file-download-link">
+								                ${taskData.a_fname}
+								            </a>
+								        </c:when>
+								        <c:otherwise>
+								            첨부된 파일이 없습니다.
+								        </c:otherwise>
+								    </c:choose>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -58,10 +70,6 @@
 				<div class="TIF_card">
 					<label>제출 내용 <span>*</span></label>
 					<textarea name="as_content" rows="20" cols="40" required></textarea>
-					<div class="TIF_card_keynum">
-						<p>최소 100자 이상 작성해주세요</p>
-						<p>0자</p>
-					</div>
 				</div>
 				<div class="TIF_card">
 					<label>파일 첨부</label>
@@ -69,9 +77,10 @@
 						<div class="TIF_card_file_imgbox">
 							<img src="/histudy/lms-img/fileimg.png">
 						</div>
-						<p>파일을 드래그하거나 클릭하여 업로드</p>
-						<p>PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
-						<input type="file" name="prve_as_fname">
+						<p class="file-title">파일을 드래그하거나 클릭하여 업로드</p>
+						<p class="file-desc">PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
+						<span class="file-name">선택된 파일 없음</span>
+						<input type="file" name="prve_as_fname" onchange="fileName(this)">
 					</div>
 				</div>
 				<div class="TIF_card">
@@ -100,4 +109,13 @@
 </main>
 <%@include file="../footer.jsp" %>
 </body>
+<script>
+function fileName(input){
+    const fileName = input.files.length > 0
+        ? input.files[0].name
+        : '선택된 파일 없음';
+
+    document.querySelector('.file-name').textContent = fileName;
+}
+</script>
 </html>
