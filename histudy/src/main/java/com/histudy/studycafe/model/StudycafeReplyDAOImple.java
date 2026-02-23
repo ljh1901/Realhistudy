@@ -28,9 +28,10 @@ public class StudycafeReplyDAOImple implements StudycafeReplyDAO {
 					list.get(i).setReview_idx(review_idx);
 					fileResult +=sqlSession.insert("insertStudycafeReplyFileSQL",list.get(i));
 				}
+				return fileResult; 
 			}
 		}
-		return fileResult; 
+		return result;
 	}
 	
 	@Override
