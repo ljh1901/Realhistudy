@@ -168,4 +168,7 @@
 		and systimestamp between r.reservation_starttime and
 		r.reservation_endtime)
 	</update>
+	<select id="selectMembershipPaySQL" resultType="Integer">
+		select count(*) from membership_payment where user_idx = #{user_idx} and end_date > sysdate and payment_status = '완료' 
+	</select>
 </mapper>

@@ -106,6 +106,9 @@ public class StudyCafeViewController {
 			UserDTO udto = userService.userInfo((String)session.getAttribute("user_id"));
 			model.addAttribute("udto", udto);
 		}
+		int paySale = studycafeService.paySale((Integer)session.getAttribute("user_idx"));
+		model.addAttribute("paySale", paySale);
+		model.addAttribute("studycafe_idx", studycafe_idx);
 		model.addAttribute("studycafeOne", studycafeOne);
 		model.addAttribute("seatList", seatList);
 		model.addAttribute("layoutDTO", layoutDTO);

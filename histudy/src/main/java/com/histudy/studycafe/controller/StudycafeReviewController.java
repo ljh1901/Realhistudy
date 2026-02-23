@@ -37,16 +37,19 @@ public class StudycafeReviewController {
 	private StudycafeReplyService studycafeReplyService;
 	
 	@GetMapping("studycafeReview.do")
-	public ModelAndView studycafeReply(@RequestParam(required = true, value = "studycafe_idx") int studycafe_idx) {
+	public ModelAndView studycafeReply(@RequestParam(required = true, value = "studycafe_idx") int studycafe_idx, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		List<StudycafeReplyDTO> reply=studycafeReplyService.replyList(studycafe_idx);
 		double avgRating=studycafeReplyService.studycafeAvgRating(studycafe_idx);
+		int result = studycafeReplyService.studycafeReplyValid((Integer)session.getAttribute("user_idx"));
+		int hasWritten = studycafeReplyService.studycafeReplyWritten((Integer)session.getAttribute("user_idx"));
 		DecimalFormat df = new DecimalFormat("0.##");
 		avgRating= Double.parseDouble(df.format(avgRating));
 		mav.addObject("studycafe_idx", studycafe_idx);
 		mav.addObject("avgRating", avgRating);
 		mav.addObject("reply", reply);
-		System.out.println(reply);
+		mav.addObject("result", result);
+		mav.addObject("hasWritten", hasWritten);
 		mav.setViewName("studycafe/studycafeReview");
 		return mav;
 	}

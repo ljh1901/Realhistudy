@@ -15,4 +15,6 @@ public interface StudycafeReplyService {
 	public List<StudycafeReplyDTO> replyList(int studycafe_idx);
 	public double studycafeAvgRating(int studycafe_idx);
 	public int studycafeReviewDelete(int studycafe_idx, int review_idx,  int user_idx);
+	public int studycafeReplyValid(int user_idx);
+	public int studycafeReplyWritten(int user_idx);
 }
