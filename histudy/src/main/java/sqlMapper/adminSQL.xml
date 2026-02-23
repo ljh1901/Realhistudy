@@ -18,7 +18,7 @@
 			<when test="type == 'total'">'누적 매출' AS sales_date</when>
 			<otherwise>TO_CHAR(p.paidAt, 'YYYY-MM-DD') AS sales_date</otherwise>
 		</choose>
-		,
+		
 		SUM(p.totalAmount) AS total_amount
 		FROM studycafe_pay p
 		JOIN

@@ -48,9 +48,9 @@
     .btn__resolve { background: #0f172a; color: white; border: none; padding: 14px 28px; cursor: pointer; border-radius: 8px; font-weight: 700; flex: 1; }
     
     .badge { padding: 5px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-    .type__USER { background: #dbeafe; color: #1e40af; }
-    .type__REVIEW { background: #fef3c7; color: #92400e; }
-    .type__STUDY { background: #dcfce7; color: #166534; }
+    .type__user { background: #dbeafe; color: #1e40af; }
+    .type__review { background: #fef3c7; color: #92400e; }
+    .type__study { background: #dcfce7; color: #166534; }
     .clickable { cursor: pointer; color: #2563eb; font-weight: 700; text-decoration: underline; }
 </style>
 </head>
@@ -137,16 +137,13 @@
             currentReport = { idx, type, targetIdx };
             document.getElementById('reportDetailArea').style.display = 'block';
             
-            // 데이터 매핑
             document.getElementById('dispIdx').innerText = idx;
             document.getElementById('dispTargetIdx').innerText = targetIdx;
             document.getElementById('dispContent').innerText = content;
             
-            // 누적 횟수 세팅
             const countVal = reportCount || 0;
             document.getElementById('dispReportCount').innerText = countVal;
             
-            // 횟수에 따른 강조 (예: 3회 이상이면 배경색 더 진하게)
             const countBadge = document.getElementById('countBadgeArea');
             if(parseInt(countVal) >= 3) {
                 countBadge.style.background = '#fecaca'; // 더 진한 빨강
@@ -158,7 +155,6 @@
             badge.innerText = type;
             badge.className = 'badge type__' + type;
 
-            // --- 이미지 깜빡임 방지 로직 ---
             const imgElement = document.getElementById('dispImg');
             const placeholder = document.getElementById('noImgText');
             
@@ -166,7 +162,7 @@
             imgElement.onerror = null;
 
             if (photo && photo !== 'null' && photo.trim() !== '') {
-                imgElement.src = 'upload/' + photo; 
+                imgElement.src = 'upload/report/' + photo; 
                 imgElement.onload = function() {
                     this.style.display = 'block';
                     placeholder.style.display = 'none';
@@ -183,7 +179,6 @@
                 placeholder.innerText = "증빙 사진이 없습니다.";
             }
 
-            // --- 상태에 따른 버튼 처리 ---
             if(status === '대기') {
                 document.getElementById('reportBtnGroup').style.display = 'flex';
                 document.getElementById('statusMsg').style.display = 'none';
@@ -199,10 +194,9 @@
         function goToTarget() {
             let url = "";
             const tIdx = currentReport.targetIdx;
-            // 타입별 경로 설정 (프로젝트 URL에 맞게 수정 필요)
-            if(currentReport.type === 'USER') url = "adminUserDetail.do?user_idx=" + tIdx;
-            else if(currentReport.type === 'REVIEW') url = "studycafeReview.do?review_idx=" + tIdx;
-            else if(currentReport.type === 'STUDY') url = "studyContent.do?study_idx=" + tIdx;
+            if(currentReport.type === 'user') url = "adminUserDetail.do?user_idx=" + tIdx;
+            else if(currentReport.type === 'review') url = "studycafeReview.do?review_idx=" + tIdx;
+            else if(currentReport.type === 'study') url = "studyContent.do?study_idx=" + tIdx;
             
             if(url) window.open(url, '_blank');
         }
