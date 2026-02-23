@@ -189,6 +189,7 @@ body {
 	<%@include file="../header.jsp"%>
 	<form id="studycafeReview" method="post" enctype="multipart/form-data">
 		<main>
+		평점: ★${avgRating}
 			<section id="reply__area">
 				<div class="reply-content">
 				<span>${sessionScope.user_name}</span>
@@ -262,8 +263,7 @@ document.getElementById('studycafeReplyBtn').addEventListener('click',function()
 	function fileReview() {
 		xhr = new XMLHttpRequest();
 		var formData = new FormData();
-		if (document.getElementById('writeReview').value == ''
-				&& ratingInput.value == 0 && selectedReviewFiles == '') {
+		if (document.getElementById('writeReview').value == ''||document.getElementById('writeReview').value == null && ratingInput.value == 0 && selectedReviewFiles == '') {
 			alert('리뷰를 작성해주세요!');
 			return false;
 		} else if (ratingInput.value == 0) {
@@ -272,8 +272,7 @@ document.getElementById('studycafeReplyBtn').addEventListener('click',function()
 		}
 		xhr.open("POST", "studycafeReviewFile.do", true);
 		xhr.onreadystatechange = fileReviewResult;
-		formData.append("studycafe_reply", document
-				.getElementById('writeReview').value);
+		formData.append("studycafe_reply", document.getElementById('writeReview').value);
 		formData.append("studycafe_rating", ratingInput.value);
 		formData.append("studycafe_idx", ${studycafe_idx});
 		if (selectedReviewFiles != null) {

@@ -11,7 +11,9 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.histudy.studycafe.model.StudycafeReplyDAO;
+import com.histudy.studycafe.model.StudycafeReplyDTO;
 import com.histudy.studycafe.model.StudycafeReplyFileDTO;
+import com.histudy.studycafe.model.StudycafeReplyJoinStudycafeReplyFileDTO;
 
 public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	private StudycafeReplyDAO studycafeReplyDAO;
@@ -38,8 +40,6 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 		
 		
 		List<StudycafeReplyFileDTO> replyFileLists = new ArrayList<StudycafeReplyFileDTO>();
-		System.out.println("업로드된 파일 개수:" + reviewFiles.length);
-
 		File f = new File("C:/Realhistudy/histudy/src/main/webapp/studycafe-reviewimg/");
 		if (reviewFiles != null) {
 			for (int i = 0; i < reviewFiles.length; i++) {
@@ -96,6 +96,16 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList(int studycafe_idx) {
+		List<StudycafeReplyJoinStudycafeReplyFileDTO> replyLists = studycafeReplyDAO.replyList(studycafe_idx);
+		return null;
+	}
+	@Override
+	public double studycafeAvgRating(int studycafe_idx) {
+		double avgRating = studycafeReplyDAO.studycafeAvgRating(studycafe_idx);
+		return avgRating;
 	}
 
 }
