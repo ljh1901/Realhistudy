@@ -23,7 +23,6 @@
 						<li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="30">구매 / 혜택</a>
 						<li><a href="myRefund.do"><img src="mypage-img/refund.png" width="30">정기권 환불</a>
 						<li><a href="myHeart.do"><img src="mypage-img/heart.png" width="30">찜 목록</a>
-						<li><a href="myAlarm.do"><img src="mypage-img/bell.png" width="30">알림 설정</a>
 						</li>
                 </ul>
             </nav>
@@ -67,13 +66,12 @@
 
             <div id="sale-section" class="wish-section">
 	            <c:choose>
-			        <c:when test="${hasCoupon}">
-			            <div class="coupon-card">
-			                <h2>멤버십 50% 할인권</h2>
-			                <p>스터디카페 전용</p>
-			                <button onclick="location.href='studyCafe.do?useCoupon=Y'">사용하기</button>
-			            </div>
-			        </c:when>
+			       <c:when test="${sessionScope.hasCoupon == true}">
+				        <div class="coupon-box">
+				            🎫 프리미엄 회원 전용 50% 할인 쿠폰!!!
+				            <button type="button">쿠폰 적용하기</button>
+				        </div>
+				    </c:when>
 			        <c:otherwise>
 	                	<div class="empty-msg">
 	                    <img src="mypage-img/promo-code.png" width="50">

@@ -18,38 +18,65 @@ public class MypageServiceImple implements MypageService {
 	@Autowired
 	private MypageDAO mypageDao;	
 	@Override
-	public Map<String, String> getMonthSchedule(Integer user_idx, String year, String month) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("user_idx", user_idx);
-		param.put("year", year);
-		param.put("month", month);
+	public Map<String, Object> getMonthSchedule(Integer user_idx, String year, String month) {
+		List<ScheduleDTO> list = mypageDao.getMonthSchedule(user_idx, year, month);
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("user_idx", user_idx);
+	    param.put("year", year);
+	    param.put("month", month);
 
-		List<ScheduleDTO> list = mypageDao.getMonthSchedule(param);
-		List<StudyDTO> studyList = mypageDao.getMyStudyDates(user_idx);
-		Map<String, String> resultMap = new HashMap<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		for (ScheduleDTO dto : list) {
-			if (dto.getS_start_date() != null) {
-				resultMap.put(sdf.format(dto.getS_start_date()), dto.getS_title());
-			}
-		}
-		// 스터디 일정 합치기
-		for (StudyDTO sdto : studyList) {
-		    if (sdto != null && sdto.getStudy_start_date() != null) {
-		        String startKey = sdto.getStudy_start_date(); 
-		        if(startKey.length() > 10) startKey = startKey.substring(0, 10);
-		        String sVal = resultMap.getOrDefault(startKey, "");
-		        resultMap.put(startKey, sVal + (sVal.isEmpty() ? "" : " | ") + "[시작] " + sdto.getStudy_title()+"스터디");
-		    }
-		    if (sdto != null && sdto.getStudy_end_date() != null) {
-		        String endKey = sdto.getStudy_end_date();
-		        if(endKey.length() > 10) endKey = endKey.substring(0, 10);
-		        String eVal = resultMap.getOrDefault(endKey, "");
-		        resultMap.put(endKey, eVal + (eVal.isEmpty() ? "" : " | ") + "[종료] " + sdto.getStudy_title()+"스터디");
-		    }
-		}
-		return resultMap;
+	    List<StudyDTO> studyList = mypageDao.getMyStudyDates(user_idx);
+	    
+	    Map<String, Object> resultMap = new HashMap<>();
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    
+	    if (list != null) {
+	        for (ScheduleDTO dto : list) {
+	            if (dto.getS_start_date() != null) {
+	                String dateKey = sdf.format(dto.getS_start_date());
+	                
+	                Map<String, Object> dayData = new HashMap<>();
+	                dayData.put("s_title", dto.getS_title() != null ? dto.getS_title() : "");
+	                dayData.put("s_content", dto.getS_content() != null ? dto.getS_content() : "");
+	                
+	                resultMap.put(dateKey, dayData);
+	            }
+	        }
+	        if (studyList != null) {
+	            for (StudyDTO sdto : studyList) {
+	                
+	                if (sdto.getStudy_start_date() != null) {
+	                    String startKey = sdto.getStudy_start_date(); 
+	                    if(startKey.length() > 10) startKey = startKey.substring(0, 10);
+	                    
+	                    Map<String, Object> dayData = (Map<String, Object>) resultMap.getOrDefault(startKey, new HashMap<>());
+	                    String existingTitle = (String) dayData.getOrDefault("s_title", "");
+	                    
+	                    String addTitle = "[시작] " + sdto.getStudy_title() + " 스터디";
+	                    dayData.put("s_title", existingTitle.isEmpty() ? addTitle : existingTitle + " | " + addTitle);
+	                    dayData.putIfAbsent("s_content", "");  
+	                    
+	                    resultMap.put(startKey, dayData);
+	                }
+	                
+	                if (sdto.getStudy_end_date() != null) {
+	                    String endKey = sdto.getStudy_end_date();
+	                    if(endKey.length() > 10) endKey = endKey.substring(0, 10);
+	                    
+	                    Map<String, Object> dayData = (Map<String, Object>) resultMap.getOrDefault(endKey, new HashMap<>());
+	                    String existingTitle = (String) dayData.getOrDefault("s_title", "");
+	                    
+	                    String addTitle = "[종료] " + sdto.getStudy_title() + " 스터디";
+	                    dayData.put("s_title", existingTitle.isEmpty() ? addTitle : existingTitle + " | " + addTitle);
+	                    dayData.putIfAbsent("s_content", "");
+	                    
+	                    resultMap.put(endKey, dayData);
+	                }
+	            }
+	        }
+	        
+	    }
+	    return resultMap;
 	}
 
 	@Override

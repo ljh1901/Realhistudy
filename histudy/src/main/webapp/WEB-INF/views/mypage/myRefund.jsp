@@ -24,7 +24,6 @@
 						<li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="30">구매 / 혜택</a>
 						<li><a href="myRefund.do"><img src="mypage-img/refund.png" width="30">정기권 환불</a>
 						<li><a href="myHeart.do"><img src="mypage-img/heart.png" width="30">찜 목록</a>
-						<li><a href="myAlarm.do"><img src="mypage-img/bell.png" width="30">알림 설정</a>
 						</li>
 				</ul>
 			</nav>

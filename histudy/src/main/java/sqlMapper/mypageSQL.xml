@@ -141,8 +141,10 @@
 	    JOIN studycafe_ticket st ON p.orderName = st.ticket_name
 	    WHERE p.user_idx = #{user_idx}
 	      AND p.pay_status = 'PAID'
-	      AND p.paid = (st.ticket_amount / 2)
-	      AND p.paidAt >= #{membershipDate} 
+	      <![CDATA[
+	      AND p.paid < st.ticket_amount
+	      AND p.paidAt >= #{membershipDate}
+	      ]]> 
 	</select>
 	<!-- 마지막 멤버십 결제 확인 -->
 	<select id="getLastMembership" resultType="com.histudy.membership.model.MembershipPaymentDTO">
