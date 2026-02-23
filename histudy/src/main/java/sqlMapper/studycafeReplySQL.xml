@@ -36,4 +36,10 @@
   		from studycafe_reply_file 
   		where review_idx = #{review_idx}
   	</delete>
+  	<select id="selectStudycafePaySQL" resultType="Integer">
+  		select count(*) from studycafe_pay where user_idx = #{user_idx} and pay_status = 'PAID'
+  	</select>
+  	<select id="selectWrittenSQL" resultType="Integer">
+  		select count(*) from studycafe_reply where user_idx = #{user_idx}
+  	</select>
   </mapper>

@@ -25,4 +25,5 @@ public interface StudycafeSerivce {
 	public int ticketTotalAmount(int ticket_idx);
 	public int seatStatusUpdate();
 	public List<StudycafeLayoutDTO> studycafeLayout(int studycafe_idx);
+	public int paySale(int user_idx);
 }

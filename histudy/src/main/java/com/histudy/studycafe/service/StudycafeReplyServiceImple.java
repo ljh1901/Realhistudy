@@ -152,5 +152,15 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 		int result = studycafeReplyDAO.studycafeReviewDelete(map);
 		return result;
 	}
+	@Override
+	public int studycafeReplyValid(int user_idx) {
+		int result = studycafeReplyDAO.studycafeReplyValid(user_idx);
+		return result;
+	}
+	@Override
+	public int studycafeReplyWritten(int user_idx) {
+		int result = studycafeReplyDAO.studycafeReplyWritten(user_idx);
+		return result;
+	}
 
 }

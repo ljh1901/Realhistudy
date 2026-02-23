@@ -37,10 +37,6 @@ public class StudycafeReplyDAOImple implements StudycafeReplyDAO {
 	@Override
 	public List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList(int studycafe_idx) {
 		List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList = sqlSession.selectList("selectStudycafeReplySQL", studycafe_idx);
-		for(int i=0; i<replyList.size(); i++)
-		{
-			System.out.println("파일번호: "+replyList.get(i).getReview_file_idx()+"\n리뷰 번호: "+replyList.get(i).getReview_idx()+"\n리뷰 내용: "+replyList.get(i).getStudycafe_reply());
-		}
 		return replyList;
 	}
 	
@@ -55,6 +51,17 @@ public class StudycafeReplyDAOImple implements StudycafeReplyDAO {
 		if(result > 0) {
 			int delete=sqlSession.delete("deleteStudycafeReviewFileSQL", map);
 		}
+		return result;
+	}
+	
+	@Override
+	public int studycafeReplyValid(int user_idx) {
+		int result = sqlSession.selectOne("selectStudycafePaySQL", user_idx);
+		return result;
+	}
+	@Override
+	public int studycafeReplyWritten(int user_idx) {
+		int result = sqlSession.selectOne("selectWrittenSQL", user_idx);
 		return result;
 	}
 }

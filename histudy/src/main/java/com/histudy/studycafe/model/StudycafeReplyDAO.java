@@ -10,4 +10,6 @@ public interface StudycafeReplyDAO {
 	public List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList(int studycafe_idx);
 	public double studycafeAvgRating(int studycafe_idx);
 	public int studycafeReviewDelete(Map<String, Integer> map);
+	public int studycafeReplyValid(int user_idx);
+	public int studycafeReplyWritten(int user_idx);
 }

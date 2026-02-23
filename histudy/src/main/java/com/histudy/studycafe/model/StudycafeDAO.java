@@ -20,4 +20,5 @@ public interface StudycafeDAO {
 	public int payCancel(String paymentId);
 	public int seatStatusUpdate();
 	public List<StudycafeLayoutDTO> studycafeLayout(int studycafe_idx); // 스터디 카페 레이아웃
+	public int paySale(int user_idx);
 }

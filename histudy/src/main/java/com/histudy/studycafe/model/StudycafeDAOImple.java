@@ -96,4 +96,9 @@ public class StudycafeDAOImple implements StudycafeDAO{
 		List<StudycafeLayoutDTO> layoutDTO = sqlSession.selectList("selectStudycafeLayoutSQL", studycafe_idx);
 		return layoutDTO;
 	}
+	@Override
+	public int paySale(int user_idx) {
+		int result = sqlSession.selectOne("selectMembershipPaySQL", user_idx);
+		return result;
+	}
 }

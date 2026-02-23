@@ -206,7 +206,7 @@ main>span {
 						평점: ★${avgRating}
 				<c:forEach var="reply" items="${reply}">
 					<div class="reply-content">
-						<span id="${sessionScope.user_idx}">${reply.user_idx}</span> 
+						<span id="${sessionScope.user_idx}">${reply.user_name}</span> 
 						<c:if test="${sessionScope.user_idx == reply.user_idx}">
 							<span><a href="studycafeReviewUpdate.do?studycafe_idx=${studycafe_idx}&review_idx=${reply.review_idx}">수정</a></span>
 							<span><a href="studycafeReviewDelete.do?studycafe_idx=${studycafe_idx}&review_idx=${reply.review_idx}&user_idx=${reply.user_idx}">삭제</a></span>
@@ -230,7 +230,9 @@ main>span {
 				</c:forEach>
 			</section>
 			<div>
+			<c:if test="${sessionScope.user_idx !=null && result > 0 && hasWritten ==0 }">
 				<button type="button" id="studycafeReplyBtn">이용후기 남기기</button>
+			</c:if>
 			</div>
 			<section id="reply_layout">
 				<div class="review-photo">
@@ -309,20 +311,7 @@ document.getElementById('studycafeReplyBtn').addEventListener('click',function()
 	function fileReviewResult() {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
-				var str = '';
-				var fileData = JSON.parse(xhr.responseText);
-				if (fileData.replyFileList != null) {
-					fileData.replyFileList.forEach(function(fileList) {
-						console.log(fileList);
-						str += fileList;
-					})
-					document.querySelector('.photo-area').innerHTML += str;
-				}
-				if (fileData.studycafe_reply != null) {
-					document.querySelector('.reply-text').innerHTML += fileData.studycafe_reply;
-					document.querySelector('.reply-text').innerHTML += fileData.studycafe_rating;
-					document.querySelector('.reply-text').style.display='';
-				}
+				xhr.onload=location.reload();
 			}
 		}
 	}

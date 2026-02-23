@@ -290,14 +290,16 @@ rect[data-layout-type="ROOM_SMALL"] {
 fill="#CDA56D" data-layout-type="${layout.layout_type}" />
 <!-- 입구 문 -->
 </c:forEach>
+<c:if test="${studycafe_idx ==1}">
 <text x="706" y="600" font-size="10" transform="rotate(90 706,600)">문</text>
 <text x="720" y="425" font-size="10" transform="rotate(90 706,420)">문</text>
 <text x="550" y="320" text-anchor="middle" font-size="20" fill="#94A3B8" font-weight="700"> MAIN HALL </text>
 <text x="220" y="40" text-anchor="middle" font-size="20" font-weight="700">노트북 존</text>
 <text x="220" y="340" text-anchor="middle" font-size="20" font-weight="700">일반존 A</text>
 <text x="820" y="40" text-anchor="middle" font-size="20" font-weight="700">일반존 B</text>
-<text x="870" y="710" text-anchor="middle" font-weight="700">스터디룸 B</text>
+<text x="220" y="680" text-anchor="middle" font-weight="700">스터디룸 B</text>
 <text x="865" y="350" text-anchor="middle" font-size="18" font-weight="700">1인 독방</text>
+</c:if>
 </g>
 <g id="seat__area">
 <c:forEach var="seat" items="${seatList}">
@@ -447,6 +449,7 @@ function portOnePay(queryNum, ticket_category_idx){
 		var now = new Date();
 		var str = ''+now.getFullYear()+(now.getMonth()+1)+now.getDate()+now.getHours()+now.getMinutes()+now.getSeconds();
 			ticket_idx = document.querySelectorAll('.payBtn')[i].value;
+			var totalAmount = Number(document.querySelectorAll('.ticketAmount')[i].getAttribute("value"));
 		return fetch("studycafe/payment/payNotComplete.do?ticket_idx="+document.querySelectorAll('.payBtn')[i].value, {
 			method:"POST",
 			headers:{"Content-Type":"application/json"},
@@ -460,13 +463,17 @@ function portOnePay(queryNum, ticket_category_idx){
 			  	phoneNumber: "${udto.user_tel}"
 				},
 				orderName: document.querySelectorAll('.seat-a')[queryNum].getAttribute('value')+"-좌석/"+document.querySelectorAll('.ticketName')[i].getAttribute("value"),
-				totalAmount: document.querySelectorAll('.ticketAmount')[i].getAttribute("value"),
+				totalAmount: totalAmount,
 				currency: "CURRENCY_KRW",
 				payMethod: "CARD"
 			})
 			})
 			.then(res => res.json())
 			.then(async function(res){
+				var totalAmount=res.totalAmount;
+				if(${paySale >0}){
+					totalAmount=totalAmount*0.5;
+				}
 				resp = await PortOne.requestPayment({
 				//Store ID 설정
 				storeId: res.storeId,
@@ -483,7 +490,7 @@ function portOnePay(queryNum, ticket_category_idx){
 					ticket_category_idx: ticket_category_idx
 				},
 				orderName: res.orderName,
-				totalAmount: res.totalAmount,
+				totalAmount: totalAmount,
 				currency: "CURRENCY_KRW",
 				payMethod: "CARD",
 				redirectUrl: "http://localhost:9090/histudy/receipt.do?totalAmount="+res.totalAmount,

@@ -184,4 +184,9 @@ public class StudycafeServiceImple implements StudycafeSerivce {
 		List<StudycafeLayoutDTO> layoutDTO = studycafeDAO.studycafeLayout(studycafe_idx);
 		return layoutDTO;
 	}
+	@Override
+	public int paySale(int user_idx) {
+		int result = studycafeDAO.paySale(user_idx);
+		return result;
+	}
 }
