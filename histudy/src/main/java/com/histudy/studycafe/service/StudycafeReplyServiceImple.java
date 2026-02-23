@@ -109,6 +109,7 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 
 	        if (!replyMap.containsKey(reviewIdx)) {
 	            StudycafeReplyDTO replyDto = new StudycafeReplyDTO(
+	            		row.getUser_name(),
 	                    reviewIdx,
 	                    row.getUser_idx(),
 	                    row.getStudycafe_idx(),

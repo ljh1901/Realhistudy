@@ -3,6 +3,7 @@ package com.histudy.studycafe.model;
 import java.util.List;
 
 public class StudycafeReplyDTO {
+	private String user_name;
 	private int review_idx;
 	private int user_idx;
 	private int studycafe_idx;
@@ -28,6 +29,18 @@ public class StudycafeReplyDTO {
 	
 	
 	
+	public StudycafeReplyDTO(String user_name, int review_idx, int user_idx, int studycafe_idx, String studycafe_reply,
+			double studycafe_rating, String created_at, List<StudycafeReplyFileDTO> fileList) {
+		super();
+		this.user_name = user_name;
+		this.review_idx = review_idx;
+		this.user_idx = user_idx;
+		this.studycafe_idx = studycafe_idx;
+		this.studycafe_reply = studycafe_reply;
+		this.studycafe_rating = studycafe_rating;
+		this.created_at = created_at;
+		this.fileList = fileList;
+	}
 	public StudycafeReplyDTO(int review_idx, int user_idx, int studycafe_idx, String studycafe_reply,
 			double studycafe_rating, String created_at, List<StudycafeReplyFileDTO> fileList) {
 		super();
@@ -38,6 +51,14 @@ public class StudycafeReplyDTO {
 		this.studycafe_rating = studycafe_rating;
 		this.created_at = created_at;
 		this.fileList = fileList;
+	}
+	
+	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	public List<StudycafeReplyFileDTO> getFileList() {
 		return fileList;
