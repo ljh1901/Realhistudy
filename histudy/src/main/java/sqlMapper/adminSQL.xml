@@ -97,28 +97,35 @@
 		layout_x AS "x",
 		layout_y AS "y",
 		layout_w AS "width",
-		layout_h AS "height",
+		layout_h AS
+		"height",
 		layout_label AS "label"
 		FROM studycafe_layout
-		WHERE studycafe_idx = #{studycafe_idx}
+		WHERE
+		studycafe_idx = #{studycafe_idx}
 		ORDER BY layout_idx ASC
 	</select>
 
 	<insert id="insertLayout" parameterType="map">
-		INSERT INTO studycafe_layout (
-		layout_idx, studycafe_idx, layout_type, layout_x, layout_y, layout_w, layout_h,
+		INSERT INTO
+		studycafe_layout (
+		layout_idx, studycafe_idx, layout_type, layout_x,
+		layout_y, layout_w, layout_h,
 		layout_label
 		) VALUES (
-		studycafe_layout_idx.nextval, #{studycafe_idx}, #{type}, #{x}, #{y}, #{width}, #{height}, #{label}
+		studycafe_layout_idx.nextval, #{studycafe_idx}, #{type}, #{x}, #{y},
+		#{width}, #{height}, #{label}
 		)
 	</insert>
 
 	<insert id="insertSeat" parameterType="map">
 		INSERT INTO seat (
-		seat_idx, seat_num, seat_type, seat_status, seat_x, seat_y, seat_w, seat_h,
+		seat_idx, seat_num, seat_type, seat_status, seat_x, seat_y, seat_w,
+		seat_h,
 		studycafe_idx
 		) VALUES (
-		seat_idx.nextval, #{label}, #{type}, 'FREE', #{x}, #{y}, #{width}, #{height},
+		seat_idx.nextval, #{label}, #{type},
+		'FREE', #{x}, #{y}, #{width}, #{height},
 		#{studycafe_idx}
 		)
 	</insert>
@@ -176,7 +183,19 @@
 		#{ticket_category_idx},
 		#{ticket_name},
 		#{ticket_amount},
-		#{ticket_time}
+		<choose>
+			<when
+				test="ticket_category_idx == 2 or ticket_category_idx == '2'">
+				24
+			</when>
+			<when
+				test="ticket_category_idx == 3 or ticket_category_idx == '3'">
+				#{ticket_time} * 30
+			</when>
+			<otherwise>
+				#{ticket_time}
+			</otherwise>
+		</choose>
 		)
 	</insert>
 
@@ -352,12 +371,21 @@
 
 	<insert id="insertNotice"
 		parameterType="com.histudy.admin.model.NoticeDTO">
-		insert into notice (notice_idx, notice_category_idx,
+		insert into notice (
+		notice_idx,
+		notice_category_idx,
 		notice_title,
-		notice_content, notice_file, notice_writedate)
-		values
-		(notice_idx.nextval, #{notice_category_idx}, #{notice_title},
-		#{notice_content}, #{notice_file}, sysdate)
+		notice_content,
+		notice_file,
+		notice_writedate
+		)
+		values (
+		notice_idx.nextval,
+		#{notice_category_idx},
+		#{notice_title},
+		#{notice_content},
+		#{notice_file, jdbcType=VARCHAR}, sysdate
+		)
 	</insert>
 
 	<update id="updateNotice"

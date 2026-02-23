@@ -8,8 +8,7 @@
 <link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
 <%@ include file="adminCheck.jsp" %>
 <style>
-    .report__container { padding: 30px; font-family: 'Pretendard', -apple-system, sans-serif; background-color: #f8fafc; min-height: 100vh; }
-    .admin__title { font-size: 26px; color: #1e293b; margin-bottom: 30px; font-weight: 800; }
+    .report__container {font-family: 'Pretendard', -apple-system, sans-serif;min-height: 100vh; }
 
     /* 리스트 테이블 */
     .report__table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); overflow: hidden; }
@@ -58,7 +57,7 @@
 
     <div class="report__container"> 
         <div class="admin__header">
-            <h1 class="admin__title">통합 신고 관리</h1>
+            <h1>통합 신고 관리</h1>
         </div>
 
         <table class="report__table">
@@ -67,7 +66,7 @@
                     <th width="80">번호</th>
                     <th width="120">유형</th>
                     <th width="200">대상</th>
-                    <th>신고 사유 요약</th>
+                    <th>신고 유형</th>
                     <th width="120">신고자</th>
                     <th width="100">상태</th>
                 </tr>
@@ -83,7 +82,7 @@
                             </span>
                         </td>
                         <td style="text-align: left; padding-left: 20px;">
-                            <div style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.report_content}</div>
+                            <div style="max-width:380px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.report_category}</div>
                         </td>
                         <td>${r.reporter_name}</td>
                         <td>
@@ -162,7 +161,7 @@
             imgElement.onerror = null;
 
             if (photo && photo !== 'null' && photo.trim() !== '') {
-                imgElement.src = 'upload/report/' + photo; 
+                imgElement.src = '/resources/upload/report/' + photo; 
                 imgElement.onload = function() {
                     this.style.display = 'block';
                     placeholder.style.display = 'none';

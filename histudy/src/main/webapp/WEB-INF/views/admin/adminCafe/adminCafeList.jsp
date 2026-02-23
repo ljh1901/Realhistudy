@@ -3,30 +3,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>스터디 카페 관리자</title>
-<link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
-<%@ include file="../adminCheck.jsp" %>
+    <meta charset="UTF-8">
+    <title>스터디 카페 관리자</title>
+    <link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
+    <%@ include file="../adminCheck.jsp" %>
 </head>
 
-<body>
-<h1>입점 카페 목록</h1>	
-<fieldset class="adminCafe">
-<div><a href="adminCafeReg.do"><input type="button" value="입점등록"></a></div>
-    <c:forEach var="cafe" items="${cafeList}">
-    <ul class="adminCafeList__menu">
-        <li class="adminCafeList__menu__item">
-            <a href="adminCafeDetail.do?studycafe_idx=${cafe.studycafe_idx}&studycafe_name=${cafe.studycafe_name}">
-                ${cafe.studycafe_name}
+<body id="adminCafeListPage">
+    <h1>입점 카페 목록</h1>    
+    
+    <div class="adminCafe__container">
+        <div class="adminCafe__header__tools">
+            <a href="adminCafeReg.do">
+                <button type="button" class="adminCafe__btn">＋ 새 카페 입점등록</button>
             </a>
-        </li>
-    </ul>
-</c:forEach>
-    <c:if test="${empty cafeList}">
-        <ul class="adminCafeList__menu">
-            <li class="adminCafeList__menu__item">입점된 카페가 없습니다.</li>
-        </ul>
-    </c:if>
-</fieldset>
+        </div>
+
+        <table class="adminCafe__table">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">번호</th>
+                    <th>카페 명칭</th>
+                    <th style="width: 25%;">관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="cafe" items="${cafeList}">
+                    <tr>
+                        <td>${cafe.studycafe_idx}</td>
+                        <td style="text-align: left; padding-left: 30px;">
+                            <a href="adminCafeDetail.do?studycafe_idx=${cafe.studycafe_idx}&studycafe_name=${cafe.studycafe_name}" class="adminCafe__link">
+                                🏢 ${cafe.studycafe_name}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="adminCafeDetail.do?studycafe_idx=${cafe.studycafe_idx}&studycafe_name=${cafe.studycafe_name}">
+                                <button type="button" class="faq__btn__edit">상세보기</button>
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                
+                <c:if test="${empty cafeList}">
+                    <tr>
+                        <td colspan="3" style="padding: 50px; color: #999;">입점된 카페가 없습니다.</td>
+                    </tr>
+                </c:if>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
