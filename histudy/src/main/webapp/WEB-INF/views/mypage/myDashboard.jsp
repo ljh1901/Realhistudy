@@ -40,7 +40,6 @@
 						<li><a href="myDashboard.do"><img src="mypage-img/report.png" width="30">대시보드</a>
 						<li><a href="mySchedule.do"><img src="mypage-img/calendar.png" width="30">일정관리</a>
 						<li><a href="myPurchase.do"><img src="mypage-img/shopping-cart.png" width="30">구매 / 혜택</a>
-						<li><a href="myRefund.do"><img src="mypage-img/refund.png" width="30">정기권 환불</a>
 						<li><a href="myHeart.do"><img src="mypage-img/heart.png" width="30">찜 목록</a>
 						</li>
 				</ul>

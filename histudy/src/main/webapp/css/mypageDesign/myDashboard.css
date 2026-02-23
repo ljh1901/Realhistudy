@@ -21,7 +21,6 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.03);
     border: 1px solid #f1f5f9;
 }
-/* 개별 섹션 공통 카드 스타일 */
 section {
     background: #fff;
     border-radius: 20px;
@@ -41,6 +40,8 @@ section {
 }
 
 .membership-card div:first-child {
+	font-size:20;
+	text-align:left;
     font-weight: 700;
     color: #0f172a;
     font-size: 18px;

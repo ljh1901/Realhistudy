@@ -17,30 +17,30 @@ public class NoticeDAOImple implements NoticeDAO {
 
 	@Override
 	public List<NoticeCategoryDTO> getNoticeCategoryList() {
-		return session.selectList("com.histudy.admin.getNoticeCategoryList");
+		return session.selectList("getNoticeCategoryList");
 	}
 
 	@Override
 	public List<NoticeDTO> getNoticeList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return session.selectList("com.histudy.admin.selectNoticeList",map);
+		return session.selectList("selectNoticeList",map);
 	}
 
 	@Override
 	public NoticeDTO getNoticeOne(int notice_idx) {
-		return session.selectOne("com.histudy.admin.getNoticeOne", notice_idx);
+		return session.selectOne("getNoticeOne", notice_idx);
 	}
 	@Override
 	public int insertNotice(NoticeDTO dto) {
-		return session.insert("com.histudy.admin.insertNotice",dto);
+		return session.insert("insertNotice",dto);
 	}
 	
 	@Override
 	public int updateNotice(NoticeDTO dto) {
-		return session.update("com.histudy.admin.updateNotice",dto);
+		return session.update("updateNotice",dto);
 	}
 	@Override
 	public int deleteNotice(int notice_idx) {
-		return session.delete("com.histudy.admin.deleteNotice",notice_idx);
+		return session.delete("deleteNotice",notice_idx);
 	}
 }

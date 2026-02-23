@@ -147,4 +147,9 @@ public class LectureServiceImple implements LectureService {
 		// TODO Auto-generated method stub
 	   return lectureDao.selectRecentNotes(user_idx);	
 	}
+   @Override
+	public String getUserPro(int user_idx) {
+		// TODO Auto-generated method stub
+		return lectureDao.getUserPro(user_idx);
+	}
 }

@@ -75,4 +75,8 @@ public class AdminCafeDAOImple implements AdminCafeDAO {
     public int insertStudyCafe(StudycafeDTO dto) {
         return session.insert("insertStudyCafe", dto);
     }
+    @Override
+    public void deleteCafe(int studycafe_idx) {
+        session.delete("deleteCafe", studycafe_idx);
+    }
 }

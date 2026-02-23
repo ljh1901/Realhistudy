@@ -44,8 +44,7 @@
 						</li>
 				</ul>
 			</nav>
-		</aside>
-		
+		</aside>   
 		
 	</div>
 </div>
