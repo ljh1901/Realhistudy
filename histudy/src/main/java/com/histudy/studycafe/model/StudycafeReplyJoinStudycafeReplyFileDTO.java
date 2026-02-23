@@ -1,6 +1,7 @@
 package com.histudy.studycafe.model;
 
 public class StudycafeReplyJoinStudycafeReplyFileDTO {
+	private String user_name;
 	private int review_idx;
 	private int user_idx;
 	private String studycafe_reply;
@@ -18,10 +19,11 @@ public class StudycafeReplyJoinStudycafeReplyFileDTO {
 	}
 
 
-	public StudycafeReplyJoinStudycafeReplyFileDTO(int review_idx, int user_idx, String studycafe_reply,
+	public StudycafeReplyJoinStudycafeReplyFileDTO(String user_name,int review_idx, int user_idx, String studycafe_reply,
 			int studycafe_idx, double studycafe_rating, String created_at, int review_file_idx, String file_path,
 			String file_type, int file_order) {
 		super();
+		this.user_name = user_name;
 		this.review_idx = review_idx;
 		this.user_idx = user_idx;
 		this.studycafe_reply = studycafe_reply;
@@ -32,6 +34,16 @@ public class StudycafeReplyJoinStudycafeReplyFileDTO {
 		this.file_path = file_path;
 		this.file_type = file_type;
 		this.file_order = file_order;
+	}
+
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 

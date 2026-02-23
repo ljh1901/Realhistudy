@@ -53,7 +53,7 @@ public class StudycafeReviewController {
 
 	@PostMapping(value = "studycafeReviewFile.do", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> fileList(@RequestBody(required = false) MultipartFile[] reviewFiles, 
+	public ResponseEntity<Map<String, Object>> fileList(@RequestParam(required = false) MultipartFile[] reviewFiles, 
 			String studycafe_reply, double studycafe_rating, HttpSession session, int studycafe_idx) {
 		try {
 		Map<String, Object> map = studycafeReplyService.writeStudycafeReply(reviewFiles, studycafe_reply, studycafe_rating, (Integer)session.getAttribute("user_idx"), studycafe_idx);
