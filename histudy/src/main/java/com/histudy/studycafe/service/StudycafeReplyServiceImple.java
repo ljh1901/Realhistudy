@@ -37,7 +37,7 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 		if (studycafe_reply != null && !(studycafe_reply.equals(""))) {
 			map.put("studycafe_reply", studycafe_reply);
 		}
-		
+	
 		
 		List<StudycafeReplyFileDTO> replyFileLists = new ArrayList<StudycafeReplyFileDTO>();
 		File f = new File("C:/Realhistudy/histudy/src/main/webapp/studycafe-reviewimg/");
@@ -98,9 +98,29 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 		}
 	}
 	@Override
-	public List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList(int studycafe_idx) {
+	public List<StudycafeReplyDTO> replyList(int studycafe_idx) {
 		List<StudycafeReplyJoinStudycafeReplyFileDTO> replyLists = studycafeReplyDAO.replyList(studycafe_idx);
-		return null;
+		List<StudycafeReplyDTO> reply = new ArrayList<StudycafeReplyDTO>();
+		List<StudycafeReplyFileDTO> fileList = new ArrayList<StudycafeReplyFileDTO>();
+		for(int i=0; i<replyLists.size(); i++) {
+			// 파일 가져오기
+			if(replyLists.get(i).getReview_file_idx()!=0) {
+			StudycafeReplyFileDTO fileDto = new StudycafeReplyFileDTO(replyLists.get(i).getReview_file_idx(), replyLists.get(i).getReview_idx(),
+					replyLists.get(i).getFile_path(), 
+					replyLists.get(i).getFile_type(), 
+					replyLists.get(i).getFile_order(), replyLists.get(i).getCreated_at());
+					fileList.add(fileDto);
+					
+			}
+			// 댓글 가져오기
+			if(replyLists.get(i).getReview_idx()!=0) {
+				StudycafeReplyDTO replyDto = new StudycafeReplyDTO(replyLists.get(i).getReview_idx(),
+						replyLists.get(i).getUser_idx(),replyLists.get(i).getStudycafe_idx(),replyLists.get(i).getStudycafe_reply(), 
+						replyLists.get(i).getStudycafe_rating(),replyLists.get(i).getCreated_at(), fileList);
+				reply.add(replyDto);
+			}
+		}
+		return reply;
 	}
 	@Override
 	public double studycafeAvgRating(int studycafe_idx) {

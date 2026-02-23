@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.histudy.studycafe.model.StudycafeReplyDTO;
 import com.histudy.studycafe.model.StudycafeReplyFileDTO;
 import com.histudy.studycafe.service.StudycafeReplyService;
 
@@ -38,12 +39,14 @@ public class StudycafeReviewController {
 	@GetMapping("studycafeReview.do")
 	public ModelAndView studycafeReply(@RequestParam(required = true, value = "studycafe_idx") int studycafe_idx) {
 		ModelAndView mav = new ModelAndView();
-		studycafeReplyService.replyList(studycafe_idx);
+		List<StudycafeReplyDTO> reply=studycafeReplyService.replyList(studycafe_idx);
 		double avgRating=studycafeReplyService.studycafeAvgRating(studycafe_idx);
 		DecimalFormat df = new DecimalFormat("0.##");
 		avgRating= Double.parseDouble(df.format(avgRating));
 		mav.addObject("studycafe_idx", studycafe_idx);
 		mav.addObject("avgRating", avgRating);
+		mav.addObject("reply", reply);
+		System.out.println(reply);
 		mav.setViewName("studycafe/studycafeReview");
 		return mav;
 	}
@@ -53,7 +56,7 @@ public class StudycafeReviewController {
 	public ResponseEntity<Map<String, Object>> fileList(@RequestBody(required = false) MultipartFile[] reviewFiles, 
 			String studycafe_reply, double studycafe_rating, HttpSession session, int studycafe_idx) {
 		try {
-		Map<String, Object> map = studycafeReplyService.writeStudycafeReply(reviewFiles, studycafe_reply, studycafe_rating, (Integer)session.getAttribute("user_idx"), studycafe_idx); // JSON 객체
+		Map<String, Object> map = studycafeReplyService.writeStudycafeReply(reviewFiles, studycafe_reply, studycafe_rating, (Integer)session.getAttribute("user_idx"), studycafe_idx);
 		ResponseEntity<Map<String, Object>> respReplyFile = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 		return respReplyFile;
 		}catch(Exception e) {

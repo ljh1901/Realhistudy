@@ -18,7 +18,7 @@ function paintStars(score) {
 
 stars.forEach((star, index) => {
 
-  star.addEventListener("mousemove", (e) => {
+  star.addEventListener("click", (e) => {
 
     const rect = star.getBoundingClientRect();
     const isHalf = (e.clientX - rect.left) < rect.width / 2;

@@ -232,23 +232,21 @@ function saveLayout() {
 }
 
 window.onload = function() {
-    const savedLayout = [];
     <c:forEach var="item" items="${layoutList}">
-        savedLayout.push({
-            type: "${item.TYPE != null ? item.TYPE : item.type}",
-            label: "${item.LABEL != null ? item.LABEL : item.label}",
-            x: Number("${item.X != null ? item.X : item.x}"),
-            y: Number("${item.Y != null ? item.Y : item.y}"),
-            width: Number("${item.WIDTH != null ? item.WIDTH : item.width}"),
-            height: Number("${item.HEIGHT != null ? item.HEIGHT : item.height}")
-        });
+        (function() {
+            const type = "${item.type}";
+            const label = "${item.label}";
+            const x = parseFloat("${item.x}");
+            const y = parseFloat("${item.y}");
+            const w = parseFloat("${item.width}");
+            const h = parseFloat("${item.height}");
+
+            if (label && !isNaN(x)) {
+                createBox(x + (w / 2), y + (h / 2), w, h,
+                    type === 'SEAT' ? "#60A5FA" : "#EEF2FF", label, type === 'ROOM');
+            }
+        })();
     </c:forEach>
-    savedLayout.forEach(item => {
-        if (item.label) {
-            createBox(item.x + (item.width / 2), item.y + (item.height / 2), item.width, item.height,
-                item.type === 'SEAT' ? "#60A5FA" : "#EEF2FF", item.label, item.type === 'ROOM');
-        }
-    });
 };
 </script>
 </body>

@@ -98,13 +98,13 @@ function drawLayout(item) {
 window.onload = function() {
     <c:forEach var="item" items="${layoutList}">
         drawLayout({
-            type: "${item.TYPE != null ? item.TYPE : (item.type != null ? item.type : 'SEAT')}",
-            label: "${item.LABEL != null ? item.LABEL : item.label}",
-            x: ${item.X != null ? item.X : item.x},
-            y: ${item.Y != null ? item.Y : item.y},
-            width: ${item.WIDTH != null ? item.WIDTH : item.width},
-            height: ${item.HEIGHT != null ? item.HEIGHT : item.height},
-            isOccupied: ${ (item.isOccupied == 'Y' || item.ISOCCUPIED == 'Y') ? true : false }
+            type: "${item.type}",
+            label: "${item.label}",
+            x: parseFloat("${item.x}"),
+            y: parseFloat("${item.y}"),
+            width: parseFloat("${item.width}"),
+            height: parseFloat("${item.height}"),
+            isOccupied: "${item.seat_status}" === "OCCUPIED"
         });
     </c:forEach>
 };

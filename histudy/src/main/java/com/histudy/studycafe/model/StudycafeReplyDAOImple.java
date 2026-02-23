@@ -39,7 +39,7 @@ public class StudycafeReplyDAOImple implements StudycafeReplyDAO {
 		List<StudycafeReplyJoinStudycafeReplyFileDTO> replyList = sqlSession.selectList("selectStudycafeReplySQL", studycafe_idx);
 		for(int i=0; i<replyList.size(); i++)
 		{
-			System.out.println("파일경로: "+replyList.get(i).getFile_path()+"\n리뷰 번호: "+replyList.get(i).getReview_idx()+"\n리뷰 내용: "+replyList.get(i).getStudycafe_reply());
+			System.out.println("파일번호: "+replyList.get(i).getReview_file_idx()+"\n리뷰 번호: "+replyList.get(i).getReview_idx()+"\n리뷰 내용: "+replyList.get(i).getStudycafe_reply());
 		}
 		return replyList;
 	}

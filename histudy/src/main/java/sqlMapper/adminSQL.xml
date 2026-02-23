@@ -18,7 +18,7 @@
 			<when test="type == 'total'">'누적 매출' AS sales_date</when>
 			<otherwise>TO_CHAR(p.paidAt, 'YYYY-MM-DD') AS sales_date</otherwise>
 		</choose>
-		
+		,
 		SUM(p.totalAmount) AS total_amount
 		FROM studycafe_pay p
 		JOIN
@@ -89,37 +89,39 @@
 		studycafe_layout where studycafe_idx = #{studycafe_idx}
 	</delete>
 
+	<select id="selectLayoutList" parameterType="int"
+		resultType="map">
+		SELECT
+		layout_idx AS "layout_idx",
+		layout_type AS "type",
+		layout_x AS "x",
+		layout_y AS "y",
+		layout_w AS "width",
+		layout_h AS "height",
+		layout_label AS "label"
+		FROM studycafe_layout
+		WHERE studycafe_idx = #{studycafe_idx}
+		ORDER BY layout_idx ASC
+	</select>
+
 	<insert id="insertLayout" parameterType="map">
-		INSERT INTO
-		studycafe_layout (
-		layout_idx, studycafe_idx, layout_type, layout_x, layout_y, layout_w,
-		layout_h
+		INSERT INTO studycafe_layout (
+		layout_idx, studycafe_idx, layout_type, layout_x, layout_y, layout_w, layout_h,
+		layout_label
 		) VALUES (
-		studycafe_layout_idx.nextval, #{studycafe_idx}, #{type},
-		#{x}, #{y}, #{width}, #{height}
+		studycafe_layout_idx.nextval, #{studycafe_idx}, #{type}, #{x}, #{y}, #{width}, #{height}, #{label}
 		)
 	</insert>
 
 	<insert id="insertSeat" parameterType="map">
 		INSERT INTO seat (
-		seat_idx, seat_num, seat_type, seat_status,
-		seat_x, seat_y, seat_w,
-		seat_h, studycafe_idx
+		seat_idx, seat_num, seat_type, seat_status, seat_x, seat_y, seat_w, seat_h,
+		studycafe_idx
 		) VALUES (
-		seat_idx.nextval, #{label}, #{type},
-		'FREE',
-		#{x}, #{y}, #{width}, #{height}, #{studycafe_idx}
+		seat_idx.nextval, #{label}, #{type}, 'FREE', #{x}, #{y}, #{width}, #{height},
+		#{studycafe_idx}
 		)
 	</insert>
-
-	<select id="selectLayoutList" parameterType="int"
-		resultType="map">
-		select layout_type, layout_x, layout_y, layout_w, layout_h
-		from
-		studycafe_layout where studycafe_idx = #{studycafe_idx}
-		order by
-		layout_idx asc
-	</select>
 
 	<delete id="deleteSeatByCafeIdx" parameterType="int">
 		DELETE FROM seat
@@ -387,21 +389,28 @@
 		r.report_photo,
 		NVL(u.user_name, '알 수 없는 사용자') AS reporter_name,
 		(SELECT COUNT(*)
-		FROM report
+		FROM
+		report
 		WHERE report_type = r.report_type
 		AND target_idx = r.target_idx
 		AND report_status = '완료') AS report_count,
 		CASE
-		WHEN r.report_type = 'study' THEN (SELECT study_title FROM study WHERE
-		study_idx = r.target_idx)
-		WHEN r.report_type = 'user' THEN (SELECT user_name FROM usertb WHERE
+		WHEN r.report_type =
+		'study' THEN (SELECT study_title FROM study WHERE
+		study_idx =
+		r.target_idx)
+		WHEN r.report_type = 'user' THEN (SELECT user_name FROM
+		usertb WHERE
 		user_idx = r.target_idx)
-		WHEN r.report_type = 'review' THEN (SELECT studycafe_reply FROM
-		studycafe_reply WHERE review_idx = r.target_idx)
+		WHEN r.report_type = 'review' THEN
+		(SELECT studycafe_reply FROM
+		studycafe_reply WHERE review_idx =
+		r.target_idx)
 		ELSE '데이터 없음'
 		END AS target_name
 		FROM report r
-		LEFT JOIN usertb u ON r.reporter_idx = u.user_idx
+		LEFT JOIN
+		usertb u ON r.reporter_idx = u.user_idx
 		<where>
 			<if test="status != null and status != ''">
 				AND r.report_status = #{status}
@@ -412,7 +421,8 @@
 
 	<update id="updateReportStatus" parameterType="hashmap">
 		UPDATE report
-		SET report_status = #{status}
+		SET
+		report_status = #{status}
 		WHERE report_idx = #{reportIdx}
 	</update>
 
