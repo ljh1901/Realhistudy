@@ -250,7 +250,40 @@ rect[data-layout-type="ROOM_SMALL"] {
     gap: 12px;
     margin-top: 15px;
 }
+.ticket {
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 12px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 5%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
 
+/* hover */
+.ticket:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    filter: brightness(1.05);
+}
+
+/* 클릭 */
+.ticket:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+/* 포커스 접근성 */
+.ticket:focus-visible {
+    outline: 3px solid rgba(0,0,0,0.2);
+    outline-offset: 2px;
+}
 </style>
 </head>
 <body>
