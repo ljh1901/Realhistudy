@@ -348,10 +348,15 @@ public class LmsServiceImple implements LmsService {
 				
 				memberLists.get(i).setProgress(progressInt);
 				
+				  String login = memberLists.get(i).getLogin_time();
 				  String logout = memberLists.get(i).getLogout_time();
-
-			        // 현재 접속중
-			        if(logout == null){
+				  	// 승인됐지만 아직 접속하지 않은 멤버
+				  	if (login == null && logout == null) {
+					    memberLists.get(i).setActiveStatus("활동 대기중");
+					    continue;
+					}
+			        // 현재 접속중	
+			        if(login != null && logout == null){
 			            memberLists.get(i).setActiveStatus("현재 활동중");
 			            activeCount++;
 			            continue;

@@ -74,6 +74,10 @@
 		border-radius: 20px;
 		max-width: 400px;
 		box-shadow: 0 8px 30px rgb(0,0,0,0.12);
+		max-height: 737px;
+		height: 100%;
+		overflow: hidden;
+		overflow-y: scroll; 
 	}
 	.lmsCenterContainer__leftBox__stduyIng{
 		display: flex;
@@ -194,6 +198,9 @@
 		padding: 2rem;
 		border-radius: 20px;
 		box-shadow: 0 8px 30px rgb(0,0,0,0.12);
+		max-height: 737px;
+		overflow: hidden;
+		overflow-y: scroll; 
 	}
 	.lmsCenterContainer__rightBox__title{
 		display: flex;

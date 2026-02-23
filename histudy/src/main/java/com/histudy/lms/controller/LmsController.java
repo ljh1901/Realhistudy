@@ -1,6 +1,7 @@
 package com.histudy.lms.controller;
 
 import java.util.*;
+import com.histudy.view.DownloadView;
 import java.text.SimpleDateFormat;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -96,6 +97,7 @@ public class LmsController {
 					if(progressDouble > 100) {
 					    progressDouble = 100;
 					}
+					
 					int progressInt = (int) progressDouble;
 					s_list.get(i).setStudyProgress(progressInt);
 
@@ -507,6 +509,33 @@ public class LmsController {
 		mav.setViewName("lms/lmsMsg");
 		return mav;
 		
+	}
+	/** 과제 첨부파일 다운로드 */
+	@GetMapping("/taskFileDownload.do")
+	public ModelAndView taskFileDownload(
+	        @RequestParam("fileName") String fileName,
+	        HttpSession session) {
+
+	    ModelAndView mav = new ModelAndView();
+
+	    String savePath =
+	            "C:/histudy/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/histudy/taskfile/";
+
+	    File file = new File(savePath + fileName);
+
+	    // 파일 없을 경우 방어 코드 (선택이지만 추천)
+	    if (!file.exists()) {
+	        mav.addObject("msg", "파일이 존재하지 않습니다.");
+	        mav.addObject("goPage", "lms.do");
+	        mav.setViewName("lms/lmsMsg");
+	        return mav;
+	    }
+
+	    // DownloadView로 파일 전달
+	    mav.addObject("downloadFile", file);
+	    mav.setView(new DownloadView());
+
+	    return mav;
 	}
 	
 	public void studyResultNotice(int memberIdx, String type, String noticeContent, String noticeTitle, int senderIdx) {

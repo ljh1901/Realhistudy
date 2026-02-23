@@ -38,7 +38,7 @@
 					</div>
 					<div class="TIF_card">
 						<label>과제 제목 <span>*</span><span id="maxTitle"></span></label>
-						<input type="text" name="a_title" oninput="titleCheck(this)" placeholder="과제 제목을 입력해주세요." required>
+						<input type="text" name="a_title" oninput="titleCheck(this)" maxlength="21" placeholder="과제 제목을 입력해주세요." required>
 					</div>
 					<div class="TIF_card">
 						<label>주차 <span>*</span></label>
@@ -61,10 +61,10 @@
 							name="a_content"
 							rows="10" cols="40"
 							oninput="studyContentCheck(this)"
-                     		maxlength="300"required></textarea>
+                     		maxlength="600"required></textarea>
                      	<div class="TIF_card_keynum">
 							<p id="keynum">0</p>
-                     		<p>/300자</p>
+                     		<p>/600자</p>
                      	</div>
 					</div>
 					<div class="TIF_card">
@@ -110,9 +110,10 @@
 							<div class="TIF_card_file_imgbox">
 								<img src="/histudy/lms-img/fileimg.png">
 							</div>
-							<p>파일을 드래그하거나 클릭하여 업로드</p>
-							<p>PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
-							<input type="file" name="prve_a_fname">
+							<p class="file-title">파일을 클릭하여 업로드</p>
+							<p class="file-desc">PDF, ZIP, 이미지 파일 등 (최대 50MB)</p>
+							<span class="file-name">선택된 파일 없음</span>
+							<input type="file" name="prve_a_fname" onchange="fileName(this)">
 						</div>
 					</div>
 					<div class="TIF_card">
@@ -123,7 +124,7 @@
 							<div class="TIF_card_text">
 								<h3>과제 등록 안내</h3>
 								<ul>
-									<li>- 과제 등록 후 스터디 멤버들에게 알림이 전송됩니다</li>
+									<li>- 과제를 등록하여 스터디를 운영해보세요.</li>
 									<li>- 등록된 과제는 수정 및 삭제가 가능합니다.</li>
 									<li>- 멤버들의 제출 현황은 LMS 페이지의 멤버 관리를 클릭하여 확인할 수 있습니다.</li>
 								</ul>
@@ -142,14 +143,23 @@
 <%@include file="../footer.jsp" %>
 </body>
 <script>
+
+function fileName(input){
+    const fileName = input.files.length > 0
+        ? input.files[0].name
+        : '선택된 파일 없음';
+
+    document.querySelector('.file-name').textContent = fileName;
+}
+
 // 제목 글자수 제한 유효성 검사
 function titleCheck(el){
-	const MAX = 25;
+	const MAX = 21;
 	const titleCount = el.value.length;
 	const data = document.getElementById('maxTitle');
 	
 	if(titleCount>=MAX){
-		data.innerHTML = '제목은 25자 이내로 작성해주세요!';
+		data.innerHTML = '제목은 21자 이내로 작성해주세요!';
 	}else{
 		data.innerHTML = '';
 	}
@@ -157,7 +167,7 @@ function titleCheck(el){
 }
 // 스터디 내용 글자수 제한 유효성 검사 
 function studyContentCheck(el){
-   const MAX = 300;
+   const MAX = 600;
    const count = el.value.length;
    const keynum = document.getElementById('keynum');
    
