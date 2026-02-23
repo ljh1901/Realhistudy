@@ -138,8 +138,8 @@ public class LectureServiceImple implements LectureService {
 		return lectureDao.getCounts();
 	}
    @Override
-	public Map<String, Object> lectureAvgCount(int lecture_idx) {
-		// TODO Auto-generated method stub
+   public LectureDTO lectureAvgCount(int lecture_idx) {
+   // TODO Auto-generated method stub
 		return lectureDao.lectureAvgCount(lecture_idx);
 	}
    @Override
