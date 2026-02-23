@@ -99,28 +99,42 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	}
 	@Override
 	public List<StudycafeReplyDTO> replyList(int studycafe_idx) {
-		List<StudycafeReplyJoinStudycafeReplyFileDTO> replyLists = studycafeReplyDAO.replyList(studycafe_idx);
-		List<StudycafeReplyDTO> reply = new ArrayList<StudycafeReplyDTO>();
-		List<StudycafeReplyFileDTO> fileList = new ArrayList<StudycafeReplyFileDTO>();
-		for(int i=0; i<replyLists.size(); i++) {
-			// 파일 가져오기
-			if(replyLists.get(i).getReview_file_idx()!=0) {
-			StudycafeReplyFileDTO fileDto = new StudycafeReplyFileDTO(replyLists.get(i).getReview_file_idx(), replyLists.get(i).getReview_idx(),
-					replyLists.get(i).getFile_path(), 
-					replyLists.get(i).getFile_type(), 
-					replyLists.get(i).getFile_order(), replyLists.get(i).getCreated_at());
-					fileList.add(fileDto);
-					
-			}
-			// 댓글 가져오기
-			if(replyLists.get(i).getReview_idx()!=0) {
-				StudycafeReplyDTO replyDto = new StudycafeReplyDTO(replyLists.get(i).getReview_idx(),
-						replyLists.get(i).getUser_idx(),replyLists.get(i).getStudycafe_idx(),replyLists.get(i).getStudycafe_reply(), 
-						replyLists.get(i).getStudycafe_rating(),replyLists.get(i).getCreated_at(), fileList);
-				reply.add(replyDto);
-			}
-		}
-		return reply;
+
+	    List<StudycafeReplyJoinStudycafeReplyFileDTO> joinList = studycafeReplyDAO.replyList(studycafe_idx);
+
+	    Map<Integer, StudycafeReplyDTO> replyMap = new HashMap<>();
+	    for (StudycafeReplyJoinStudycafeReplyFileDTO row : joinList) {
+
+	        int reviewIdx = row.getReview_idx();
+
+	        if (!replyMap.containsKey(reviewIdx)) {
+	            StudycafeReplyDTO replyDto = new StudycafeReplyDTO(
+	                    reviewIdx,
+	                    row.getUser_idx(),
+	                    row.getStudycafe_idx(),
+	                    row.getStudycafe_reply(),
+	                    row.getStudycafe_rating(),
+	                    row.getCreated_at(),
+	                    new ArrayList<>()
+	            );
+
+	            replyMap.put(reviewIdx, replyDto);
+	        }
+
+	        if (row.getReview_file_idx() != 0) {
+	            StudycafeReplyFileDTO fileDto = new StudycafeReplyFileDTO(
+	                    row.getReview_file_idx(),
+	                    reviewIdx,
+	                    row.getFile_path(),
+	                    row.getFile_type(),
+	                    row.getFile_order(),
+	                    row.getCreated_at()
+	            );
+	            replyMap.get(reviewIdx).getFileList().add(fileDto);
+	        }
+	    }
+
+	    return new ArrayList<>(replyMap.values());
 	}
 	@Override
 	public double studycafeAvgRating(int studycafe_idx) {
