@@ -37,7 +37,8 @@ if(${!empty msg}){
 			<div class="home__btns">
 				<input type="button" value="스터디 시작하기" class="home__btn"> <input
 					type="button" value="멘토링 신청" class="home__btn"
-					id="applyMentoringBtn">
+					id="applyMentoringBtn"
+					onclick="location.href='${pageContext.request.contextPath}/mentorList.do'">
 			</div>
 		</section>
 
@@ -252,5 +253,6 @@ if(${!empty msg}){
    document.addEventListener('click', function() {
       selectBox.classList.remove('open');
    });
+   
 </script>
 </html>
