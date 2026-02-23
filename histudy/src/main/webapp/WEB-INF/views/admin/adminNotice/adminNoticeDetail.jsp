@@ -42,9 +42,7 @@
         <tr>
             <th>공지 내용</th>
             <td>
-                <div class="notice__content__text" style="min-height: 300px; padding: 10px;">
-                    ${notice.notice_content}
-                </div>
+               <div class="notice__content__text" style="min-height: 300px; padding: 10px;">${notice.notice_content}</div>
             </td>
         </tr>
     </table>

@@ -76,4 +76,10 @@ public class AdminCafeServiceImple implements AdminCafeService {
         return adminDAO.insertStudyCafe(dto);
     }
     
+    @Override
+    public void deleteCafe(int studycafe_idx) {
+        
+    	adminDAO.deleteCafe(studycafe_idx);
+    }
+    
 }

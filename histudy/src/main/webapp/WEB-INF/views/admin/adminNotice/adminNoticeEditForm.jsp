@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지사항 수정</title>
-<link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">">
+<link rel="stylesheet" href="css/admin/admin_layout.css" type="text/css">
 <%@ include file="../adminCheck.jsp" %>
 </head>
 

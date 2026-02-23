@@ -22,4 +22,6 @@ public interface AdminCafeDAO {
 	public int deleteTicket(int ticket_idx);
 	
 	public int insertStudyCafe(StudycafeDTO dto);
+	public void deleteCafe(int studycafe_idx);
+	
 }
