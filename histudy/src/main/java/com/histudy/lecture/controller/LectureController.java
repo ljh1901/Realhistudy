@@ -123,6 +123,10 @@ public class LectureController {
        String userPro=lectureService.getUserPro(user_idx);
        mav.addObject("userPro",userPro);
        
+       LectureDTO avgData = lectureService.lectureAvgCount(lecture_idx);
+       mav.addObject("reviewAvg", avgData.getReview_avg());   
+       mav.addObject("reviewCount", avgData.getReview_count());
+       
        mav.setViewName("lecture/lectureContent");
        return mav;
    }

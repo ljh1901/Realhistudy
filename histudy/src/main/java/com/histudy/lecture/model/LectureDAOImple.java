@@ -122,8 +122,8 @@ public class LectureDAOImple implements LectureDAO {
 	   return sqlSession.selectOne("getCounts");
 	}
    @Override
-	public Map<String, Object> lectureAvgCount(int lecture_idx) {
-		// TODO Auto-generated method stub
+   public LectureDTO lectureAvgCount(int lecture_idx) {
+   // TODO Auto-generated method stub
 		return sqlSession.selectOne("lectureAvgCount",lecture_idx);
 	}
    @Override

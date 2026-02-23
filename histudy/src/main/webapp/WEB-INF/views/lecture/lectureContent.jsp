@@ -247,8 +247,8 @@ function dohate(lecture_idx, user_idx) {
 	   	<div class="review-header-wrapper">
 	    <span class="header-left">수강평</span>
 	    <span class="header-right">
-	        <span class="star-icon">★</span>${lectureContent.review_avg} 
-	        <span class="count-text">(${lectureContent.review_count})</span>
+	        <span class="star-icon">★</span>${reviewAvg} 
+	        <span class="count-text">(${reviewCount})</span>
 	    </span>
 	</div>
 	
