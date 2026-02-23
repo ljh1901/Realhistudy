@@ -57,7 +57,7 @@
             	<a href="studyContent.do?study_idx=${dto.study_idx}">
 	                <article class="studyCard">
 	                   <div class="studyCard__thumb">
-	                     <img src="/histudy/study-img/${!empty dto.study_upload_img ? dto.study_upload_img : 'groupStudy.png'}" alt="스터디 이미지">
+	                     <img src="/histudy/study-img/${!empty dto.study_upload_img ? dto.study_upload_img : 'defaultGroupImg.png'}" alt="스터디 이미지">
 	                   </div>
 						<div class="studyCard__content" style="position:relative;">	                   
 						
