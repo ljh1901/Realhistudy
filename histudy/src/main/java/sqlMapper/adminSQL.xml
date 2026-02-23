@@ -92,11 +92,11 @@
 	<insert id="insertLayout" parameterType="map">
 		INSERT INTO
 		studycafe_layout (
-		layout_idx, studycafe_idx, type, label, x, y, width,
-		height
+		layout_idx, studycafe_idx, layout_type, layout_x, layout_y, layout_w,
+		layout_h
 		) VALUES (
-		seq_layout_idx.nextval, #{studycafe_idx}, #{type},
-		#{label}, #{x}, #{y}, #{width}, #{height}
+		studycafe_layout_idx.nextval, #{studycafe_idx}, #{type},
+		#{x}, #{y}, #{width}, #{height}
 		)
 	</insert>
 
@@ -114,7 +114,7 @@
 
 	<select id="selectLayoutList" parameterType="int"
 		resultType="map">
-		select type, label, x, y, width, height
+		select layout_type, layout_x, layout_y, layout_w, layout_h
 		from
 		studycafe_layout where studycafe_idx = #{studycafe_idx}
 		order by
@@ -127,7 +127,7 @@
 	</delete>
 
 	<select id="getTicketCategoryList"
-		resultType="com.histudy.admin.model.TicketCategoryDTO">
+		resultType="com.histudy.studycafe.model.TicketJoinTicketCategoryDTO">
 		select
 		ticket_category_idx,
 		ticket_category_name
@@ -159,7 +159,7 @@
 	<insert id="insertTicket" parameterType="map">
 		<selectKey keyProperty="newIdx" resultType="int"
 			order="BEFORE">
-			select ticket_idx.nextval from dual
+			select studycafe_ticket_idx.nextval from dual
 		</selectKey>
 		insert into studycafe_ticket (
 		ticket_idx,

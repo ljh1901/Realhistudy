@@ -5,19 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<!-- SEO -->
+<title>Hi, Study</title>
+<meta name="description" content="스터디&멘토링" />
+<meta name="author" content="파이널 프로젝트" />
+<link rel="shortcut icon" href="/histudy/main-img/logo1.png" type="image/x-icon" />
+
+<!-- GoogleFont -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="/histudy/css/mainLayout.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/histudy/css/mainLayout.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/root.css">
-<link rel="stylesheet" type="text/css"
-	href="/histudy/css/user/loginModal.css">
+<link rel="stylesheet" type="text/css" href="/histudy/css/user/loginModal.css">
 <script>
 if(${!empty msg}){
 	alert(${requestScope.msg});
