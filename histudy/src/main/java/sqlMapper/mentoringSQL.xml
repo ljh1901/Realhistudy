@@ -535,21 +535,22 @@ WHERE ROWNUM = 1
 <insert id="insertReport" parameterType="com.histudy.admin.model.ReportDTO">
     INSERT INTO report (
         report_idx,
-        report_type,
-        target_idx,
-        reporter_idx,
+        report_type,      report_category,  target_idx,       reporter_idx,
         report_content,
         report_date,
         report_status,
-        report_photo  ) VALUES (
+        report_photo
+    ) VALUES (
         report_seq.NEXTVAL,
         #{report_type},
+        #{report_category},
         #{target_idx},
         #{reporter_idx},
         #{report_content},
         SYSDATE,
         '대기',
-        #{report_photo, jdbcType=VARCHAR} )
+        #{report_photo, jdbcType=VARCHAR}
+    )
 </insert>
 
 

@@ -436,6 +436,8 @@ public class MentoringController {
         Integer reporter_idx = (Integer) session.getAttribute("user_idx");
         if (reporter_idx == null) return "login_required";
         dto.setReporter_idx(reporter_idx);
+        
+        dto.setReport_type("user");
 
         if (file != null && !file.isEmpty()) {
             try {
