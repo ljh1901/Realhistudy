@@ -19,7 +19,7 @@
 		select sr.review_idx, sr.user_idx, sr.studycafe_reply, sr.studycafe_idx, sr.studycafe_rating, sr.created_at, srf.review_file_idx, srf.file_path, srf.file_type, srf.file_order
 		from studycafe_reply sr left join studycafe_reply_file srf on sr.review_idx = srf.review_idx
 		where sr.studycafe_idx = #{studycafe_idx}
-		order by sr.review_idx desc, file_order asc
+		order by sr.review_idx desc, file_order asc, sr.created_at desc
   	</select>
   	<select id="selectStudycafeRatingAvgSQL" resultType="double">
   		select nvl(avg(studycafe_rating), 0)

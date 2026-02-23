@@ -10,108 +10,120 @@
 <link rel="stylesheet" href="css/footer.css">
 <style>
 body {
-	background-color: #f9f9f9;
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding-top: 80px;
+	background-color: #f3f4f6;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
-#reply_layout {
-	user-select: none;
-}
-#studycafeReview {
-	width: 600px;
-	margin: 40px auto; /* 상하 40px, 가로 중앙 */
-	background-color: #fff;
-	border-radius: 12px;
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-	padding: 20px 30px;
-	box-sizing: border-box;
-}
-
-.review-photo {
-	border: 2px dashed #ccc;
-	border-radius: 12px;
-	padding: 20px;
-	text-align: center;
+/* 평균 평점 */
+main>span {
+	font-size: 1.2rem;
+	font-weight: 600;
+	display: block;
 	margin-bottom: 20px;
-	background-color: #fafafa;
 }
 
-.review-upload-btn {
-	display: inline-block;
-	padding: 10px 20px;
-	margin-top: 10px;
-	background: #4f46e5;
-	color: white;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: 0.2s;
+#reply__area {
+	width: 50%;
+	padding-top: 80px;
+	margin: auto;
+}
+/* 리뷰 카드 디자인 업그레이드 */
+.reply-content {
+	background: #fff;
+	border-radius: 14px;
+	padding: 18px 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+	border: none;
+	transition: 0.2s ease;
 }
 
-.review-upload-btn:hover {
-	background: #3730a3;
+.reply-content:hover {
+	transform: translateY(-3px);
 }
 
-/* 사진/영상 미리보기 */
-#reviewPreviewContainer {
-	display: flex;
-	gap: 10px;
-	flex-wrap: wrap;
-	margin-top: 15px;
-	justify-content: center; /* 중앙 정렬 */
+/* 상단 영역 정렬 */
+.reply-content>span {
+	font-size: 0.85rem;
+	color: #777;
+	margin-right: 10px;
 }
 
-.preview-item {
-	position: relative;
+/* 별점 강조 */
+.reply-content span:last-of-type {
+	font-weight: bold;
+	color: #FFCA1A;
 }
 
-.preview-item img, .preview-item video {
-	width: 110px;
+/* 사진 영역 */
+.reply-photo {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 8px;
+	margin: 10px 0;
+}
+
+.photo-area img {
+	width: 100%;
 	height: 110px;
 	object-fit: cover;
 	border-radius: 10px;
+	padding-left: 0;
+	transition: 0.2s;
 }
 
-/* 미리보기 제거 버튼 */
-.remove-file-btn {
-	top: 2px;
-	right: 2px;
-	position: absolute;
-	background: red;
-	color: white;
-	border: none;
-	border-radius: 50%;
-	cursor: pointer;
+.photo-area img:hover {
+	transform: scale(1.05);
 }
 
-/* textarea */
-.writeReview>textarea {
+/* 리뷰 텍스트 */
+.reply-text {
+	background: #f9fafb;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 12px;
 	width: 100%;
-	height: 100px;
-	padding: 10px;
+	margin: 10px 0 0 0;
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #333;
+}
+
+/* 수정/삭제/신고 링크 */
+.reply-content a {
+	text-decoration: none;
+	color: #aaa;
+	font-size: 0.8rem;
+	transition: 0.2s;
+}
+
+.reply-content a:hover {
+	color: #4f46e5;
+}
+
+/* 리뷰 작성 버튼 업그레이드 */
+#studycafeReplyBtn {
+	background: #4f46e5;
+	color: #fff;
+	padding: 12px 25px;
 	border-radius: 8px;
-	border: 1px solid #ccc;
-	resize: none;
-	margin-top: 10px;
-	box-sizing: border-box;
-}
-
-/* 글자수 라벨 */
-#countWriteReview {
-	font-size: 0.9rem;
-	color: #666;
-	float: right;
-	margin-top: 5px;
-}
-
-/* 별점 */
-#ratingRegister {
+	border: none;
 	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 10px;
+	font-weight: 600;
+	transition: 0.2s;
+}
+
+#studycafeReplyBtn:hover {
+	background: #3730a3;
+}
+
+/* 작성 폼 카드화 */
+#reply_layout {
+	background: #fff;
+	border-radius: 16px;
+	padding: 25px;
+	margin-top: 30px;
+	box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
 }
 
 #ratingRegister .star {
@@ -120,9 +132,7 @@ body {
 	color: #FFCA1A;
 	margin: 0 3px;
 	user-select: none;
-}
-
-/* 평점 텍스트 */
+} /* 평점 텍스트 */
 .rating_value {
 	font-size: 1rem;
 	color: #333;
@@ -139,49 +149,22 @@ body {
 	cursor: pointer;
 	width: 32px;
 	height: 32px;
-}
-
-/* 기본 빈 별 */
+} /* 기본 빈 별 */
 .star::before {
 	content: "☆";
 	position: absolute;
 	left: 0;
 	color: #ccc;
-}
-
-/* 채워진 별 */
+} /* 채워진 별 */
 .star.full::before {
 	content: "★";
 	color: #FFCA1A;
-}
-
-/* 반쪽 별 */
+} /* 반쪽 별 */
 .star.half::before {
 	content: "★";
 	color: #FFCA1A;
 	width: 50%;
 	overflow: hidden;
-}
-.reply-photo{
-	display:grid;
-	grid-template-columns: repeat(5, 0fr);
-}
-.reply-content{
-	border: 2px solid black;
-	border-radius: 5px;
-
-}
-.reply-text{
-	background-color: #ccc;
-	width: 90%;
-	margin: auto;
-	border: gray solid 2px;
-	border-radius: 5px;
-}
-.photo-area img{
-	width: 120px;
-	height: 110px;
-	padding-left: 10px;
 }
 </style>
 </head>
@@ -189,28 +172,25 @@ body {
 	<%@include file="../header.jsp"%>
 	<form id="studycafeReview" method="post" enctype="multipart/form-data">
 		<main>
-		평점: ★${avgRating}
 			<section id="reply__area">
-			<c:forEach var="reply" items="${reply}">
-				<div class="reply-content">
-				<span>${sessionScope.user_name}</span>
-				<span><a href="#">수정</a></span>
-				<span><a href="#">삭제</a></span>
-				<span><a href="#">${reply.created_at}</a></span>
-				<span><a href="#"></a></span>
-				<span><a href="#">신고</a></span>
-				<span>별점: ★★★★☆</span>
-					<div class="reply-photo">
-					<c:forEach var="photo" items="${reply.fileList}">
-						<div class="photo-area">
-							<img src="${photo.file_path}">
+						평점: ★${avgRating}
+				<c:forEach var="reply" items="${reply}">
+					<div class="reply-content">
+						<span>${sessionScope.user_name}</span> <span><a href="#">수정</a></span>
+						<span><a href="#">삭제</a></span> <span><a href="#">${reply.created_at}</a></span>
+						<span><a href="#"></a></span> <span><a href="#">신고</a></span> <span>별점:
+							${reply.studycafe_rating}</span>
+						<div class="reply-photo">
+							<c:if test="${!empty reply.fileList}">
+								<c:forEach var="file" items="${reply.fileList}">
+									<div class="photo-area">
+										<img src="${file.file_path}">
+									</div>
+								</c:forEach>
+							</c:if>
 						</div>
-						</c:forEach>
+						<div class="reply-text">${reply.studycafe_reply}</div>
 					</div>
-					<div class="reply-text">
-					${reply.studycafe_reply}
-					</div>
-				</div>
 				</c:forEach>
 			</section>
 			<div>
@@ -219,7 +199,8 @@ body {
 			<section id="reply_layout">
 				<div class="review-photo">
 					<h2>사진 / 영상 추가</h2>
-					<input id="reviewFileInput" name="reviewFiles" type="file" accept="image/*, video/*" multiple hidden="true">
+					<input id="reviewFileInput" name="reviewFiles" type="file"
+						accept="image/*, video/*" multiple hidden="true">
 					<button type="button" id="reviewFileInputBtn"
 						class="review-upload-btn">+ 파일 추가</button>
 					<div id="reviewPreviewContainer"></div>
