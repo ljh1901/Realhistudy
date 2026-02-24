@@ -140,4 +140,26 @@
 	  WHERE mentee_user_idx = #{user_idx}
 	    AND status = '매칭됨'
 	</select>
+	<select id="selectMyStudyList" parameterType="map" resultType="com.histudy.study.model.StudyDTO">
+        SELECT *
+        FROM (
+            SELECT rownum as rnum, a.*
+            FROM (
+                SELECT study.*, usertb.user_name, study_category.sc_name, TRUNC(study_end_date) - TRUNC(sysdate) AS dday
+                FROM study 
+                JOIN usertb ON study.user_idx = usertb.user_idx 
+                JOIN study_category ON study_category.sc_idx = study.sc_idx
+                WHERE study.study_idx IN (
+                    -- 1. 내가 개설한 스터디
+                    SELECT study_idx FROM study WHERE user_idx = #{user_idx}
+                    UNION
+                    -- 2. 내가 신청해서 승인(Approved)된 스터디
+                    SELECT study_idx FROM study_application WHERE user_idx = #{user_idx} AND sa_status = 'Approved'
+                )
+                ORDER BY study.study_idx DESC
+            ) a 
+        ) b
+        WHERE rnum BETWEEN #{start_num} AND #{end_num}
+    </select>
+    
 </mapper>

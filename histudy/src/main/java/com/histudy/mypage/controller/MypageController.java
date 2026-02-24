@@ -54,7 +54,11 @@ public class MypageController {
 	    params.put("start_num", 1);
 	    params.put("end_num", 3);
 	    
-	    List<StudyDTO> study = studyService.getStudyList(params);
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("user_idx", user_idx); 
+	    paramMap.put("start_num", 1);       
+	    paramMap.put("end_num", 3);
+	    List<StudyDTO> study = mypageService.selectMyStudyList(paramMap);
 	    mav.addObject("study",study);
 	    Integer mentor_idx = mypageService.getMentorIdxByMentee(user_idx);
 	    if(mentor_idx != null) {

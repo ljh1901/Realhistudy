@@ -22,5 +22,5 @@ public interface MypageService {
 	public MembershipPaymentDTO getLastMembership(int user_idx);
 	public List<StudyDTO> getMyStudyDates(int user_idx);
 	public Integer getMentorIdxByMentee(int user_idx);
-
+	public List<StudyDTO> selectMyStudyList(Map<String, Object> params);
 }

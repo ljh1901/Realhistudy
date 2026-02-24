@@ -40,7 +40,7 @@ public class StudycafeReplyServiceImple implements StudycafeReplyService {
 	
 		
 		List<StudycafeReplyFileDTO> replyFileLists = new ArrayList<StudycafeReplyFileDTO>();
-		File f = new File("C:/Realhistudy/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/histudy/studycafe-reviewimg/");
+		File f = new File("C:/histudy/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/histudy/studycafe-reviewimg/");
 		if (reviewFiles != null) {
 			for (int i = 0; i < reviewFiles.length; i++) {
 				copyFile(reviewFiles[i]); // 파일 복사

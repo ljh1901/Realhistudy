@@ -85,4 +85,9 @@ public class MypageDAOImple implements MypageDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getMentorIdxByMentee",user_idx);
 	}
+	@Override
+	public List<StudyDTO> selectMyStudyList(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("selectMyStudyList",params);
+	}
 }

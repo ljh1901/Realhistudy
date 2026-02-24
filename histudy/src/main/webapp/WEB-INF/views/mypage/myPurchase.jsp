@@ -86,7 +86,6 @@
 			       <c:when test="${sessionScope.hasCoupon == true}">
 				        <div class="coupon-box">
 				            🎫 프리미엄 회원 전용 50% 할인 쿠폰!!!
-				            <button type="button">쿠폰 적용하기</button>
 				        </div>
 				    </c:when>
 			        <c:otherwise>

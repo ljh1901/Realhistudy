@@ -1,5 +1,9 @@
 package com.histudy.user.service;
+import java.util.List;
+import java.util.Map;
+
 import com.histudy.mypage.model.WishListDTO;
+import com.histudy.study.model.StudyDTO;
 import com.histudy.user.model.UserDTO;
 
 public interface UserService {
