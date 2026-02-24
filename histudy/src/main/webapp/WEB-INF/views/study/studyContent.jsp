@@ -62,7 +62,7 @@
 							</div>
 						</div>
 						<div class="studyContent__left__box__reader">
-							<img src="/histudy/main-img/junbeom.png">
+							<img src="/histudy/mypage-img/pimg/${dto.profile_img}">
 							<div class="studyContent__left__box__reader__text">
 								<p>스터디 리더</p>
 								<h3>${dto.user_name}</h3>
