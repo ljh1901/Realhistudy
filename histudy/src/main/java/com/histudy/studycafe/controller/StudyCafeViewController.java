@@ -106,8 +106,10 @@ public class StudyCafeViewController {
 			UserDTO udto = userService.userInfo((String)session.getAttribute("user_id"));
 			model.addAttribute("udto", udto);
 		}
-		int paySale = studycafeService.paySale((Integer)session.getAttribute("user_idx"));
-		model.addAttribute("paySale", paySale);
+		if(session.getAttribute("user_idx")!=null) {
+			int paySale = studycafeService.paySale((Integer)session.getAttribute("user_idx"));
+			model.addAttribute("paySale", paySale);
+		}
 		model.addAttribute("studycafe_idx", studycafe_idx);
 		model.addAttribute("studycafeOne", studycafeOne);
 		model.addAttribute("seatList", seatList);
@@ -132,7 +134,7 @@ public class StudyCafeViewController {
 	                                HttpSession session) {
 	    ModelAndView mav = new ModelAndView();
 	    try {
-	        PayDTO receipt = studycafeService.processPaymentAndReservation(paymentId, viewTotalAmount, session);
+	        PayDTO receipt = studycafeService.processPaymentAndReservation(paymentId, viewTotalAmount, (Integer)session.getAttribute("user_idx"));
 	        mav.setViewName("studycafe/receipt");
 	        mav.addObject("receipt", receipt);
 	    } catch(Exception e) {
