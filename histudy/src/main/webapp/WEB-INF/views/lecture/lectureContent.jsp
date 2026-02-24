@@ -297,7 +297,7 @@ function dohate(lecture_idx, user_idx) {
 	                <div class="review-card">
 	                    <div class="review-card-header">
 	                        <div class="review-user-profile">
-	                            <img src="mypage-img/pimg/${userPro}" class="review-user-img">
+	                            <img src="mypage-img/pimg/${dto.profile_img}" class="review-user-img">
 	                            <div>
 	                                <div class="review-user-name">${dto.user_name}</div>
 	                                <div class="review-stars">

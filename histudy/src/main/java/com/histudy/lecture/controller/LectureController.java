@@ -120,9 +120,6 @@ public class LectureController {
        Integer isHate = lectureService.lectureHate(hdto);
        mav.addObject("isHate", isHate);
 
-       String userPro=lectureService.getUserPro(user_idx);
-       mav.addObject("userPro",userPro);
-       
        LectureDTO avgData = lectureService.lectureAvgCount(lecture_idx);
        mav.addObject("reviewAvg", avgData.getReview_avg());   
        mav.addObject("reviewCount", avgData.getReview_count());

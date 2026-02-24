@@ -57,12 +57,14 @@
     	select count(*) from lecture
    </select>
    <select id="reviewList" parameterType="int" resultType="com.histudy.lecture.model.LectureReviewDTO">
-	    select r.*, u.user_name
-	    from lecture_review r
-	    join usertb u on r.user_idx = u.user_idx
-	    where r.lecture_idx = #{lecture_idx}
-	    order by r.review_date desc
-   </select>
+    select 
+        r.*, 
+        u.user_name, 
+        m.profile_img  from lecture_review r
+    join usertb u on r.user_idx = u.user_idx
+    left join mypage m on r.user_idx = m.user_idx where r.lecture_idx = #{lecture_idx}
+    order by r.review_date desc
+</select>
    <select id="checkReviewCount" parameterType="Map" resultType="int">
    	select count(*)
    	from lecture_review

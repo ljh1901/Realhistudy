@@ -9,7 +9,17 @@ public class LectureReviewDTO {
    private Integer user_idx;
    private Integer lecture_idx;
    private String user_name;
-   public int getReview_idx() {
+   private String profile_img;   
+   
+   public String getprofile_img() {
+	return profile_img;
+}
+
+public void setprofile_img(String profile_img) {
+	this.profile_img = profile_img;
+}
+
+public int getReview_idx() {
       return review_idx;
    }
    
