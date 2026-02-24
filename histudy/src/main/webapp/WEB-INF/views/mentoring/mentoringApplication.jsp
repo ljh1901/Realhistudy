@@ -48,7 +48,7 @@
 
         <!-- mentoring_title -->
         <div class="ma-mentoring-quote">
-          <c:out value="${mentorSummary.mentoring_title}" default="(멘토링 제목이 여기에 표시됩니다)"/>
+          <c:out value="${mentorSummary.mentoring_title}" default="멘토링 제목이 여기에 표시됩니다."/>
         </div>
 
         <div class="ma-tags">
