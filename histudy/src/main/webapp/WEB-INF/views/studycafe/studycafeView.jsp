@@ -109,10 +109,9 @@ var lat =0;
 var lng =0;
 var xhr = null;
 const seat__area=document.getElementById('seat__area');
-if(document.querySelector('.studycafe-item').text == 'histudy 1호점'){
 	lat = ${studycafeOne.studycafe_lat};
 	lng = ${studycafeOne.studycafe_lng};
-}
+	
 function seatInfo(studycafe_idx){
 	xhr = new XMLHttpRequest();
 	xhr.open("GET", "seatInfo.do?studycafe_idx="+studycafe_idx, true);
