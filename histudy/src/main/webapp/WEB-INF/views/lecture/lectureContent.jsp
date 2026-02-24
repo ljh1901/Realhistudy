@@ -182,10 +182,10 @@ function dohate(lecture_idx, user_idx) {
                     <td><h3>메모 노트</h3></td>
                 </tr>
                 <tr>
-                    <td><input id="note_title" type="text" name="note_title" value="${memo.note_title}" placeholder="제목" style="width:95%;"></td>
+                    <td><input id="note_title" type="text" name="note_title" value="${memo.note_title}" placeholder="제목" style="width:100%;"></td>
                 </tr>
                 <tr>
-                    <td><textarea id="note_content" name="note_content" style="width:95%; height:300px; resize:none;">${memo.note_content}</textarea></td>
+                    <td><textarea id="note_content" name="note_content" style="width:100%; height:300px; resize:none;">${memo.note_content}</textarea></td>
                 </tr>
                 <tr>
                     <td>
@@ -280,7 +280,7 @@ function dohate(lecture_idx, user_idx) {
 	        </div>
 	        <div class="form-actions">
 	            <input type="submit" id="reviewbt" name="reviewbt" value="리뷰 작성">
-				<input type="button" value="취소" onclick="show(${lectureContent.lecture_idx})" style="background:#ccc;">	        </div>
+				<input typmypage-img/pimg/="취소" onclick="show(${lectureContent.lecture_idx})" style="background:#ccc;">	        </div>
 	    </form>
 	</div>
 	    <c:choose>
