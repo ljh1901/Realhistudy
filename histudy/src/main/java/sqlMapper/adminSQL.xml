@@ -418,6 +418,7 @@
 		r.report_content,
 		r.report_date,
 		r.report_status,
+		r.report_category,
 		r.report_photo,
 		NVL(u.user_name, '알 수 없는 사용자') AS reporter_name,
 		(SELECT COUNT(*)
