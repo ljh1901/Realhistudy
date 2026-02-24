@@ -4,7 +4,6 @@
 	box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .mypage-wrapper{padding:40px 0;background:#f8fafc;min-height:100vh;}
-.mypage-container{display:flex;max-width:1200px;margin:0 auto;gap:40px;align-items:flex-start;}
 .mypage-sidebar{flex-shrink:0;width:250px;}
 .mypage-content{flex-grow:1;min-width:0;}
 
