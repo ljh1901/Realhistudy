@@ -66,16 +66,16 @@
    
    <!-- 스터디 내용 페이지 입장 시 필요한 데이터 조회 -->
    <select id="selectStudyContent" parameterType="Integer" resultType="com.histudy.study.model.StudyDTO">
-		SELECT a.study_idx, a.study_title, a.study_content,
+        SELECT a.study_idx, a.study_title, a.study_content,
 		       a.study_end_date, a.study_current_members, a.study_max_members,
 		       a.study_location_lng, a.study_location_lat, a.study_addr,
 		       a.study_upload_img, a.sc_idx, a.user_idx, a.user_name,
 		       study_category.sc_name, TO_CHAR(a.study_start_date, 'YYYY-MM-DD') as study_start_date,
-		       a.study_total_weeks, a.study_begin_date
+		       a.study_total_weeks, a.study_begin_date, a.profile_img
 		FROM
 		    (
-		    select study.*, usertb.user_name
-		    from study JOIN usertb ON study.user_idx=usertb.user_idx
+		    select study.*, usertb.user_name, m.profile_img
+		    from study JOIN usertb ON study.user_idx=usertb.user_idx JOIN mypage m ON usertb.user_idx = m.user_idx
 		    where study_idx = #{study_idx}
 		    ) a JOIN study_category ON a.sc_idx = study_category.sc_idx
    </select>
