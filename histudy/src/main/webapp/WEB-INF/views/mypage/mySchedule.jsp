@@ -26,10 +26,10 @@
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" href="/histudy/css/mypageDesign/mySchedule.css" type="text/css">
 </head>
-<body>
+<body id="mySchdulePage">
 <%@ include file="../header.jsp"%>
 <main>
-<div class="mySchdulePage">
+<div>
 <div class="mypage-wrapper">
     <div class="mypage-container">
         <aside class="mypage-sidebar">

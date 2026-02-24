@@ -35,10 +35,10 @@
 <%@ include file="../header.jsp"%>
 
 <section class="mentor-profile-ground">
-  <div style="max-width:1100px;margin:40px auto;padding:0 16px;">
+  <div style="max-width:1100px; margin:5px auto;padding:0 16px;">
 
     <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:16px;">
-      <div class="card">
+      <div class="card" style="box-shadow: 4.0px 8.0px 8.0px rgba(0,0,0,0.38);">
         <h2 style="margin:0 0 10px 0;"><c:out value="${detail.mentoring_title}" /></h2>
         <div>분야: <b><c:out value="${detail.job_group}" /></b></div>
         <div>직무: <b><c:out value="${detail.job_role}" /></b></div>
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-     <div class="card">
+     <div class="card" style="box-shadow: 4.0px 8.0px 8.0px rgba(0,0,0,0.38);">
     <h3 style="margin:0 0 12px 0;">멘토 정보</h3>
     <div class="mentor-card" style="display: flex; align-items: flex-start; gap: 16px;">
         <div class="mentor-avatar" style="width: 80px; height: 80px; flex-shrink: 0; overflow: hidden; border-radius: 12px; background: #f1f5f9; display: flex; align-items: center; justify-content: center;">
@@ -138,7 +138,7 @@
     <c:otherwise>
       <button type="button" 
               style="width:100%; border:none; border-radius:12px; padding:12px 14px; font-weight:900; 
-                     cursor:pointer; background:#b7f34e;"
+                     cursor:pointer; background:#111827; color: white;"
               onclick="location.href='mentoringApply.do?mentor_idx=${param.mentor_idx}'">
         멘토링 신청하기
       </button>
@@ -153,7 +153,7 @@
       <a class="mp-tab" href="#secReview">멘토링 리뷰 <small>(<c:out value="${fn:length(reviews)}"/>)</small></a>
     </div>
 <div class="card" style="margin-top:16px;">
-    <h3>📅 신청 가능한 시간</h3>
+    <h3 style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #111827;">신청 가능한 시간</h3>
     <ul class="schedule-list">
         <c:forEach var="s" items="${detail.schedules}">
             <li class="schedule-item">
@@ -169,17 +169,17 @@
     </c:if>
 </div>
     <div id="secIntro" class="card anchor-offset" style="margin-top:16px;">
-      <h3 style="margin:0 0 10px 0;">멘토링 소개</h3>
-      <div style="font-weight:900;">멘토링 설명</div>
+      <h3 style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #111827;">멘토링 소개</h3>
+      <div style="font-weight:600;">멘토링 설명</div>
       <div style="color:#0f172a;line-height:1.6;margin-top:6px;"><c:out value="${detail.description}"/></div>
-      <div style="font-weight:900;margin-top:10px;">사전 공지</div>
+      <div style="font-weight:600;margin-top:10px;">사전 공지</div>
       <div style="color:#0f172a;line-height:1.6;margin-top:6px;"><c:out value="${detail.pre_notice}" default="(사전 공지 없음)"/></div>
       <hr style="border:none;border-top:1px solid #eef2f7;margin:14px 0">
       
     </div>
 
     <div id="secReview" class="card anchor-offset" style="margin-top:16px;">
-      <h3 style="margin:0 0 12px 0;">멘토링 리뷰</h3>
+      <h3 style="margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #111827;">멘토링 리뷰</h3>
       <c:choose>
         <c:when test="${empty reviews}">
           <div style="color:#64748b;">등록된 리뷰가 없습니다.</div>

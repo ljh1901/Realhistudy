@@ -25,9 +25,9 @@
 <link rel="stylesheet" href="css/root.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
-<link rel="stylesheet" href="css/mypageDesign/myHeart.css" type="text/css">
+<link rel="stylesheet" href="css/mypageDesign/myPurchase.css" type="text/css">
 </head>
-<body>
+<body id="myPurchasePage">
 <%@ include file="../header.jsp"%>
 <main>
 <div class="mypage-wrapper">

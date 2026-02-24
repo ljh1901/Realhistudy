@@ -144,7 +144,8 @@
 
 /* 페이징 */
 .paging{
-  padding-bottom: 30px;
+  padding-top: 40px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: center;
   font-size: 1.2rem;

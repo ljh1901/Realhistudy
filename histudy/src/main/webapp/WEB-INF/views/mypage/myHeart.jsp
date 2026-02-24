@@ -28,7 +28,7 @@
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
 <link rel="stylesheet" href="css/mypageDesign/myHeart.css" type="text/css">
 </head>
-<body class="myHeartPage">
+<body id="myHeartPage">
 <%@ include file="../header.jsp"%>
 <main>
 <div class="mypage-wrapper">
@@ -60,7 +60,7 @@
 	                    <c:forEach var="s" items="${slist}">
 	                        <div class="wish-card" onclick="location.href='studyContent.do?study_idx=${s.study_idx}'">
 	                            <div class="wish-thumb">
-	                                <img src="/histudy/study-img/${not empty s.study_upload_img ? s.study_upload_img : 'groupStudy.png'}">
+	                                <img src="/histudy/study-img/${not empty s.study_upload_img ? s.study_upload_img : 'defaultGroupImg.png'}">
 	                            </div>
 	                            <div class="wish-info">
 	                                <span class="wish-tag">${s.sc_name}</span>

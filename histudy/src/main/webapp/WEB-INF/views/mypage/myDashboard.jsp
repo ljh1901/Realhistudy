@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="css/root.css" type="text/css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/header.css">
 <link rel="stylesheet" type="text/css" href="/histudy/css/footer.css">
-<link rel="stylesheet" href="css/mypageDesign/myDashboard.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="/histudy/mypage.css">
+<link rel="stylesheet" type="text/css" href="css/mypageDesign/myDashboard.css" type="text/css">
 </head>
 <body id="myDashboardPage">
 <%@ include file="../header.jsp"%>
