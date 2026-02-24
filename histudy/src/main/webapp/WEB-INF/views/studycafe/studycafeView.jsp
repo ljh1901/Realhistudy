@@ -275,7 +275,7 @@ function portOnePay(queryNum, ticket_category_idx){
 				totalAmount: totalAmount,
 				currency: "CURRENCY_KRW",
 				payMethod: "CARD",
-				redirectUrl: "http://localhost:9090/histudy/receipt.do?totalAmount="+res.totalAmount,
+				redirectUrl: "http://192.168.0.180:9090/histudy/receipt.do?totalAmount="+res.totalAmount,
 				forceRedirect: true
 			})
 			});
