@@ -146,4 +146,9 @@ public class MypageServiceImple implements MypageService {
 	public Integer getMentorIdxByMentee(int user_idx) {
 		return mypageDao.getMentorIdxByMentee(user_idx);
 	}
+	@Override
+	public List<StudyDTO> selectMyStudyList(Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return mypageDao.selectMyStudyList(params);
+	}
 }

@@ -450,6 +450,9 @@ main {
 				</div>
 				<c:if test="${empty reply}">
 					<p>리뷰가 존재하지 않습니다 리뷰를 남겨주세요</p>
+					<c:if test="${empty sessionScope.user_idx}">
+					<p>로그인 후 리뷰 가능</p>
+					</c:if>
 				</c:if>
 				<c:forEach var="reply" items="${reply}">
 					<div class="reply-content">

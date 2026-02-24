@@ -1,5 +1,10 @@
 package com.histudy.user.model;
 
+import java.util.List;
+import java.util.Map;
+
+import com.histudy.study.model.StudyDTO;
+
 public interface UserDAO {
 
 	public int userSignUp(UserDTO dto);

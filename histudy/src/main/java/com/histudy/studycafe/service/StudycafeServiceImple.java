@@ -85,7 +85,7 @@ public class StudycafeServiceImple implements StudycafeSerivce {
 		return result;
 	}
 	@Override
-	public PayDTO processPaymentAndReservation(String paymentId, Integer viewTotalAmount, HttpSession session) throws Exception {
+	public PayDTO processPaymentAndReservation(String paymentId, Integer viewTotalAmount, Integer user_idx) throws Exception {
 	    // 1. PortOne 결제 확인
 	    JsonNode root = StudycafePortOneApiService.getPaymentInfo(paymentId);
 	    
@@ -125,7 +125,7 @@ public class StudycafeServiceImple implements StudycafeSerivce {
 	        "channel-key-da563d5f-f117-444f-aba5-ad9b66277c1b",
 	        root.get("orderName").asText(),
 	        root.get("amount").get("paid").asInt(),
-	        (Integer) session.getAttribute("user_idx"),
+	        user_idx,
 	        root.get("method").get("provider").asText(),
 	        root.get("status").asText(),
 	        statusChangedAt,
@@ -141,11 +141,11 @@ public class StudycafeServiceImple implements StudycafeSerivce {
 	    int registerReservation = 0;
 	    if(result>0 && ticket_category_idx !=3) {
 	    	Timestamp reservation_endtime = Timestamp.valueOf(localDatePaidAt.plusHours(studycafeDAO.ticketTime(ticket_idx)));
-	    	StudycafeReservationDTO srdto = new StudycafeReservationDTO(0, (Integer)session.getAttribute("user_idx"), seat_idx, paidAt, reservation_endtime, "RESERVED", ticket_idx, paymentId);
+	    	StudycafeReservationDTO srdto = new StudycafeReservationDTO(0, user_idx, seat_idx, paidAt, reservation_endtime, "RESERVED", ticket_idx, paymentId);
 	    	registerReservation = studycafeDAO.registerReservation(srdto);
 	    }else if(result >0 && ticket_category_idx ==3) {
 	    	Timestamp reservation_endtime = Timestamp.valueOf(localDatePaidAt.plusDays(studycafeDAO.ticketTime(ticket_idx)));
-	    	StudycafeReservationDTO srdto = new StudycafeReservationDTO(0, (Integer)session.getAttribute("user_idx"), seat_idx, paidAt, reservation_endtime, "RESERVED", ticket_idx, paymentId);
+	    	StudycafeReservationDTO srdto = new StudycafeReservationDTO(0, user_idx, seat_idx, paidAt, reservation_endtime, "RESERVED", ticket_idx, paymentId);
 	    	registerReservation = studycafeDAO.registerReservation(srdto);
 	    }
 	    	if(registerReservation >0) {
