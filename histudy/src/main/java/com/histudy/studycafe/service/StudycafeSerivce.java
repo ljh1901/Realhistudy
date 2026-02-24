@@ -21,7 +21,7 @@ public interface StudycafeSerivce {
 	public List<SeatDTO> seatInfo(int studycafe_idx);
 	public int orderPay(PayDTO payOrder);
 	public int paySeat(PayDTO paydto);
-	public PayDTO processPaymentAndReservation(String paymentId, Integer viewTotalAmount, HttpSession session) throws Exception;
+	public PayDTO processPaymentAndReservation(String paymentId, Integer viewTotalAmount, Integer user_idx) throws Exception;
 	public int ticketTotalAmount(int ticket_idx);
 	public int seatStatusUpdate();
 	public List<StudycafeLayoutDTO> studycafeLayout(int studycafe_idx);

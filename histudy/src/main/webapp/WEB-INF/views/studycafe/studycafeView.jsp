@@ -252,6 +252,7 @@ function portOnePay(queryNum, ticket_category_idx){
 			})
 			.then(res => res.json())
 			.then(async function(res){
+				// redirectUrl 수정
 				var totalAmount=res.totalAmount;
 				if(${paySale >0}){
 					totalAmount=totalAmount*0.5;
