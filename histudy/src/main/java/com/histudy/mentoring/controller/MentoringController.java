@@ -41,7 +41,7 @@ public class MentoringController {
     		) {
 
         // 페이징 기본값
-        int listSize = 15;   
+        int listSize = 9;   
         int pageSize = 5; 
 
         // 
