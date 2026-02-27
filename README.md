@@ -56,10 +56,6 @@
 ### PPT 소개
 [2팀_PPT.pdf](https://github.com/user-attachments/files/25600895/2._PPT.pdf)
 <hr>
-
-# Site Map
-<img width="1121" height="1019" alt="image" src="https://github.com/user-attachments/assets/f43cc575-d75d-4858-8425-9013cfbbacb0" />
-
 ### 사용자
 - 회원가입 / 로그인
 - 스터디 카페 조회
@@ -72,6 +68,8 @@
 - 좌석 관리
 - 멘토 승인 관리
 - 신고 처리 및 리뷰 관리
+# Site Map
+<img width="1121" height="1019" alt="image" src="https://github.com/user-attachments/assets/f43cc575-d75d-4858-8425-9013cfbbacb0" />
 
 # Use Case Diagram
 사용자는 예약, 결제, 리뷰, 스터디 개설, 멘토링 개설 등 수행 가능
@@ -91,7 +89,7 @@
 - 관리자 승인 및 신고 처리
 # FlowChart
 
-# 요구사항 정의서
+# DB Schema
+<img width="1559" height="1153" alt="image" src="https://github.com/user-attachments/assets/d46198c2-9470-49a2-b5fa-3d02c4c28ec8" />
 
-# 요구사항 세부 계획서
 
