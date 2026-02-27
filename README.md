@@ -8,9 +8,6 @@
 
   ### [3. Site Map](#Site-Map)
 
-  
-
-
   <br>
 ## Introduction
 <h1>스터디 & 멘토링 통합 관리 플랫폼</h1>
@@ -48,7 +45,8 @@
 - MyBatis 기반 SQL Mapper 구조 설계
 - Zero Configuration 자동 설정에 의존하기 보다, 개발자가 직접 설정 함으로서, 데이터의 흐름을 명확히 파악하기 위해 Spring Legacy 사용
 
-
+### PPT 소개
+[2팀_PPT.pdf](https://github.com/user-attachments/files/25600895/2._PPT.pdf)
 <hr>
 
 # Site Map
