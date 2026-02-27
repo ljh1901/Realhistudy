@@ -88,6 +88,7 @@
 - 멘토링 신청
 - 리뷰 작성
 - 관리자 승인 및 신고 처리
+
 - 사용자 유즈케이스
 <img width="1303" hght="701" alt="image" src="https://github.com/user-attachments/assets/01166b7f-471f-4fa5-8859-17460e9858f5" />
 
