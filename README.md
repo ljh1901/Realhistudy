@@ -68,12 +68,12 @@
 - 신고 처리 및 리뷰 관리
 
 # Use Case Diagram
-본 시스템은 사용자와 관리자로 구분되며,
-사용자는 예약, 결제, 리뷰 기능을 수행할 수 있고,
-관리자는 공간 관리 및 사용자 활동을 관리할 수 있도록 설계
+사용자는 예약, 결제, 리뷰, 스터디 개설, 멘토링 개설 등 수행 가능
+관리자는 공간 관리 및 사용자 활동을 관리 가능
 
 - 사용자 유즈케이스
 <img width="1303" hght="701" alt="image" src="https://github.com/user-attachments/assets/01166b7f-471f-4fa5-8859-17460e9858f5" />
+
 - 관리자 유즈케이스
 <img width="1268" height="806" alt="image" src="https://github.com/user-attachments/assets/b0096210-1b4e-4834-9a14-b50a4ac5b384" />
 
