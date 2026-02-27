@@ -80,6 +80,7 @@ Architecture : MVC (Model2) + 3-Tier
 ```
 ### 설계 특징
 1️. 계층 분리 기반 유지보수성 확보
+
   Controller / Service / DAO 분리
   Service 계층에서 핵심 비즈니스 로직 관리
 
