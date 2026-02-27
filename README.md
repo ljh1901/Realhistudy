@@ -52,6 +52,7 @@
 <hr>
 
 # Site Map
+<img width="1121" height="1019" alt="image" src="https://github.com/user-attachments/assets/f43cc575-d75d-4858-8425-9013cfbbacb0" />
 
 ### 사용자
 - 회원가입 / 로그인
