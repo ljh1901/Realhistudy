@@ -15,6 +15,7 @@
 ## Introduction
 <h1>스터디 & 멘토링 통합 관리 플랫폼</h1>
 2026. 01. 19 ~ 2026. 02. 25
+<p>6명</p>
 ## Archiecture
 
 | Presentation Tier | Middle Tier                        | Data Tier |
