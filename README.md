@@ -90,7 +90,8 @@
 - 관리자 승인 및 신고 처리
 
 - 사용자 유즈케이스
-<img width="1303" hght="701" alt="image" src="https://github.com/user-attachments/assets/01166b7f-471f-4fa5-8859-17460e9858f5" />
+<img width="1410" height="736" alt="image" src="https://github.com/user-attachments/assets/069610bf-b9c3-49fe-9b7a-6596071cd468" />
+
 
 - 관리자 유즈케이스
 <img width="1268" height="806" alt="image" src="https://github.com/user-attachments/assets/b0096210-1b4e-4834-9a14-b50a4ac5b384" />
