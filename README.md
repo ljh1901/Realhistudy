@@ -80,19 +80,14 @@ Architecture : MVC (Model2) + 3-Tier
 ```
 ### 설계 특징
 1️. 계층 분리 기반 유지보수성 확보
-
   Controller / Service / DAO 분리
-
   Service 계층에서 핵심 비즈니스 로직 관리
-
+  
 2. MyBatis 기반 SQL 분리
-
   Mapper XML 활용
-
   동적 SQL 적용 (조건 검색, 예약 중복 체크)
 
 3️. pring Legacy 명시적 설정
-
   자동 설정(Spring Boot) 대신 XML 기반 설정
   데이터 흐름의 이해를 위해 Bean 등록 및 직접 설정
 
