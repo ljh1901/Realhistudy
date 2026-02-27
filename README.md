@@ -1,6 +1,22 @@
-<h1>스터디 & 멘토링 통합 관리 플랫폼</h1>
+🎓 스터디 & 멘토링 통합 관리 플랫폼
 
-- 스터디 공간 예약, 멘토 매칭, 결제 및 학습 관리를 통합한 3-Tier 기반 웹 플랫폼
+스터디 공간 예약, 멘토 매칭, 결제, LMS 학습 관리를 통합한
+Spring MVC 기반 3-Tier 웹 플랫폼
+
+📌 프로젝트 개요
+
+📆 개발 기간 : 2026.01.19 ~ 2026.02.25
+👨‍👩‍👧‍👦 개발 인원 : 6명 (팀 프로젝트)
+🏗 아키텍처 : Spring MVC 기반 3-Tier 구조
+🗄 DB : Oracle 11g XE (OJDBC6)
+
+🎯 기획 배경
+
+기존 스터디 카페 예약 시스템과 멘토링 플랫폼이 분리되어 있어
+사용자가 여러 서비스를 오가야 하는 불편함이 존재
+
+-> 공간 예약 + 멘토링 매칭 + 결제 + 학습 관리(LMS) 를
+하나의 서비스로 통합 구현
 
 - 개요
   ### [1. Introduction](#Introduction)
@@ -23,12 +39,6 @@
 | 양상연 | 팀원 | 멘토링|
 | 유준상 | 팀원 | 로그인 / 회원가입|
 
-📃 프로젝트 기획 배경
-
-- 기존 스터디 카페 예약 시스템과 멘토링 매칭 및 스터디와 추후 학습관리를
-  할 수 있는 시스템이 필요하였음
-  
-  ->  스터디 카페 온라인 결제 / 멘토링 / 스터디 및 학습관리를 위한 하나의 통합 서비스를 개발
 ### 📖 프로젝트 개요
 기존 스터디 카페 예약 시스템과 멘토링 매칭 시스템이 분리되어 있는 문제를 해결하기 위해  
 스터디 공간 예약, 멘토 매칭, 결제, 리뷰 기능을 하나의 플랫폼으로 통합 구현
@@ -46,33 +56,42 @@
 - 유지보수성을 고려한 계층 분리
 
 ## Architecture
-
-### 3-Tier Architecture 기반 설계
-Frontend : JSP, HTML, CSS, JavaScript
-Backend	: Java(JavaSE 11), Servlet, Spring Framework(STS-3)
-Database : Oracle 11g XE
-JDBC Driver : OJDBC6
-Server : Apache Tomcat 9.0
-Architecture : Model2 구조
-
+2. Architecture
+📃3-Tier 기반 MVC 구조
 | Presentation Tier | Application Tier | Data Tier |
-|-------------------|------------------|-----------|
-| HTML/CSS/JS       | Servlet (Controller) | Oracle DB |
-| JSP (View)        | Service (Business Logic) | MyBatis |
-|                   | Spring Legacy Framework | DAO |
-|                   | Tomcat 9.0 (WAS) | |
+|-------------------|--------------------------|-----------|
+| HTML/CSS/JS       | Servlet (Controller)     | Oracle DB |
+| JSP               | Service (Business Logic) | MyBatis   |
+|                   | Spring Legacy Framework  | DAO       |
+|                   | Tomcat 9.0 (WAS)         |           |
 
-
+Tech Stack
+```
+Backend      : Java 11, Servlet, Spring Framework (STS-3)
+Database     : Oracle 11g XE
+SQL Mapper   : MyBatis
+JDBC Driver  : OJDBC6
+Server       : Apache Tomcat 9.0
+Architecture : MVC (Model2) + 3-Tier
+```
 ### 설계 특징
+1️. 계층 분리 기반 유지보수성 확보
 
-MVC 아키텍처 기반 3계층 구조 설계
+Controller / Service / DAO 분리
 
-	•	Service 계층에서 트랜잭션 및 핵심 비즈니스 로직 관리
-	•	MyBatis Mapper XML을 활용한 SQL 분리 및 유지보수성 확보
-	•	Spring Boot의 자동 설정이 아닌 Spring Legacy 환경에서 명시적 설정을 통해 내부 동작 구조에 대한 이해도 강화
+Service 계층에서 핵심 비즈니스 로직 관리
 
-### PPT 소개
-[2팀_PPT.pdf](https://github.com/user-attachments/files/25600895/2._PPT.pdf)
+2. MyBatis 기반 SQL 분리
+
+Mapper XML 활용
+
+동적 SQL 적용 (조건 검색, 예약 중복 체크)
+
+3️. pring Legacy 명시적 설정
+
+자동 설정(Spring Boot) 대신 XML 기반 설정
+데이터 흐름의 이해를 위해 Bean 등록 및 직접 설정
+
 <hr>
 
 ### 사용자
@@ -115,5 +134,16 @@ MVC 아키텍처 기반 3계층 구조 설계
 
 # DB Schema
 <img width="1559" height="1153" alt="image" src="https://github.com/user-attachments/assets/d46198c2-9470-49a2-b5fa-3d02c4c28ec8" />
+
+### 프로젝트 성과
+
+- 복합 기능(예약/결제/LMS)을 하나의 플랫폼으로 통합 구현
+
+- Spring MVC 기반 3-Tier 아키텍처 설계 경험
+
+- 비즈니스 로직 설계 역량 강화
+
+### 발표 자료
+[2._PPT.pdf](https://github.com/user-attachments/files/25609506/2._PPT.pdf)
 
 
