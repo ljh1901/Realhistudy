@@ -1,15 +1,20 @@
 # histudy
 - 개요
 
+  ### [1. Introduction](#Introduction)
+  
+  ### [2. Skill](#Archiecture) 
 
-  ### [1. Skill](#Archiecture) 
 
+  ### [3. Site Map](#Site-Map)
 
-  ### [2. Site Map](#Site-Map)
+  
 
 
   <br>
-
+## Introduction
+<h1>스터디 & 멘토링 통합 관리 플랫폼</h1>
+2026. 01. 19 ~ 2026. 02. 25
 ## Archiecture
 
 | Presentation Tier | Middle Tier                        | Data Tier |
