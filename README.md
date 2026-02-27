@@ -1,6 +1,5 @@
-<img width="1734" height="902" alt="image" src="https://github.com/user-attachments/assets/845dfdbe-acb7-47b4-9527-f4db20d951b9" /># histudy
-- 개요
 
+- 개요
   ### [1. Introduction](#Introduction)
   
   ### [2. Skill](#Archiecture) 
@@ -97,7 +96,6 @@
 
 # FlowChart
 <img width="1734" height="902" alt="image" src="https://github.com/user-attachments/assets/06abf9bf-b14d-40c7-b8b8-6a190e6864b0" />
-
 
 # DB Schema
 <img width="1559" height="1153" alt="image" src="https://github.com/user-attachments/assets/d46198c2-9470-49a2-b5fa-3d02c4c28ec8" />
