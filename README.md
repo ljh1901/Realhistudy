@@ -5,8 +5,8 @@
 - 목차
  ### [1. 프로젝트 개요](#프로젝트-개요)
 ### [2. 기획 배경](#기획-배경)
-### [3. Introduction](#introduction)
-### [4. Architecture](#architecture)
+### [3. Introduction](#3.introduction)
+### [4. Architecture](#4.architecture)
 
 📌 프로젝트 개요
 
@@ -27,6 +27,7 @@
 하나의 서비스로 통합 구현
 
   <br>
+  
 # 3. Introduction
 
 📆 개발 기간 : 2026.01.19 ~ 2026.02.25  
@@ -56,7 +57,7 @@
 
 - 유지보수성을 고려한 계층 분리
 
-## 4. Architecture
+# 4. Architecture
 
 📃3-Tier 기반 MVC 구조
 
