@@ -5,7 +5,7 @@
 - 목차
  ### [1. 프로젝트 개요](#프로젝트-개요)
 ### [2. 기획 배경](#기획-배경)
-### [3. Introduction](#3.introduction)
+### [3. Introduction](#3.Introduction)
 ### [4. Architecture](#4.architecture)
 
 📌 프로젝트 개요
