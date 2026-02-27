@@ -60,7 +60,9 @@
 
 ## Architecture
 2. Architecture
+
 📃3-Tier 기반 MVC 구조
+
 | Presentation Tier | Application Tier | Data Tier |
 |-------------------|--------------------------|-----------|
 | HTML/CSS/JS       | Servlet (Controller)     | Oracle DB |
