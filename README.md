@@ -48,6 +48,12 @@
 ## Architecture
 
 ### 3-Tier Architecture 기반 설계
+Frontend : JSP, HTML, CSS, JavaScript
+Backend	: Java(JavaSE 11), Servlet, Spring Framework(STS-3)
+Database : Oracle 11g XE
+JDBC Driver : OJDBC6
+Server : Apache Tomcat 9.0
+Architecture : Model2 구조
 
 | Presentation Tier | Application Tier | Data Tier |
 |-------------------|------------------|-----------|
