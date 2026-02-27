@@ -71,8 +71,9 @@
 - 좌석 관리
 - 멘토 승인 관리
 - 신고 처리 및 리뷰 관리
-- 
+  
 # Site Map
+
 <img width="1121" height="1019" alt="image" src="https://github.com/user-attachments/assets/f43cc575-d75d-4858-8425-9013cfbbacb0" />
 
 # Use Case Diagram
