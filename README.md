@@ -29,7 +29,7 @@
   ### [3. Site Map](#Site-Map)
 
   <br>
-## Introduction
+## 1. Introduction
 
 📆 개발 기간 : 2026.01.19 ~ 2026.02.25  
 👨‍👩‍👧‍👦 개발 인원 : 6명 (팀 프로젝트)
@@ -58,8 +58,7 @@
 
 - 유지보수성을 고려한 계층 분리
 
-## Architecture
-2. Architecture
+## 2. Architecture
 
 📃3-Tier 기반 MVC 구조
 
