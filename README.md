@@ -2,6 +2,11 @@
 
   - 스터디 공간 예약, 멘토 매칭, 결제, LMS 학습 관리를 통합한
     Spring MVC 기반 3-Tier 웹 플랫폼
+- 목차
+  ### [1. 프로젝트 개요]
+  ### [2. 기획 배경]
+  ### [3. Introduction](#Introduction)
+  ### [4. Skill](#Archiecture) 
 
 📌 프로젝트 개요
 
@@ -21,15 +26,8 @@
 -> 공간 예약 + 멘토링 매칭 + 결제 + 학습 관리(LMS) 를
 하나의 서비스로 통합 구현
 
-- 개요
-  ### [1. Introduction](#Introduction)
-  
-  ### [2. Skill](#Archiecture) 
-
-  ### [3. Site Map](#Site-Map)
-
   <br>
-## 1. Introduction
+## 3. Introduction
 
 📆 개발 기간 : 2026.01.19 ~ 2026.02.25  
 👨‍👩‍👧‍👦 개발 인원 : 6명 (팀 프로젝트)
@@ -58,7 +56,7 @@
 
 - 유지보수성을 고려한 계층 분리
 
-## 2. Architecture
+## 4. Architecture
 
 📃3-Tier 기반 MVC 구조
 
