@@ -52,10 +52,11 @@
 |                   | Tomcat 9.0 (WAS) | |
 
 ### 설계 특징
-- MVC 패턴 적용 (Controller / Service / DAO 분리)
-- Service 계층에서 비즈니스 로직 집중 처리
-- MyBatis 기반 SQL Mapper 구조 설계
-- Zero Configuration 자동 설정에 의존하기 보다, 개발자가 직접 설정 함으로서, 데이터의 흐름을 명확히 파악하기 위해 Spring Legacy 사용
+
+MVC 아키텍처 기반 3계층 구조 설계
+	•	Service 계층에서 트랜잭션 및 핵심 비즈니스 로직 관리
+	•	MyBatis Mapper XML을 활용한 SQL 분리 및 유지보수성 확보
+	•	Spring Boot의 자동 설정이 아닌 Spring Legacy 환경에서 명시적 설정을 통해 내부 동작 구조에 대한 이해도 강화
 
 ### PPT 소개
 [2팀_PPT.pdf](https://github.com/user-attachments/files/25600895/2._PPT.pdf)
